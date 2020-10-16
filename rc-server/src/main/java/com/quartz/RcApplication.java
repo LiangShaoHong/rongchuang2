@@ -1,4 +1,4 @@
-package com.xiaoluo;
+package com.quartz;
 
 
 import org.mybatis.spring.annotation.MapperScan;
