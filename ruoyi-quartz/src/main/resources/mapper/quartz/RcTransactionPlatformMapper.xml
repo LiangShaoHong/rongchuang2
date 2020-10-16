@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.quartz.mapper.RcTransactionPlatformMapper">
+    
+    <resultMap type="RcTransactionPlatform" id="RcTransactionPlatformResult">
+        <result property="id"    column="id"    />
+        <result property="coinId"    column="coin_id"    />
+        <result property="name"    column="name"    />
+        <result property="logo"    column="logo"    />
+        <result property="rank"    column="rank"    />
+        <result property="pairnum"    column="pairnum"    />
+        <result property="volumn"    column="volumn"    />
+        <result property="volumnBtc"    column="volumn_btc"    />
+        <result property="volumnCny"    column="volumn_cny"    />
+        <result property="tradeurl"    column="tradeurl"    />
+        <result property="changeVolumn"    column="change_volumn"    />
+        <result property="exrank"    column="exrank"    />
+        <result property="assetsUsd"    column="assets_usd"    />
+        <result property="riskLevel"    column="risk_level"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectRcTransactionPlatformVo">
+        select id, coin_id, name, logo, rank, pairnum, volumn, volumn_btc, volumn_cny, tradeurl, change_volumn, exrank, assets_usd, risk_level, create_time from rc_transaction_platform
+    </sql>
+
+    <select id="selectRcTransactionPlatformList" parameterType="RcTransactionPlatform" resultMap="RcTransactionPlatformResult">
+        <include refid="selectRcTransactionPlatformVo"/>
+        <where>  
+            <if test="coinId != null  and coinId != ''"> and coin_id = #{coinId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="rank != null  and rank != ''"> and rank = #{rank}</if>
+            <if test="pairnum != null  and pairnum != ''"> and pairnum = #{pairnum}</if>
+            <if test="volumn != null  and volumn != ''"> and volumn = #{volumn}</if>
+            <if test="volumnBtc != null  and volumnBtc != ''"> and volumn_btc = #{volumnBtc}</if>
+            <if test="volumnCny != null  and volumnCny != ''"> and volumn_cny = #{volumnCny}</if>
+            <if test="tradeurl != null  and tradeurl != ''"> and tradeurl = #{tradeurl}</if>
+            <if test="changeVolumn != null  and changeVolumn != ''"> and change_volumn = #{changeVolumn}</if>
+            <if test="exrank != null  and exrank != ''"> and exrank = #{exrank}</if>
+            <if test="assetsUsd != null  and assetsUsd != ''"> and assets_usd = #{assetsUsd}</if>
+            <if test="riskLevel != null  and riskLevel != ''"> and risk_level = #{riskLevel}</if>
+        </where>
+    </select>
+    
+    <select id="selectRcTransactionPlatformById" parameterType="Long" resultMap="RcTransactionPlatformResult">
+        <include refid="selectRcTransactionPlatformVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectRcTransactionPlatformByCoinId" parameterType="String" resultMap="RcTransactionPlatformResult">
+        <include refid="selectRcTransactionPlatformVo"/>
+        where coin_id = #{coinId}
+    </select>
+        
+    <insert id="insertRcTransactionPlatform" parameterType="RcTransactionPlatform" useGeneratedKeys="true" keyProperty="id">
+        insert into rc_transaction_platform
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="coinId != null">coin_id,</if>
+            <if test="name != null">name,</if>
+            <if test="logo != null">logo,</if>
+            <if test="rank != null">rank,</if>
+            <if test="pairnum != null">pairnum,</if>
+            <if test="volumn != null">volumn,</if>
+            <if test="volumnBtc != null">volumn_btc,</if>
+            <if test="volumnCny != null">volumn_cny,</if>
+            <if test="tradeurl != null">tradeurl,</if>
+            <if test="changeVolumn != null">change_volumn,</if>
+            <if test="exrank != null">exrank,</if>
+            <if test="assetsUsd != null">assets_usd,</if>
+            <if test="riskLevel != null">risk_level,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="coinId != null">#{coinId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="logo != null">#{logo},</if>
+            <if test="rank != null">#{rank},</if>
+            <if test="pairnum != null">#{pairnum},</if>
+            <if test="volumn != null">#{volumn},</if>
+            <if test="volumnBtc != null">#{volumnBtc},</if>
+            <if test="volumnCny != null">#{volumnCny},</if>
+            <if test="tradeurl != null">#{tradeurl},</if>
+            <if test="changeVolumn != null">#{changeVolumn},</if>
+            <if test="exrank != null">#{exrank},</if>
+            <if test="assetsUsd != null">#{assetsUsd},</if>
+            <if test="riskLevel != null">#{riskLevel},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRcTransactionPlatform" parameterType="RcTransactionPlatform">
+        update rc_transaction_platform
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="coinId != null">coin_id = #{coinId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="logo != null">logo = #{logo},</if>
+            <if test="rank != null">rank = #{rank},</if>
+            <if test="pairnum != null">pairnum = #{pairnum},</if>
+            <if test="volumn != null">volumn = #{volumn},</if>
+            <if test="volumnBtc != null">volumn_btc = #{volumnBtc},</if>
+            <if test="volumnCny != null">volumn_cny = #{volumnCny},</if>
+            <if test="tradeurl != null">tradeurl = #{tradeurl},</if>
+            <if test="changeVolumn != null">change_volumn = #{changeVolumn},</if>
+            <if test="exrank != null">exrank = #{exrank},</if>
+            <if test="assetsUsd != null">assets_usd = #{assetsUsd},</if>
+            <if test="riskLevel != null">risk_level = #{riskLevel},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateRcTransactionPlatformByCoinId" parameterType="RcTransactionPlatform">
+        update rc_transaction_platform
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="coinId != null">coin_id = #{coinId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="logo != null">logo = #{logo},</if>
+            <if test="rank != null">rank = #{rank},</if>
+            <if test="pairnum != null">pairnum = #{pairnum},</if>
+            <if test="volumn != null">volumn = #{volumn},</if>
+            <if test="volumnBtc != null">volumn_btc = #{volumnBtc},</if>
+            <if test="volumnCny != null">volumn_cny = #{volumnCny},</if>
+            <if test="tradeurl != null">tradeurl = #{tradeurl},</if>
+            <if test="changeVolumn != null">change_volumn = #{changeVolumn},</if>
+            <if test="exrank != null">exrank = #{exrank},</if>
+            <if test="assetsUsd != null">assets_usd = #{assetsUsd},</if>
+            <if test="riskLevel != null">risk_level = #{riskLevel},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where coin_id = #{coinId}
+    </update>
+
+    <delete id="deleteRcTransactionPlatformById" parameterType="Long">
+        delete from rc_transaction_platform where id = #{id}
+    </delete>
+
+    <delete id="deleteRcTransactionPlatformByIds" parameterType="String">
+        delete from rc_transaction_platform where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
