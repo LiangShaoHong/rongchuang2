@@ -1,9 +1,13 @@
 package com.ruoyi.quartz.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+
+import java.math.BigDecimal;
 
 /**
  * 实时各交易所币种交易数据对象 rc_transaction_data
@@ -16,6 +20,7 @@ public class RcTransactionData extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** $column.columnComment */
+    @TableId(value = "id",type = IdType.AUTO)
     private Long id;
 
     /** 币种英文名称 */
@@ -40,31 +45,31 @@ public class RcTransactionData extends BaseEntity
 
     /** 最新价格（单位：美元） */
     @Excel(name = "最新价格", readConverterExp = "单=位：美元")
-    private String priceUsd;
+    private BigDecimal priceUsd;
 
     /** 最新价格（单位：BTC） */
     @Excel(name = "最新价格", readConverterExp = "单=位：BTC")
-    private String priceBtc;
+    private BigDecimal priceBtc;
 
     /** 24h的成交额（单位：美元） */
     @Excel(name = "24h的成交额", readConverterExp = "单=位：美元")
-    private String volume24hUsd;
+    private BigDecimal volume24hUsd;
 
     /** 流通市值（单位：美元） */
     @Excel(name = "流通市值", readConverterExp = "单=位：美元")
-    private String marketCapUsd;
+    private BigDecimal marketCapUsd;
 
     /** 流通数量 */
     @Excel(name = "流通数量")
-    private String availableSupply;
+    private BigDecimal availableSupply;
 
     /** 总发行量 */
     @Excel(name = "总发行量")
-    private String totalSupply;
+    private BigDecimal totalSupply;
 
     /** 最大发行量（最大发行量可能>总发行量，譬如有些币种会主动销毁一部分数量） */
     @Excel(name = "最大发行量", readConverterExp = "最=大发行量可能>总发行量，譬如有些币种会主动销毁一部分数量")
-    private String maxSupply;
+    private BigDecimal maxSupply;
 
     /** 1小时涨跌幅 */
     @Excel(name = "1小时涨跌幅")
@@ -136,66 +141,66 @@ public class RcTransactionData extends BaseEntity
     {
         return logoPng;
     }
-    public void setPriceUsd(String priceUsd)
+    public void setPriceUsd(BigDecimal priceUsd)
     {
         this.priceUsd = priceUsd;
     }
 
-    public String getPriceUsd()
+    public BigDecimal getPriceUsd()
     {
         return priceUsd;
     }
-    public void setPriceBtc(String priceBtc)
+    public void setPriceBtc(BigDecimal priceBtc)
     {
         this.priceBtc = priceBtc;
     }
 
-    public String getPriceBtc()
+    public BigDecimal getPriceBtc()
     {
         return priceBtc;
     }
-    public void setVolume24hUsd(String volume24hUsd)
+    public void setVolume24hUsd(BigDecimal volume24hUsd)
     {
         this.volume24hUsd = volume24hUsd;
     }
 
-    public String getVolume24hUsd()
+    public BigDecimal getVolume24hUsd()
     {
         return volume24hUsd;
     }
-    public void setMarketCapUsd(String marketCapUsd)
+    public void setMarketCapUsd(BigDecimal marketCapUsd)
     {
         this.marketCapUsd = marketCapUsd;
     }
 
-    public String getMarketCapUsd()
+    public BigDecimal getMarketCapUsd()
     {
         return marketCapUsd;
     }
-    public void setAvailableSupply(String availableSupply)
+    public void setAvailableSupply(BigDecimal availableSupply)
     {
         this.availableSupply = availableSupply;
     }
 
-    public String getAvailableSupply()
+    public BigDecimal getAvailableSupply()
     {
         return availableSupply;
     }
-    public void setTotalSupply(String totalSupply)
+    public void setTotalSupply(BigDecimal totalSupply)
     {
         this.totalSupply = totalSupply;
     }
 
-    public String getTotalSupply()
+    public BigDecimal getTotalSupply()
     {
         return totalSupply;
     }
-    public void setMaxSupply(String maxSupply)
+    public void setMaxSupply(BigDecimal maxSupply)
     {
         this.maxSupply = maxSupply;
     }
 
-    public String getMaxSupply()
+    public BigDecimal getMaxSupply()
     {
         return maxSupply;
     }
