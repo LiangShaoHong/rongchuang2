@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.quartz.mapper.RcTransactionDataMapper">
+
+    <resultMap type="RcTransactionData" id="RcTransactionDataResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="symbol"    column="symbol"    />
+        <result property="rank"    column="rank"    />
+        <result property="logo"    column="logo"    />
+        <result property="logoPng"    column="logo_png"    />
+        <result property="priceUsd"    column="price_usd"    />
+        <result property="priceBtc"    column="price_btc"    />
+        <result property="volume24hUsd"    column="volume_24h_usd"    />
+        <result property="marketCapUsd"    column="market_cap_usd"    />
+        <result property="availableSupply"    column="available_supply"    />
+        <result property="totalSupply"    column="total_supply"    />
+        <result property="maxSupply"    column="max_supply"    />
+        <result property="percentChange1h"    column="percent_change_1h"    />
+        <result property="percentChange24h"    column="percent_change_24h"    />
+        <result property="percentChange7d"    column="percent_change_7d"    />
+        <result property="lastUpdated"    column="last_updated"    />
+    </resultMap>
+
+    <sql id="selectRcTransactionDataVo">
+        select id, name, symbol, rank, logo, logo_png, price_usd, price_btc, volume_24h_usd, market_cap_usd, available_supply, total_supply, max_supply, percent_change_1h, percent_change_24h, percent_change_7d, last_updated from rc_transaction_data
+    </sql>
+
+    <select id="selectRcTransactionDataList" parameterType="RcTransactionData" resultMap="RcTransactionDataResult">
+        <include refid="selectRcTransactionDataVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="symbol != null  and symbol != ''"> and symbol = #{symbol}</if>
+            <if test="rank != null  and rank != ''"> and rank = #{rank}</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="logoPng != null  and logoPng != ''"> and logo_png = #{logoPng}</if>
+            <if test="priceUsd != null  and priceUsd != ''"> and price_usd = #{priceUsd}</if>
+            <if test="priceBtc != null  and priceBtc != ''"> and price_btc = #{priceBtc}</if>
+            <if test="volume24hUsd != null  and volume24hUsd != ''"> and volume_24h_usd = #{volume24hUsd}</if>
+            <if test="marketCapUsd != null  and marketCapUsd != ''"> and market_cap_usd = #{marketCapUsd}</if>
+            <if test="availableSupply != null  and availableSupply != ''"> and available_supply = #{availableSupply}</if>
+            <if test="totalSupply != null  and totalSupply != ''"> and total_supply = #{totalSupply}</if>
+            <if test="maxSupply != null  and maxSupply != ''"> and max_supply = #{maxSupply}</if>
+            <if test="percentChange1h != null  and percentChange1h != ''"> and percent_change_1h = #{percentChange1h}</if>
+            <if test="percentChange24h != null  and percentChange24h != ''"> and percent_change_24h = #{percentChange24h}</if>
+            <if test="percentChange7d != null  and percentChange7d != ''"> and percent_change_7d = #{percentChange7d}</if>
+            <if test="lastUpdated != null  and lastUpdated != ''"> and last_updated = #{lastUpdated}</if>
+        </where>
+    </select>
+
+    <select id="selectRcTransactionDataById" parameterType="Long" resultMap="RcTransactionDataResult">
+        <include refid="selectRcTransactionDataVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertRcTransactionData" parameterType="RcTransactionData">
+        insert into rc_transaction_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="symbol != null">symbol,</if>
+            <if test="rank != null">rank,</if>
+            <if test="logo != null">logo,</if>
+            <if test="logoPng != null">logo_png,</if>
+            <if test="priceUsd != null">price_usd,</if>
+            <if test="priceBtc != null">price_btc,</if>
+            <if test="volume24hUsd != null">volume_24h_usd,</if>
+            <if test="marketCapUsd != null">market_cap_usd,</if>
+            <if test="availableSupply != null">available_supply,</if>
+            <if test="totalSupply != null">total_supply,</if>
+            <if test="maxSupply != null">max_supply,</if>
+            <if test="percentChange1h != null">percent_change_1h,</if>
+            <if test="percentChange24h != null">percent_change_24h,</if>
+            <if test="percentChange7d != null">percent_change_7d,</if>
+            <if test="lastUpdated != null">last_updated,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="symbol != null">#{symbol},</if>
+            <if test="rank != null">#{rank},</if>
+            <if test="logo != null">#{logo},</if>
+            <if test="logoPng != null">#{logoPng},</if>
+            <if test="priceUsd != null">#{priceUsd},</if>
+            <if test="priceBtc != null">#{priceBtc},</if>
+            <if test="volume24hUsd != null">#{volume24hUsd},</if>
+            <if test="marketCapUsd != null">#{marketCapUsd},</if>
+            <if test="availableSupply != null">#{availableSupply},</if>
+            <if test="totalSupply != null">#{totalSupply},</if>
+            <if test="maxSupply != null">#{maxSupply},</if>
+            <if test="percentChange1h != null">#{percentChange1h},</if>
+            <if test="percentChange24h != null">#{percentChange24h},</if>
+            <if test="percentChange7d != null">#{percentChange7d},</if>
+            <if test="lastUpdated != null">#{lastUpdated},</if>
+        </trim>
+    </insert>
+
+    <update id="updateRcTransactionData" parameterType="RcTransactionData">
+        update rc_transaction_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="symbol != null">symbol = #{symbol},</if>
+            <if test="rank != null">rank = #{rank},</if>
+            <if test="logo != null">logo = #{logo},</if>
+            <if test="logoPng != null">logo_png = #{logoPng},</if>
+            <if test="priceUsd != null">price_usd = #{priceUsd},</if>
+            <if test="priceBtc != null">price_btc = #{priceBtc},</if>
+            <if test="volume24hUsd != null">volume_24h_usd = #{volume24hUsd},</if>
+            <if test="marketCapUsd != null">market_cap_usd = #{marketCapUsd},</if>
+            <if test="availableSupply != null">available_supply = #{availableSupply},</if>
+            <if test="totalSupply != null">total_supply = #{totalSupply},</if>
+            <if test="maxSupply != null">max_supply = #{maxSupply},</if>
+            <if test="percentChange1h != null">percent_change_1h = #{percentChange1h},</if>
+            <if test="percentChange24h != null">percent_change_24h = #{percentChange24h},</if>
+            <if test="percentChange7d != null">percent_change_7d = #{percentChange7d},</if>
+            <if test="lastUpdated != null">last_updated = #{lastUpdated},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcTransactionDataById" parameterType="Long">
+        delete from rc_transaction_data where id = #{id}
+    </delete>
+
+    <delete id="deleteRcTransactionDataByIds" parameterType="String">
+        delete from rc_transaction_data where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
