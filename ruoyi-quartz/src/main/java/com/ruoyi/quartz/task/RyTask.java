@@ -107,9 +107,6 @@ public class RyTask {
         return response_content;
     }
 
-    /**
-     *
-     */
     public void ryImportExchangeInformation() {
         for (int i = 1; i < 8; i++) {
             String uri = "https://dncapi.bqrank.net/api/v2/exchange/web-exchange";
@@ -121,8 +118,6 @@ public class RyTask {
                 System.out.println(result);
                 JSONObject sql = JSONObject.fromObject(result);
                 String result1 = sql.getString("data");
-
-
                 JSONArray jsonArray = JSONArray.fromObject(result1);
                 Object[] objs = jsonArray.toArray();
                 for (Object object : objs) {
@@ -142,8 +137,6 @@ public class RyTask {
                     data.setAssetsUsd(new BigDecimal(jsonObject.getString("assets_usd")));
                     data.setRiskLevel((String) jsonObject.getString("risk_level"));
                     data.setCreateTime(new Date());
-                    System.out.println(data+"------------------------------------------");
-//                    System.out.println("RcTransactionPlatform-------------------------------------------" + rcTransactionPlatformService.selectRcTransactionPlatformByCoinId(data.getCoinId()));
                     if (rcTransactionPlatformService.selectRcTransactionPlatformByCoinId(data.getCoinId()) == null) {
                         rcTransactionPlatformService.insertRcTransactionPlatform(data);
                     } else {
