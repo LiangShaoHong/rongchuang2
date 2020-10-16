@@ -141,7 +141,6 @@ public class RyTask {
                         rcTransactionPlatformService.insertRcTransactionPlatform(data);
                     } else {
                         rcTransactionPlatformService.updateRcTransactionPlatformByCoinId(data);
-
                     }
                 }
 
