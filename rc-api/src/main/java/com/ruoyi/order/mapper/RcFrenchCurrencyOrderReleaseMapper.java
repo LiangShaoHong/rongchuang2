@@ -1,7 +1,7 @@
-package com.rc.order.mapper;
+package com.ruoyi.order.mapper;
 
 import java.util.List;
-import com.rc.order.domain.RcFrenchCurrencyOrderRelease;
+import com.ruoyi.order.domain.RcFrenchCurrencyOrderRelease;
 
 /**
  * 法币订单发布Mapper接口

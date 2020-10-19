@@ -2,10 +2,11 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rc.order.mapper.RcFrenchCurrencyOrderReleaseMapper">
+<mapper namespace="com.ruoyi.order.mapper.RcFrenchCurrencyOrderReleaseMapper">
     
     <resultMap type="RcFrenchCurrencyOrderRelease" id="RcFrenchCurrencyOrderReleaseResult">
         <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
         <result property="sellerUserId"    column="seller_user_id"    />
         <result property="transactionUserId"    column="transaction_user_id"    />
         <result property="transactionsType"    column="transactions_type"    />
@@ -21,12 +22,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectRcFrenchCurrencyOrderReleaseVo">
-        select id, seller_user_id, transaction_user_id, transactions_type, transaction_name, number, purchase_price, selling_price, profitable, release_time, transactions_time, state, payment_screenshot from rc_french_currency_order_release
+        select id, order_id, seller_user_id, transaction_user_id, transactions_type, transaction_name, number, purchase_price, selling_price, profitable, release_time, transactions_time, state, payment_screenshot from rc_french_currency_order_release
     </sql>
 
     <select id="selectRcFrenchCurrencyOrderReleaseList" parameterType="RcFrenchCurrencyOrderRelease" resultMap="RcFrenchCurrencyOrderReleaseResult">
         <include refid="selectRcFrenchCurrencyOrderReleaseVo"/>
         <where>  
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
             <if test="sellerUserId != null "> and seller_user_id = #{sellerUserId}</if>
             <if test="transactionUserId != null "> and transaction_user_id = #{transactionUserId}</if>
             <if test="transactionsType != null "> and transactions_type = #{transactionsType}</if>
@@ -51,6 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into rc_french_currency_order_release
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
+            <if test="orderId != null">order_id,</if>
             <if test="sellerUserId != null">seller_user_id,</if>
             <if test="transactionUserId != null">transaction_user_id,</if>
             <if test="transactionsType != null">transactions_type,</if>
@@ -66,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
+            <if test="orderId != null">#{orderId},</if>
             <if test="sellerUserId != null">#{sellerUserId},</if>
             <if test="transactionUserId != null">#{transactionUserId},</if>
             <if test="transactionsType != null">#{transactionsType},</if>
@@ -84,6 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateRcFrenchCurrencyOrderRelease" parameterType="RcFrenchCurrencyOrderRelease">
         update rc_french_currency_order_release
         <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
             <if test="sellerUserId != null">seller_user_id = #{sellerUserId},</if>
             <if test="transactionUserId != null">transaction_user_id = #{transactionUserId},</if>
             <if test="transactionsType != null">transactions_type = #{transactionsType},</if>

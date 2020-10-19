@@ -1,11 +1,11 @@
-package com.rc.order.service.impl;
+package com.ruoyi.order.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.rc.order.mapper.RcFrenchCurrencyOrderReleaseMapper;
-import com.rc.order.domain.RcFrenchCurrencyOrderRelease;
-import com.rc.order.service.IRcFrenchCurrencyOrderReleaseService;
+import com.ruoyi.order.mapper.RcFrenchCurrencyOrderReleaseMapper;
+import com.ruoyi.order.domain.RcFrenchCurrencyOrderRelease;
+import com.ruoyi.order.service.IRcFrenchCurrencyOrderReleaseService;
 import com.ruoyi.common.core.text.Convert;
 
 /**

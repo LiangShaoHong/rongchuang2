@@ -1,4 +1,4 @@
-package com.rc.order.controller;
+package com.ruoyi.order.controller;
 
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
-import com.rc.order.domain.RcFrenchCurrencyOrderRelease;
-import com.rc.order.service.IRcFrenchCurrencyOrderReleaseService;
+import com.ruoyi.order.domain.RcFrenchCurrencyOrderRelease;
+import com.ruoyi.order.service.IRcFrenchCurrencyOrderReleaseService;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;

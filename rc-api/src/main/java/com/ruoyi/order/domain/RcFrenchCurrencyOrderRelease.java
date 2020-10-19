@@ -1,4 +1,4 @@
-package com.rc.order.domain;
+package com.ruoyi.order.domain;
 
 import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -18,6 +18,10 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
 
     /** 订单id */
     private Long id;
+
+    /** 订单id */
+    @Excel(name = "订单id")
+    private String orderId;
 
     /** 发布者id */
     @Excel(name = "发布者id")
@@ -75,6 +79,15 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
     public Long getId() 
     {
         return id;
+    }
+    public void setOrderId(String orderId) 
+    {
+        this.orderId = orderId;
+    }
+
+    public String getOrderId() 
+    {
+        return orderId;
     }
     public void setSellerUserId(Long sellerUserId) 
     {
@@ -189,6 +202,7 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("orderId", getOrderId())
             .append("sellerUserId", getSellerUserId())
             .append("transactionUserId", getTransactionUserId())
             .append("transactionsType", getTransactionsType())
