@@ -1,4 +1,5 @@
 <<<<<<< HEAD:rc-server/src/main/java/com/ruoyi/mapper/RcFrenchCurrencyOrderReleaseMapper.java
+<<<<<<< HEAD:rc-server/src/main/java/com/ruoyi/mapper/RcFrenchCurrencyOrderReleaseMapper.java
 package com.ruoyi.mapper;
 
 import com.ruoyi.domain.RcFrenchCurrencyOrderRelease;
@@ -10,6 +11,12 @@ package com.ruoyi.order.mapper;
 import java.util.List;
 import com.ruoyi.order.domain.RcFrenchCurrencyOrderRelease;
 >>>>>>> cf72129ef6177bb8af29baaae1c428c6dfb7051b:rc-server/src/main/java/com/ruoyi/order/mapper/RcFrenchCurrencyOrderReleaseMapper.java
+=======
+package com.rc.order.mapper;
+
+import java.util.List;
+import com.rc.order.domain.RcFrenchCurrencyOrderRelease;
+>>>>>>> parent of f1ccaef... 新增http工具类，和测试类:rc-api/src/main/java/com/rc/order/mapper/RcFrenchCurrencyOrderReleaseMapper.java
 
 /**
  * 法币订单发布Mapper接口
