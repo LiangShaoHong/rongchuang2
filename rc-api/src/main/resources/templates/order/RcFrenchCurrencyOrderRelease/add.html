@@ -28,8 +28,9 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">交易类型 1-买 2-卖：</label>
                 <div class="col-sm-8">
-                    <select name="transactionsType" class="form-control m-b">
+                    <select name="transactionsType" th:with="type=${@dict.getType('rc_transaction_type')}"class="form-control m-b">
                         <option value="">所有</option>
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}">
                     </select>
                     <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
                 </div>
