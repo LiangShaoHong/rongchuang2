@@ -1,12 +1,13 @@
-package com.rc.order.service.impl;
+package com.ruoyi.service.impl;
 
-import java.util.List;
+import com.ruoyi.domain.RcFrenchCurrencyOrderRelease;
+import com.ruoyi.mapper.RcFrenchCurrencyOrderReleaseMapper;
+import com.ruoyi.service.IRcFrenchCurrencyOrderReleaseService;
+import com.ruoyi.common.core.text.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.rc.order.mapper.RcFrenchCurrencyOrderReleaseMapper;
-import com.rc.order.domain.RcFrenchCurrencyOrderRelease;
-import com.rc.order.service.IRcFrenchCurrencyOrderReleaseService;
-import com.ruoyi.common.core.text.Convert;
+
+import java.util.List;
 
 /**
  * 法币订单发布Service业务层处理

@@ -1,7 +1,8 @@
-package com.rc.order.service;
+package com.ruoyi.service;
+
+import com.ruoyi.domain.RcFrenchCurrencyOrderRelease;
 
 import java.util.List;
-import com.rc.order.domain.RcFrenchCurrencyOrderRelease;
 
 /**
  * 法币订单发布Service接口
