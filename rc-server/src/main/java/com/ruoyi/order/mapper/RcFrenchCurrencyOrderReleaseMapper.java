@@ -1,16 +1,15 @@
-package com.ruoyi.service;
-
-import com.ruoyi.domain.RcFrenchCurrencyOrderRelease;
+package com.ruoyi.order.mapper;
 
 import java.util.List;
+import com.ruoyi.order.domain.RcFrenchCurrencyOrderRelease;
 
 /**
- * 法币订单发布Service接口
+ * 法币订单发布Mapper接口
  * 
  * @author ruoyi
  * @date 2020-10-19
  */
-public interface IRcFrenchCurrencyOrderReleaseService 
+public interface RcFrenchCurrencyOrderReleaseMapper 
 {
     /**
      * 查询法币订单发布
@@ -45,18 +44,18 @@ public interface IRcFrenchCurrencyOrderReleaseService
     public int updateRcFrenchCurrencyOrderRelease(RcFrenchCurrencyOrderRelease rcFrenchCurrencyOrderRelease);
 
     /**
-     * 批量删除法币订单发布
-     * 
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-    public int deleteRcFrenchCurrencyOrderReleaseByIds(String ids);
-
-    /**
-     * 删除法币订单发布信息
+     * 删除法币订单发布
      * 
      * @param id 法币订单发布ID
      * @return 结果
      */
     public int deleteRcFrenchCurrencyOrderReleaseById(Long id);
+
+    /**
+     * 批量删除法币订单发布
+     * 
+     * @param ids 需要删除的数据ID
+     * @return 结果
+     */
+    public int deleteRcFrenchCurrencyOrderReleaseByIds(String[] ids);
 }

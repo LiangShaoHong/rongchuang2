@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
+<<<<<<< HEAD:rc-server/src/main/resources/mapper/order/RcFrenchCurrencyOrderReleaseMapper.xml
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.mapper.RcFrenchCurrencyOrderReleaseMapper">
 
+=======
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.RcFrenchCurrencyOrderReleaseMapper">
+    
+>>>>>>> cf72129ef6177bb8af29baaae1c428c6dfb7051b:rc-api/src/main/resources/mapper/order/RcFrenchCurrencyOrderReleaseMapper.xml
     <resultMap type="RcFrenchCurrencyOrderRelease" id="RcFrenchCurrencyOrderReleaseResult">
         <result property="id"    column="id"    />
         <result property="orderId"    column="order_id"    />
@@ -27,7 +34,11 @@
 
     <select id="selectRcFrenchCurrencyOrderReleaseList" parameterType="RcFrenchCurrencyOrderRelease" resultMap="RcFrenchCurrencyOrderReleaseResult">
         <include refid="selectRcFrenchCurrencyOrderReleaseVo"/>
+<<<<<<< HEAD:rc-server/src/main/resources/mapper/order/RcFrenchCurrencyOrderReleaseMapper.xml
         <where>
+=======
+        <where>  
+>>>>>>> cf72129ef6177bb8af29baaae1c428c6dfb7051b:rc-api/src/main/resources/mapper/order/RcFrenchCurrencyOrderReleaseMapper.xml
             <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
             <if test="sellerUserId != null "> and seller_user_id = #{sellerUserId}</if>
             <if test="transactionUserId != null "> and transaction_user_id = #{transactionUserId}</if>

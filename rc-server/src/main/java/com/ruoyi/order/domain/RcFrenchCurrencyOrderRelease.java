@@ -1,11 +1,10 @@
-package com.ruoyi.domain;
-
-import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+package com.ruoyi.order.domain;
 
 import java.util.Date;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import com.ruoyi.common.annotation.Excel;
+import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 法币订单发布对象 rc_french_currency_order_release
@@ -19,6 +18,10 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
 
     /** 订单id */
     private Long id;
+
+    /** 订单id */
+    @Excel(name = "订单id")
+    private String orderId;
 
     /** 发布者id */
     @Excel(name = "发布者id")
@@ -76,6 +79,15 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
     public Long getId() 
     {
         return id;
+    }
+    public void setOrderId(String orderId) 
+    {
+        this.orderId = orderId;
+    }
+
+    public String getOrderId() 
+    {
+        return orderId;
     }
     public void setSellerUserId(Long sellerUserId) 
     {
@@ -190,6 +202,7 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("orderId", getOrderId())
             .append("sellerUserId", getSellerUserId())
             .append("transactionUserId", getTransactionUserId())
             .append("transactionsType", getTransactionsType())
