@@ -1,12 +1,24 @@
+<<<<<<< HEAD:rc-server/src/main/java/com/ruoyi/service/impl/RcFrenchCurrencyOrderReleaseServiceImpl.java
+package com.ruoyi.service.impl;
+=======
 package com.ruoyi.order.service.impl;
+>>>>>>> cf72129ef6177bb8af29baaae1c428c6dfb7051b:rc-server/src/main/java/com/ruoyi/order/service/impl/RcFrenchCurrencyOrderReleaseServiceImpl.java
 
-import java.util.List;
+import com.ruoyi.domain.RcFrenchCurrencyOrderRelease;
+import com.ruoyi.mapper.RcFrenchCurrencyOrderReleaseMapper;
+import com.ruoyi.service.IRcFrenchCurrencyOrderReleaseService;
+import com.ruoyi.common.core.text.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+<<<<<<< HEAD:rc-server/src/main/java/com/ruoyi/service/impl/RcFrenchCurrencyOrderReleaseServiceImpl.java
+
+import java.util.List;
+=======
 import com.ruoyi.order.mapper.RcFrenchCurrencyOrderReleaseMapper;
 import com.ruoyi.order.domain.RcFrenchCurrencyOrderRelease;
 import com.ruoyi.order.service.IRcFrenchCurrencyOrderReleaseService;
 import com.ruoyi.common.core.text.Convert;
+>>>>>>> cf72129ef6177bb8af29baaae1c428c6dfb7051b:rc-server/src/main/java/com/ruoyi/order/service/impl/RcFrenchCurrencyOrderReleaseServiceImpl.java
 
 /**
  * 法币订单发布Service业务层处理
