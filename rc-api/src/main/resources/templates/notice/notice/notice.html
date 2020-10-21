@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('轮播图列表')" />
+    <th:block th:include="include :: header('首页公告列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,8 +11,8 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>图片名字：</label>
-                                <input type="text" name="name"/>
+                                <label>公告标题：</label>
+                                <input type="text" name="noticeTitle"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -24,16 +24,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="rcLunbo:rcLunbo:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="notice:notice:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="rcLunbo:rcLunbo:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="notice:notice:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="rcLunbo:rcLunbo:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="notice:notice:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="rcLunbo:rcLunbo:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="notice:notice:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -44,12 +44,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('rcLunbo:rcLunbo:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('rcLunbo:rcLunbo:remove')}]];
-        var isHrefDatas = [[${@dict.getType('sys_show_hide')}]];
-        var isShowDatas = [[${@dict.getType('sys_show_hide')}]];
-        var isDelDatas = [[${@dict.getType('sys_show_hide')}]];
-        var prefix = ctx + "rcLunbo/rcLunbo";
+        var editFlag = [[${@permission.hasPermi('notice:notice:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('notice:notice:remove')}]];
+        var prefix = ctx + "notice/notice";
 
         $(function() {
             var options = {
@@ -58,7 +55,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "轮播图",
+                modalName: "首页公告",
                 columns: [{
                     checkbox: true
                 },
@@ -68,49 +65,8 @@
                     visible: false
                 },
                 {
-                    field: 'name',
-                    title: '图片名字'
-                },
-                {
-                    field: 'img',
-                    title: '图片地址'
-                },
-                {
-                    field: 'isHref',
-                    title: '点击是否可以跳转',
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(isHrefDatas, value);
-                    }
-                },
-                {
-                    field: 'hrefUrl',
-                    title: '跳转页面'
-                },
-                {
-                    field: 'sort',
-                    title: '排序(默认0 数字越大约靠前)'
-                },
-                {
-                    field: 'isShow',
-                    title: '是否显示',
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(isShowDatas, value);
-                    }
-                },
-                {
-                    field: 'createTime',
-                    title: '创建时间'
-                },
-                {
-                    field: 'isDel',
-                    title: '是否删除(默认0否1是)',
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(isDelDatas, value);
-                    }
-                },
-                {
-                    field: 'memo',
-                    title: '备注'
+                    field: 'noticeTitle',
+                    title: '公告标题'
                 },
                 {
                     title: '操作',

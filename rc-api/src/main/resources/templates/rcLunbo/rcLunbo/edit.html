@@ -26,7 +26,10 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">点击是否可以跳转：</label>
                 <div class="col-sm-8">
-                    <input name="isHref" th:field="*{isHref}" class="form-control" type="text">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('sys_show_hide')}">
+                        <input type="radio" th:id="${'isHref_' + dict.dictCode}" name="isHref" th:value="${dict.dictValue}" th:field="*{isHref}">
+                        <label th:for="${'isHref_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
                 </div>
             </div>
             <div class="form-group">    
@@ -44,13 +47,19 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否显示：</label>
                 <div class="col-sm-8">
-                    <input name="isShow" th:field="*{isShow}" class="form-control" type="text">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('sys_show_hide')}">
+                        <input type="radio" th:id="${'isShow_' + dict.dictCode}" name="isShow" th:value="${dict.dictValue}" th:field="*{isShow}">
+                        <label th:for="${'isShow_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">是否删除(默认0否1是)：</label>
                 <div class="col-sm-8">
-                    <input name="isDel" th:field="*{isDel}" class="form-control" type="text">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('sys_show_hide')}">
+                        <input type="radio" th:id="${'isDel_' + dict.dictCode}" name="isDel" th:value="${dict.dictValue}" th:field="*{isDel}">
+                        <label th:for="${'isDel_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
                 </div>
             </div>
             <div class="form-group">    
