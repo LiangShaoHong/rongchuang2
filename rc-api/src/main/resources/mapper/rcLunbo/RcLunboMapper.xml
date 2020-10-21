@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.rcLunbo.mapper.RcLunboMapper">
+    
+    <resultMap type="RcLunbo" id="RcLunboResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="img"    column="img"    />
+        <result property="isHref"    column="isHref"    />
+        <result property="hrefUrl"    column="hrefUrl"    />
+        <result property="sort"    column="sort"    />
+        <result property="isShow"    column="isShow"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="isDel"    column="isDel"    />
+        <result property="memo"    column="memo"    />
+    </resultMap>
+
+    <sql id="selectRcLunboVo">
+        select id, name, img, isHref, hrefUrl, sort, isShow, createTime, isDel, memo from rc_lunbo
+    </sql>
+
+    <select id="selectRcLunboList" parameterType="RcLunbo" resultMap="RcLunboResult">
+        <include refid="selectRcLunboVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectRcLunboById" parameterType="Long" resultMap="RcLunboResult">
+        <include refid="selectRcLunboVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRcLunbo" parameterType="RcLunbo" useGeneratedKeys="true" keyProperty="id">
+        insert into rc_lunbo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="img != null">img,</if>
+            <if test="isHref != null">isHref,</if>
+            <if test="hrefUrl != null">hrefUrl,</if>
+            <if test="sort != null">sort,</if>
+            <if test="isShow != null">isShow,</if>
+            <if test="createTime != null">createTime,</if>
+            <if test="isDel != null">isDel,</if>
+            <if test="memo != null">memo,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="img != null">#{img},</if>
+            <if test="isHref != null">#{isHref},</if>
+            <if test="hrefUrl != null">#{hrefUrl},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="isShow != null">#{isShow},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="isDel != null">#{isDel},</if>
+            <if test="memo != null">#{memo},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRcLunbo" parameterType="RcLunbo">
+        update rc_lunbo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="img != null">img = #{img},</if>
+            <if test="isHref != null">isHref = #{isHref},</if>
+            <if test="hrefUrl != null">hrefUrl = #{hrefUrl},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="isShow != null">isShow = #{isShow},</if>
+            <if test="createTime != null">createTime = #{createTime},</if>
+            <if test="isDel != null">isDel = #{isDel},</if>
+            <if test="memo != null">memo = #{memo},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcLunboById" parameterType="Long">
+        delete from rc_lunbo where id = #{id}
+    </delete>
+
+    <delete id="deleteRcLunboByIds" parameterType="String">
+        delete from rc_lunbo where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
