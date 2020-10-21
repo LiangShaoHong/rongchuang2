@@ -35,6 +35,11 @@
             <artifactId>ruoyi-common</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>rc-api</artifactId>
+        </dependency>
+
         <!-- 爬虫工具工具-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
