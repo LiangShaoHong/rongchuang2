@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.RcFrenchCurrencyOrderReleaseMapper">
+    
+    <resultMap type="RcFrenchCurrencyOrderRelease" id="RcFrenchCurrencyOrderReleaseResult">
+        <result property="id"    column="id"    />
+        <result property="transactionType"    column="transaction_type"    />
+        <result property="orderType"    column="order_type"    />
+        <result property="sellerUserId"    column="seller_user_id"    />
+        <result property="buyingSources"    column="buying_sources"    />
+        <result property="whereToSell"    column="where_to_sell"    />
+        <result property="transactionCurrency"    column="transaction_currency"    />
+        <result property="purchaseQuantity"    column="purchase_quantity"    />
+        <result property="purchasePrice"    column="purchase_price"    />
+        <result property="sellingQuantity"    column="selling_quantity"    />
+        <result property="sellingPrice"    column="selling_price"    />
+        <result property="spendUsdt"    column="spend_usdt"    />
+        <result property="availableFiatMoney"    column="available_fiat_money"    />
+        <result property="profit"    column="profit"    />
+        <result property="orderState"    column="order_state"    />
+        <result property="assignUserId"    column="assign_user_id"    />
+        <result property="area"    column="area"    />
+        <result property="releaseTime"    column="release_time"    />
+    </resultMap>
+
+    <sql id="selectRcFrenchCurrencyOrderReleaseVo">
+        select id, transaction_type, order_type, seller_user_id, buying_sources, where_to_sell, transaction_currency, purchase_quantity, purchase_price, selling_quantity, selling_price, spend_usdt, available_fiat_money, profit, order_state, assign_user_id, area, release_time from rc_french_currency_order_release
+    </sql>
+
+    <select id="selectRcFrenchCurrencyOrderReleaseList" parameterType="RcFrenchCurrencyOrderRelease" resultMap="RcFrenchCurrencyOrderReleaseResult">
+        <include refid="selectRcFrenchCurrencyOrderReleaseVo"/>
+        <where>  
+            <if test="transactionType != null  and transactionType != ''"> and transaction_type = #{transactionType}</if>
+            <if test="orderType != null  and orderType != ''"> and order_type = #{orderType}</if>
+            <if test="sellerUserId != null "> and seller_user_id = #{sellerUserId}</if>
+            <if test="buyingSources != null  and buyingSources != ''"> and buying_sources = #{buyingSources}</if>
+            <if test="whereToSell != null  and whereToSell != ''"> and where_to_sell = #{whereToSell}</if>
+            <if test="transactionCurrency != null  and transactionCurrency != ''"> and transaction_currency = #{transactionCurrency}</if>
+            <if test="purchaseQuantity != null "> and purchase_quantity = #{purchaseQuantity}</if>
+            <if test="purchasePrice != null "> and purchase_price = #{purchasePrice}</if>
+            <if test="sellingQuantity != null "> and selling_quantity = #{sellingQuantity}</if>
+            <if test="sellingPrice != null "> and selling_price = #{sellingPrice}</if>
+            <if test="spendUsdt != null "> and spend_usdt = #{spendUsdt}</if>
+            <if test="availableFiatMoney != null "> and available_fiat_money = #{availableFiatMoney}</if>
+            <if test="profit != null "> and profit = #{profit}</if>
+            <if test="orderState != null  and orderState != ''"> and order_state = #{orderState}</if>
+            <if test="assignUserId != null "> and assign_user_id = #{assignUserId}</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="releaseTime != null "> and release_time = #{releaseTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectRcFrenchCurrencyOrderReleaseById" parameterType="Long" resultMap="RcFrenchCurrencyOrderReleaseResult">
+        <include refid="selectRcFrenchCurrencyOrderReleaseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRcFrenchCurrencyOrderRelease" parameterType="RcFrenchCurrencyOrderRelease" useGeneratedKeys="true" keyProperty="id">
+        insert into rc_french_currency_order_release
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="transactionType != null">transaction_type,</if>
+            <if test="orderType != null">order_type,</if>
+            <if test="sellerUserId != null">seller_user_id,</if>
+            <if test="buyingSources != null">buying_sources,</if>
+            <if test="whereToSell != null">where_to_sell,</if>
+            <if test="transactionCurrency != null">transaction_currency,</if>
+            <if test="purchaseQuantity != null">purchase_quantity,</if>
+            <if test="purchasePrice != null">purchase_price,</if>
+            <if test="sellingQuantity != null">selling_quantity,</if>
+            <if test="sellingPrice != null">selling_price,</if>
+            <if test="spendUsdt != null">spend_usdt,</if>
+            <if test="availableFiatMoney != null">available_fiat_money,</if>
+            <if test="profit != null">profit,</if>
+            <if test="orderState != null">order_state,</if>
+            <if test="assignUserId != null">assign_user_id,</if>
+            <if test="area != null">area,</if>
+            <if test="releaseTime != null">release_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="transactionType != null">#{transactionType},</if>
+            <if test="orderType != null">#{orderType},</if>
+            <if test="sellerUserId != null">#{sellerUserId},</if>
+            <if test="buyingSources != null">#{buyingSources},</if>
+            <if test="whereToSell != null">#{whereToSell},</if>
+            <if test="transactionCurrency != null">#{transactionCurrency},</if>
+            <if test="purchaseQuantity != null">#{purchaseQuantity},</if>
+            <if test="purchasePrice != null">#{purchasePrice},</if>
+            <if test="sellingQuantity != null">#{sellingQuantity},</if>
+            <if test="sellingPrice != null">#{sellingPrice},</if>
+            <if test="spendUsdt != null">#{spendUsdt},</if>
+            <if test="availableFiatMoney != null">#{availableFiatMoney},</if>
+            <if test="profit != null">#{profit},</if>
+            <if test="orderState != null">#{orderState},</if>
+            <if test="assignUserId != null">#{assignUserId},</if>
+            <if test="area != null">#{area},</if>
+            <if test="releaseTime != null">#{releaseTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRcFrenchCurrencyOrderRelease" parameterType="RcFrenchCurrencyOrderRelease">
+        update rc_french_currency_order_release
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="transactionType != null">transaction_type = #{transactionType},</if>
+            <if test="orderType != null">order_type = #{orderType},</if>
+            <if test="sellerUserId != null">seller_user_id = #{sellerUserId},</if>
+            <if test="buyingSources != null">buying_sources = #{buyingSources},</if>
+            <if test="whereToSell != null">where_to_sell = #{whereToSell},</if>
+            <if test="transactionCurrency != null">transaction_currency = #{transactionCurrency},</if>
+            <if test="purchaseQuantity != null">purchase_quantity = #{purchaseQuantity},</if>
+            <if test="purchasePrice != null">purchase_price = #{purchasePrice},</if>
+            <if test="sellingQuantity != null">selling_quantity = #{sellingQuantity},</if>
+            <if test="sellingPrice != null">selling_price = #{sellingPrice},</if>
+            <if test="spendUsdt != null">spend_usdt = #{spendUsdt},</if>
+            <if test="availableFiatMoney != null">available_fiat_money = #{availableFiatMoney},</if>
+            <if test="profit != null">profit = #{profit},</if>
+            <if test="orderState != null">order_state = #{orderState},</if>
+            <if test="assignUserId != null">assign_user_id = #{assignUserId},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="releaseTime != null">release_time = #{releaseTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcFrenchCurrencyOrderReleaseById" parameterType="Long">
+        delete from rc_french_currency_order_release where id = #{id}
+    </delete>
+
+    <delete id="deleteRcFrenchCurrencyOrderReleaseByIds" parameterType="String">
+        delete from rc_french_currency_order_release where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
