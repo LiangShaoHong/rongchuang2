@@ -60,6 +60,10 @@
             <version>3.4.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-framework</artifactId>
+        </dependency>
 
     </dependencies>
 
