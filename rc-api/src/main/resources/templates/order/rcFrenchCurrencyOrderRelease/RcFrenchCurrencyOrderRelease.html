@@ -37,7 +37,11 @@
                                 <input type="text" name="whereToSell"/>
                             </li>
                             <li>
-                                <label>交易货币例：BTC-USDT：</label>
+                                <label>数量：</label>
+                                <input type="text" name="number"/>
+                            </li>
+                            <li>
+                                <label>交易币种：</label>
                                 <input type="text" name="transactionCurrency"/>
                             </li>
                             <li>
@@ -49,11 +53,11 @@
                                 <input type="text" name="purchasePrice"/>
                             </li>
                             <li>
-                                <label>卖出数量：</label>
+                                <label>出售数量：</label>
                                 <input type="text" name="sellingQuantity"/>
                             </li>
                             <li>
-                                <label>卖出价格：</label>
+                                <label>出售价格：</label>
                                 <input type="text" name="sellingPrice"/>
                             </li>
                             <li>
@@ -65,7 +69,7 @@
                                 <input type="text" name="availableFiatMoney"/>
                             </li>
                             <li>
-                                <label>收益：</label>
+                                <label>可收益：</label>
                                 <input type="text" name="profit"/>
                             </li>
                             <li>
@@ -96,16 +100,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="order:rcFrenchCurrencyOrderRelease:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="order:RcFrenchCurrencyOrderRelease:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="order:rcFrenchCurrencyOrderRelease:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="order:RcFrenchCurrencyOrderRelease:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="order:rcFrenchCurrencyOrderRelease:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="order:RcFrenchCurrencyOrderRelease:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="order:rcFrenchCurrencyOrderRelease:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="order:RcFrenchCurrencyOrderRelease:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -116,9 +120,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('order:rcFrenchCurrencyOrderRelease:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('order:rcFrenchCurrencyOrderRelease:remove')}]];
-        var prefix = ctx + "order/rcFrenchCurrencyOrderRelease";
+        var editFlag = [[${@permission.hasPermi('order:RcFrenchCurrencyOrderRelease:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('order:RcFrenchCurrencyOrderRelease:remove')}]];
+        var prefix = ctx + "order/RcFrenchCurrencyOrderRelease";
 
         $(function() {
             var options = {
@@ -133,7 +137,7 @@
                 },
                 {
                     field: 'id',
-                    title: '订单id',
+                    title: 'id',
                     visible: false
                 },
                 {
@@ -157,8 +161,12 @@
                     title: '卖出去向'
                 },
                 {
+                    field: 'number',
+                    title: '数量'
+                },
+                {
                     field: 'transactionCurrency',
-                    title: '交易货币例：BTC-USDT'
+                    title: '交易币种'
                 },
                 {
                     field: 'purchaseQuantity',
@@ -170,11 +178,11 @@
                 },
                 {
                     field: 'sellingQuantity',
-                    title: '卖出数量'
+                    title: '出售数量'
                 },
                 {
                     field: 'sellingPrice',
-                    title: '卖出价格'
+                    title: '出售价格'
                 },
                 {
                     field: 'spendUsdt',
@@ -186,7 +194,7 @@
                 },
                 {
                     field: 'profit',
-                    title: '收益'
+                    title: '可收益'
                 },
                 {
                     field: 'orderState',

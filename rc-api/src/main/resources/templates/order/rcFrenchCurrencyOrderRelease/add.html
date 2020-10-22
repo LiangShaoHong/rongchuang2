@@ -6,7 +6,7 @@
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-rcFrenchCurrencyOrderRelease-add">
+        <form class="form-horizontal m" id="form-RcFrenchCurrencyOrderRelease-add">
             <div class="form-group">    
                 <label class="col-sm-3 control-label">交易类型：</label>
                 <div class="col-sm-8">
@@ -44,7 +44,13 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">交易货币例：BTC-USDT：</label>
+                <label class="col-sm-3 control-label">数量：</label>
+                <div class="col-sm-8">
+                    <input name="number" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">交易币种：</label>
                 <div class="col-sm-8">
                     <input name="transactionCurrency" class="form-control" type="text">
                 </div>
@@ -62,13 +68,13 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">卖出数量：</label>
+                <label class="col-sm-3 control-label">出售数量：</label>
                 <div class="col-sm-8">
                     <input name="sellingQuantity" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">卖出价格：</label>
+                <label class="col-sm-3 control-label">出售价格：</label>
                 <div class="col-sm-8">
                     <input name="sellingPrice" class="form-control" type="text">
                 </div>
@@ -86,7 +92,7 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">收益：</label>
+                <label class="col-sm-3 control-label">可收益：</label>
                 <div class="col-sm-8">
                     <input name="profit" class="form-control" type="text">
                 </div>
@@ -123,14 +129,14 @@
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: datetimepicker-js" />
     <script th:inline="javascript">
-        var prefix = ctx + "order/rcFrenchCurrencyOrderRelease"
-        $("#form-rcFrenchCurrencyOrderRelease-add").validate({
+        var prefix = ctx + "order/RcFrenchCurrencyOrderRelease"
+        $("#form-RcFrenchCurrencyOrderRelease-add").validate({
             focusCleanup: true
         });
 
         function submitHandler() {
             if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-rcFrenchCurrencyOrderRelease-add').serialize());
+                $.operate.save(prefix + "/add", $('#form-RcFrenchCurrencyOrderRelease-add').serialize());
             }
         }
 

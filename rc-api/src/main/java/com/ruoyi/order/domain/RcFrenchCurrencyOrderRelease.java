@@ -10,13 +10,13 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 法币订单发布对象 rc_french_currency_order_release
  * 
  * @author ruoyi
- * @date 2020-10-21
+ * @date 2020-10-22
  */
 public class RcFrenchCurrencyOrderRelease extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 订单id */
+    /** id */
     private Long id;
 
     /** 交易类型 */
@@ -39,8 +39,12 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
     @Excel(name = "卖出去向")
     private String whereToSell;
 
-    /** 交易货币例：BTC-USDT */
-    @Excel(name = "交易货币例：BTC-USDT")
+    /** 数量 */
+    @Excel(name = "数量")
+    private Long number;
+
+    /** 交易币种 */
+    @Excel(name = "交易币种")
     private String transactionCurrency;
 
     /** 买入数量 */
@@ -51,12 +55,12 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
     @Excel(name = "买入价格")
     private Long purchasePrice;
 
-    /** 卖出数量 */
-    @Excel(name = "卖出数量")
+    /** 出售数量 */
+    @Excel(name = "出售数量")
     private Long sellingQuantity;
 
-    /** 卖出价格 */
-    @Excel(name = "卖出价格")
+    /** 出售价格 */
+    @Excel(name = "出售价格")
     private Long sellingPrice;
 
     /** 花费USDT */
@@ -67,8 +71,8 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
     @Excel(name = "可得法币")
     private Long availableFiatMoney;
 
-    /** 收益 */
-    @Excel(name = "收益")
+    /** 可收益 */
+    @Excel(name = "可收益")
     private Long profit;
 
     /** 订单状态 1：已分配 2：未分配 */
@@ -140,6 +144,15 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
     public String getWhereToSell() 
     {
         return whereToSell;
+    }
+    public void setNumber(Long number) 
+    {
+        this.number = number;
+    }
+
+    public Long getNumber() 
+    {
+        return number;
     }
     public void setTransactionCurrency(String transactionCurrency) 
     {
@@ -259,6 +272,7 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
             .append("sellerUserId", getSellerUserId())
             .append("buyingSources", getBuyingSources())
             .append("whereToSell", getWhereToSell())
+            .append("number", getNumber())
             .append("transactionCurrency", getTransactionCurrency())
             .append("purchaseQuantity", getPurchaseQuantity())
             .append("purchasePrice", getPurchasePrice())

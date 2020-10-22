@@ -12,7 +12,7 @@ import com.ruoyi.common.core.text.Convert;
  * 法币订单发布Service业务层处理
  * 
  * @author ruoyi
- * @date 2020-10-21
+ * @date 2020-10-22
  */
 @Service
 public class RcFrenchCurrencyOrderReleaseServiceImpl implements IRcFrenchCurrencyOrderReleaseService 
