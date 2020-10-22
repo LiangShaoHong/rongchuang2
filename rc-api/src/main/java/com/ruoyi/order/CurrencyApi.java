@@ -19,10 +19,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author ruoyi
  * @date 2020-10-22
  */
-@Api("法币业务接口")
+@Api("币币业务接口")
 @RestController
-@RequestMapping("/rc-api/legalCurrency")
-public class LegalCurrencyApi {
+@RequestMapping("/rc-api/currency")
+public class CurrencyApi {
 
     @ApiOperation("查询个人信息接口")
     @ApiImplicitParams(
@@ -31,7 +31,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "String", name = "profitType", value = "1：获取法币", required = true)
 
             })
-    @PostMapping("/getFbPerInformation")
+    @PostMapping("/getBbPerInformation")
     public ResultDto getFbPerInformation(HttpServletRequest request, String profitType) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
@@ -45,7 +45,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageNumber", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
             })
-    @PostMapping("/getFbMyOrderList")
+    @PostMapping("/getBbMyOrderList")
     public ResultDto getFbMyOrderList(HttpServletRequest request, Integer pageNumber, Integer limit) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
@@ -57,7 +57,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
                     @ApiImplicitParam(dataType = "String", name = "switchType", value = "开关类型 1：法币抢单开关", required = true)
             })
-    @PostMapping("/getFbAutomaticOrder")
+    @PostMapping("/getBbAutomaticOrder")
     public ResultDto getFbAutomaticOrder(HttpServletRequest request, String switchType) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
@@ -70,7 +70,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "Boolean", name = "automatic", value = "是否开启自动抢单", required = true),
                     @ApiImplicitParam(dataType = "String", name = "switchType", value = "开关类型 1：法币抢单开关", required = true)
             })
-    @PostMapping("/editFbAutomaticOrder")
+    @PostMapping("/editBbAutomaticOrder")
     public ResultDto editFbAutomaticOrder(HttpServletRequest request, Boolean automatic, String switchType) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
@@ -83,7 +83,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageNumber", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
             })
-    @PostMapping("/getFbOptionalOrder")
+    @PostMapping("/getBbOptionalOrder")
     public ResultDto getFbOptionalOrder(HttpServletRequest request, Integer pageNumber, Integer limit) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
@@ -96,7 +96,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageNumber", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
             })
-    @PostMapping("/getFbHistorical")
+    @PostMapping("/getBbHistorical")
     public ResultDto getFbHistorical(HttpServletRequest request, Integer pageNumber, Integer limit) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
@@ -110,21 +110,8 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "String", name = "id", value = "主键id", required = true)
 
             })
-    @PostMapping("/getFbDetails")
+    @PostMapping("/getBbDetails")
     public ResultDto getFbDetails(HttpServletRequest request, String id) {
-        String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
-    }
-
-    @ApiOperation("确定收款接口")
-    @ApiImplicitParams(
-            {
-                    @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
-                    @ApiImplicitParam(dataType = "String", name = "id", value = "订单id", required = true)
-
-            })
-    @PostMapping("/fbConfirm")
-    public ResultDto fbConfirm(HttpServletRequest request, String id) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
     }
@@ -136,7 +123,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "String", name = "id", value = "订单id", required = true)
 
             })
-    @PostMapping("/robFbOrder")
+    @PostMapping("/robBbOrder")
     public ResultDto robFbOrder(HttpServletRequest request, String id) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
