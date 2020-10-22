@@ -20,7 +20,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public ResultDto getBbPerInformation(String X_Token) {
         Profit profit = currencyMapper.getBbPerInformation(1);
-        ResultDto resultDto = new ResultDto(1, "", profit);
+        ResultDto resultDto = new ResultDto(1, "查询成功", profit);
         return resultDto;
     }
 
