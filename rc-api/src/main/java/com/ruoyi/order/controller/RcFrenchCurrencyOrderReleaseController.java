@@ -23,28 +23,28 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 法币订单发布Controller
  * 
  * @author ruoyi
- * @date 2020-10-21
+ * @date 2020-10-22
  */
 @Controller
-@RequestMapping("/order/rcFrenchCurrencyOrderRelease")
+@RequestMapping("/order/RcFrenchCurrencyOrderRelease")
 public class RcFrenchCurrencyOrderReleaseController extends BaseController
 {
-    private String prefix = "order/rcFrenchCurrencyOrderRelease";
+    private String prefix = "order/RcFrenchCurrencyOrderRelease";
 
     @Autowired
     private IRcFrenchCurrencyOrderReleaseService rcFrenchCurrencyOrderReleaseService;
 
-    @RequiresPermissions("order:rcFrenchCurrencyOrderRelease:view")
+    @RequiresPermissions("order:RcFrenchCurrencyOrderRelease:view")
     @GetMapping()
-    public String rcFrenchCurrencyOrderRelease()
+    public String RcFrenchCurrencyOrderRelease()
     {
-        return prefix + "/rcFrenchCurrencyOrderRelease";
+        return prefix + "/RcFrenchCurrencyOrderRelease";
     }
 
     /**
      * 查询法币订单发布列表
      */
-    @RequiresPermissions("order:rcFrenchCurrencyOrderRelease:list")
+    @RequiresPermissions("order:RcFrenchCurrencyOrderRelease:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(RcFrenchCurrencyOrderRelease rcFrenchCurrencyOrderRelease)
@@ -57,7 +57,7 @@ public class RcFrenchCurrencyOrderReleaseController extends BaseController
     /**
      * 导出法币订单发布列表
      */
-    @RequiresPermissions("order:rcFrenchCurrencyOrderRelease:export")
+    @RequiresPermissions("order:RcFrenchCurrencyOrderRelease:export")
     @Log(title = "法币订单发布", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -65,7 +65,7 @@ public class RcFrenchCurrencyOrderReleaseController extends BaseController
     {
         List<RcFrenchCurrencyOrderRelease> list = rcFrenchCurrencyOrderReleaseService.selectRcFrenchCurrencyOrderReleaseList(rcFrenchCurrencyOrderRelease);
         ExcelUtil<RcFrenchCurrencyOrderRelease> util = new ExcelUtil<RcFrenchCurrencyOrderRelease>(RcFrenchCurrencyOrderRelease.class);
-        return util.exportExcel(list, "rcFrenchCurrencyOrderRelease");
+        return util.exportExcel(list, "RcFrenchCurrencyOrderRelease");
     }
 
     /**
@@ -80,7 +80,7 @@ public class RcFrenchCurrencyOrderReleaseController extends BaseController
     /**
      * 新增保存法币订单发布
      */
-    @RequiresPermissions("order:rcFrenchCurrencyOrderRelease:add")
+    @RequiresPermissions("order:RcFrenchCurrencyOrderRelease:add")
     @Log(title = "法币订单发布", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -103,7 +103,7 @@ public class RcFrenchCurrencyOrderReleaseController extends BaseController
     /**
      * 修改保存法币订单发布
      */
-    @RequiresPermissions("order:rcFrenchCurrencyOrderRelease:edit")
+    @RequiresPermissions("order:RcFrenchCurrencyOrderRelease:edit")
     @Log(title = "法币订单发布", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -115,7 +115,7 @@ public class RcFrenchCurrencyOrderReleaseController extends BaseController
     /**
      * 删除法币订单发布
      */
-    @RequiresPermissions("order:rcFrenchCurrencyOrderRelease:remove")
+    @RequiresPermissions("order:RcFrenchCurrencyOrderRelease:remove")
     @Log(title = "法币订单发布", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody

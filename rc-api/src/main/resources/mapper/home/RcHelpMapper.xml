@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.home.mapper.RcHelpMapper">
+    
+    <resultMap type="RcHelp" id="RcHelpResult">
+        <result property="id"    column="id"    />
+        <result property="helpTitle"    column="help_title"    />
+        <result property="helpContent"    column="help_content"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectRcHelpVo">
+        select id, help_title, help_content, create_by, create_time, status from rc_help
+    </sql>
+
+    <select id="selectRcHelpList" parameterType="RcHelp" resultMap="RcHelpResult">
+        <include refid="selectRcHelpVo"/>
+        <where>  
+            <if test="helpTitle != null  and helpTitle != ''"> and help_title = #{helpTitle}</if>
+        </where>
+    </select>
+    
+    <select id="selectRcHelpById" parameterType="Long" resultMap="RcHelpResult">
+        <include refid="selectRcHelpVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRcHelp" parameterType="RcHelp">
+        insert into rc_help
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="helpTitle != null">help_title,</if>
+            <if test="helpContent != null">help_content,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="helpTitle != null">#{helpTitle},</if>
+            <if test="helpContent != null">#{helpContent},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRcHelp" parameterType="RcHelp">
+        update rc_help
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="helpTitle != null">help_title = #{helpTitle},</if>
+            <if test="helpContent != null">help_content = #{helpContent},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcHelpById" parameterType="Long">
+        delete from rc_help where id = #{id}
+    </delete>
+
+    <delete id="deleteRcHelpByIds" parameterType="String">
+        delete from rc_help where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
