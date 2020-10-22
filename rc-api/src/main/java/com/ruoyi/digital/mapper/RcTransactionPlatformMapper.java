@@ -1,15 +1,15 @@
-package com.ruoyi.quartz.service;
+package com.ruoyi.digital.mapper;
 
 import java.util.List;
-import com.ruoyi.quartz.domain.RcTransactionPlatform;
+import com.ruoyi.digital.domain.RcTransactionPlatform;
 
 /**
- * 交易所信息Service接口
+ * 交易所信息Mapper接口
  * 
- * @author ruoyi
- * @date 2020-10-16
+ * @author xiaoyu
+ * @date 2020-10-22
  */
-public interface IRcTransactionPlatformService 
+public interface RcTransactionPlatformMapper 
 {
     /**
      * 查询交易所信息
@@ -18,8 +18,6 @@ public interface IRcTransactionPlatformService
      * @return 交易所信息
      */
     public RcTransactionPlatform selectRcTransactionPlatformById(Long id);
-
-    public RcTransactionPlatform selectRcTransactionPlatformByCoinId(String coinId);
 
     /**
      * 查询交易所信息列表
@@ -45,20 +43,19 @@ public interface IRcTransactionPlatformService
      */
     public int updateRcTransactionPlatform(RcTransactionPlatform rcTransactionPlatform);
 
-    public int updateRcTransactionPlatformByCoinId(RcTransactionPlatform rcTransactionPlatform);
+    /**
+     * 删除交易所信息
+     * 
+     * @param id 交易所信息ID
+     * @return 结果
+     */
+    public int deleteRcTransactionPlatformById(Long id);
+
     /**
      * 批量删除交易所信息
      * 
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    public int deleteRcTransactionPlatformByIds(String ids);
-
-    /**
-     * 删除交易所信息信息
-     * 
-     * @param id 交易所信息ID
-     * @return 结果
-     */
-    public int deleteRcTransactionPlatformById(Long id);
+    public int deleteRcTransactionPlatformByIds(String[] ids);
 }

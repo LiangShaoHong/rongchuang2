@@ -285,6 +285,12 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
         filterChainDefinitionMap.put("/rc-api/legalCurrency/**", "anon");
         filterChainDefinitionMap.put("/rc-api/currency/**", "anon");
+
+        // 首页公告 轮播 系统消息 帮助接口
+        filterChainDefinitionMap.put("/rc-api/home/**", "anon");
+        // 首页货币信息接口
+        filterChainDefinitionMap.put("/rc-api/digital/**", "anon");
+
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");
         // 系统权限列表

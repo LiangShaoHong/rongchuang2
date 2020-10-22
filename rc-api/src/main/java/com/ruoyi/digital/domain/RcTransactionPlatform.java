@@ -1,4 +1,4 @@
-package com.ruoyi.quartz.domain;
+package com.ruoyi.digital.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -9,9 +9,9 @@ import java.math.BigDecimal;
 
 /**
  * 交易所信息对象 rc_transaction_platform
- * 
- * @author ruoyi
- * @date 2020-10-16
+ *
+ * @author xiaoyu
+ * @date 2020-10-22
  */
 public class RcTransactionPlatform extends BaseEntity
 {
@@ -72,57 +72,57 @@ public class RcTransactionPlatform extends BaseEntity
     @Excel(name = "风险等级")
     private String riskLevel;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setCoinId(String coinId) 
+    public void setCoinId(String coinId)
     {
         this.coinId = coinId;
     }
 
-    public String getCoinId() 
+    public String getCoinId()
     {
         return coinId;
     }
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
 
-    public String getName() 
+    public String getName()
     {
         return name;
     }
-    public void setLogo(String logo) 
+    public void setLogo(String logo)
     {
         this.logo = logo;
     }
 
-    public String getLogo() 
+    public String getLogo()
     {
         return logo;
     }
-    public void setRank(String rank) 
+    public void setRank(String rank)
     {
         this.rank = rank;
     }
 
-    public String getRank() 
+    public String getRank()
     {
         return rank;
     }
-    public void setPairnum(String pairnum) 
+    public void setPairnum(String pairnum)
     {
         this.pairnum = pairnum;
     }
 
-    public String getPairnum() 
+    public String getPairnum()
     {
         return pairnum;
     }
@@ -153,25 +153,25 @@ public class RcTransactionPlatform extends BaseEntity
     {
         return volumnCny;
     }
-    public void setTradeurl(String tradeurl) 
+    public void setTradeurl(String tradeurl)
     {
         this.tradeurl = tradeurl;
     }
 
-    public String getTradeurl() 
+    public String getTradeurl()
     {
         return tradeurl;
     }
-    public void setChangeVolumn(String changeVolumn) 
+    public void setChangeVolumn(String changeVolumn)
     {
         this.changeVolumn = changeVolumn;
     }
 
-    public String getChangeVolumn() 
+    public String getChangeVolumn()
     {
         return changeVolumn;
     }
-    public void setExrank(String exrank) 
+    public void setExrank(String exrank)
     {
         this.exrank = exrank;
     }
@@ -189,12 +189,12 @@ public class RcTransactionPlatform extends BaseEntity
     {
         return assetsUsd;
     }
-    public void setRiskLevel(String riskLevel) 
+    public void setRiskLevel(String riskLevel)
     {
         this.riskLevel = riskLevel;
     }
 
-    public String getRiskLevel() 
+    public String getRiskLevel()
     {
         return riskLevel;
     }
@@ -202,21 +202,21 @@ public class RcTransactionPlatform extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("coinId", getCoinId())
-            .append("name", getName())
-            .append("logo", getLogo())
-            .append("rank", getRank())
-            .append("pairnum", getPairnum())
-            .append("volumn", getVolumn())
-            .append("volumnBtc", getVolumnBtc())
-            .append("volumnCny", getVolumnCny())
-            .append("tradeurl", getTradeurl())
-            .append("changeVolumn", getChangeVolumn())
-            .append("exrank", getExrank())
-            .append("assetsUsd", getAssetsUsd())
-            .append("riskLevel", getRiskLevel())
-            .append("createTime", getCreateTime())
-            .toString();
+                .append("id", getId())
+                .append("coinId", getCoinId())
+                .append("name", getName())
+                .append("logo", getLogo())
+                .append("rank", getRank())
+                .append("pairnum", getPairnum())
+                .append("volumn", getVolumn())
+                .append("volumnBtc", getVolumnBtc())
+                .append("volumnCny", getVolumnCny())
+                .append("tradeurl", getTradeurl())
+                .append("changeVolumn", getChangeVolumn())
+                .append("exrank", getExrank())
+                .append("assetsUsd", getAssetsUsd())
+                .append("riskLevel", getRiskLevel())
+                .append("createTime", getCreateTime())
+                .toString();
     }
 }
