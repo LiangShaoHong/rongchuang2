@@ -2,11 +2,15 @@ package com.ruoyi.order;
 
 
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.utils.ResultDto;
+import com.ruoyi.order.service.CurrencyService;
+import com.ruoyi.order.service.LegalCurrencyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/rc-api/currency")
 public class CurrencyApi {
 
+    @Autowired
+    private CurrencyService currencyService;
+
     @ApiOperation("查询个人信息接口")
     @ApiImplicitParams(
             {
@@ -32,9 +39,10 @@ public class CurrencyApi {
 
             })
     @PostMapping("/getBbPerInformation")
-    public ResultDto getFbPerInformation(HttpServletRequest request, String profitType) {
+    public ResultDto getFbPerInformation(HttpServletRequest request) {
         String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+        ResultDto resultDto = currencyService.getBbPerInformation(X_Token);
+        return resultDto;
     }
 
 
@@ -42,11 +50,10 @@ public class CurrencyApi {
     @ApiImplicitParams(
             {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "pageNumber", value = "当前页号", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
+                    @ApiImplicitParam(dataType = "PageDomain", name = "pageDomain", value = "分页数据", required = true)
             })
     @PostMapping("/getBbMyOrderList")
-    public ResultDto getFbMyOrderList(HttpServletRequest request, Integer pageNumber, Integer limit) {
+    public ResultDto getFbMyOrderList(HttpServletRequest request, PageDomain pageDomain) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
     }
@@ -54,11 +61,10 @@ public class CurrencyApi {
     @ApiOperation("查询自动抢单状态接口")
     @ApiImplicitParams(
             {
-                    @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
-                    @ApiImplicitParam(dataType = "String", name = "switchType", value = "开关类型 1：法币抢单开关", required = true)
+                    @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true)
             })
     @PostMapping("/getBbAutomaticOrder")
-    public ResultDto getFbAutomaticOrder(HttpServletRequest request, String switchType) {
+    public ResultDto getFbAutomaticOrder(HttpServletRequest request) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
     }
@@ -67,11 +73,10 @@ public class CurrencyApi {
     @ApiImplicitParams(
             {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
-                    @ApiImplicitParam(dataType = "Boolean", name = "automatic", value = "是否开启自动抢单", required = true),
-                    @ApiImplicitParam(dataType = "String", name = "switchType", value = "开关类型 1：法币抢单开关", required = true)
+                    @ApiImplicitParam(dataType = "Boolean", name = "automatic", value = "是否开启自动抢单", required = true)
             })
     @PostMapping("/editBbAutomaticOrder")
-    public ResultDto editFbAutomaticOrder(HttpServletRequest request, Boolean automatic, String switchType) {
+    public ResultDto editFbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
     }
@@ -80,11 +85,10 @@ public class CurrencyApi {
     @ApiImplicitParams(
             {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "pageNumber", value = "当前页号", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
+                    @ApiImplicitParam(dataType = "PageDomain", name = "pageDomain", value = "分页数据", required = true)
             })
     @PostMapping("/getBbOptionalOrder")
-    public ResultDto getFbOptionalOrder(HttpServletRequest request, Integer pageNumber, Integer limit) {
+    public ResultDto getFbOptionalOrder(HttpServletRequest request, PageDomain pageDomain) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
     }
@@ -93,11 +97,10 @@ public class CurrencyApi {
     @ApiImplicitParams(
             {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "pageNumber", value = "当前页号", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
+                    @ApiImplicitParam(dataType = "PageDomain", name = "pageDomain", value = "分页数据", required = true)
             })
     @PostMapping("/getBbHistorical")
-    public ResultDto getFbHistorical(HttpServletRequest request, Integer pageNumber, Integer limit) {
+    public ResultDto getFbHistorical(HttpServletRequest request, PageDomain pageDomain) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
     }

@@ -13,7 +13,7 @@
         <result property="completed" column="completed"/>
         <result property="lastTime" column="last_time"/>
     </resultMap>
-    <select id="getFbPerInformation" parameterType="Integer" resultMap="ProfitResult">
+    <select id="getBbPerInformation" parameterType="Integer" resultMap="ProfitResult">
         select
             b.money balance,a.earned,a.completed
          from rc_user_profit a left join rc_user b on (a.user_id=b.id)

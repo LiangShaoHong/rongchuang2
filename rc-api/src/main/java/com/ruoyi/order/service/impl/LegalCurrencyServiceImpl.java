@@ -21,7 +21,7 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     public ResultDto getFbPerInformation(String X_Token) {
         Profit profit = legalCurrencyMapper.getFbPerInformation(1);
 
-        ResultDto resultDto = new ResultDto(1, "", profit);
+        ResultDto resultDto = new ResultDto(1, "查询成功", profit);
         return resultDto;
     }
 
