@@ -1,7 +1,6 @@
 package com.ruoyi.quartz.task;
 
 
-import com.ruoyi.digital.domain.RcExchangeRate;
 import com.ruoyi.digital.domain.RcTransactionData;
 import com.ruoyi.digital.service.IRcTransactionDataService;
 import net.sf.json.JSONArray;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -73,7 +71,7 @@ public class RcTransactionDataTask {
                 data.setLastUpdated((String)jsonObject.getString("last_updated"));
 
                 RcTransactionData listData=new RcTransactionData();
-                listData.setName(data.getName());
+                listData.setSymbol(data.getSymbol());
                 List<RcTransactionData> list=rcService.selectRcTransactionDataList(listData);
                 if (list.size() < 1) {
                     rcService.insertRcTransactionData(data);
