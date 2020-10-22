@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.quartz.mapper.RcTransactionDataMapper">
-
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.digital.mapper.RcTransactionDataMapper">
+    
     <resultMap type="RcTransactionData" id="RcTransactionDataResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
@@ -30,31 +30,31 @@
 
     <select id="selectRcTransactionDataList" parameterType="RcTransactionData" resultMap="RcTransactionDataResult">
         <include refid="selectRcTransactionDataVo"/>
-        <where>
+        <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="symbol != null  and symbol != ''"> and symbol = #{symbol}</if>
             <if test="rank != null  and rank != ''"> and rank = #{rank}</if>
             <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
             <if test="logoPng != null  and logoPng != ''"> and logo_png = #{logoPng}</if>
-            <if test="priceUsd != null  and priceUsd != ''"> and price_usd = #{priceUsd}</if>
-            <if test="priceBtc != null  and priceBtc != ''"> and price_btc = #{priceBtc}</if>
-            <if test="volume24hUsd != null  and volume24hUsd != ''"> and volume_24h_usd = #{volume24hUsd}</if>
-            <if test="marketCapUsd != null  and marketCapUsd != ''"> and market_cap_usd = #{marketCapUsd}</if>
-            <if test="availableSupply != null  and availableSupply != ''"> and available_supply = #{availableSupply}</if>
-            <if test="totalSupply != null  and totalSupply != ''"> and total_supply = #{totalSupply}</if>
-            <if test="maxSupply != null  and maxSupply != ''"> and max_supply = #{maxSupply}</if>
-            <if test="percentChange1h != null  and percentChange1h != ''"> and percent_change_1h = #{percentChange1h}</if>
-            <if test="percentChange24h != null  and percentChange24h != ''"> and percent_change_24h = #{percentChange24h}</if>
-            <if test="percentChange7d != null  and percentChange7d != ''"> and percent_change_7d = #{percentChange7d}</if>
+            <if test="priceUsd != null "> and price_usd = #{priceUsd}</if>
+            <if test="priceBtc != null "> and price_btc = #{priceBtc}</if>
+            <if test="volume24hUsd != null "> and volume_24h_usd = #{volume24hUsd}</if>
+            <if test="marketCapUsd != null "> and market_cap_usd = #{marketCapUsd}</if>
+            <if test="availableSupply != null "> and available_supply = #{availableSupply}</if>
+            <if test="totalSupply != null "> and total_supply = #{totalSupply}</if>
+            <if test="maxSupply != null "> and max_supply = #{maxSupply}</if>
+            <if test="percentChange1h != null "> and percent_change_1h = #{percentChange1h}</if>
+            <if test="percentChange24h != null "> and percent_change_24h = #{percentChange24h}</if>
+            <if test="percentChange7d != null "> and percent_change_7d = #{percentChange7d}</if>
             <if test="lastUpdated != null  and lastUpdated != ''"> and last_updated = #{lastUpdated}</if>
         </where>
     </select>
-
+    
     <select id="selectRcTransactionDataById" parameterType="Long" resultMap="RcTransactionDataResult">
         <include refid="selectRcTransactionDataVo"/>
         where id = #{id}
     </select>
-
+        
     <insert id="insertRcTransactionData" parameterType="RcTransactionData">
         insert into rc_transaction_data
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -75,7 +75,7 @@
             <if test="percentChange24h != null">percent_change_24h,</if>
             <if test="percentChange7d != null">percent_change_7d,</if>
             <if test="lastUpdated != null">last_updated,</if>
-        </trim>
+         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="name != null">#{name},</if>
@@ -94,7 +94,7 @@
             <if test="percentChange24h != null">#{percentChange24h},</if>
             <if test="percentChange7d != null">#{percentChange7d},</if>
             <if test="lastUpdated != null">#{lastUpdated},</if>
-        </trim>
+         </trim>
     </insert>
 
     <update id="updateRcTransactionData" parameterType="RcTransactionData">
@@ -125,7 +125,7 @@
     </delete>
 
     <delete id="deleteRcTransactionDataByIds" parameterType="String">
-        delete from rc_transaction_data where id in
+        delete from rc_transaction_data where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

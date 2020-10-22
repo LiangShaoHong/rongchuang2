@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改实时各交易所币种交易数据')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-transaction-edit" th:object="${rcTransactionData}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">币种英文名称：</label>
+                <div class="col-sm-8">
+                    <input name="name" th:field="*{name}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">币种的简称：</label>
+                <div class="col-sm-8">
+                    <input name="symbol" th:field="*{symbol}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">币种的排名：</label>
+                <div class="col-sm-8">
+                    <input name="rank" th:field="*{rank}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">币种的logo：</label>
+                <div class="col-sm-8">
+                    <input name="logo" th:field="*{logo}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">币种的logo：</label>
+                <div class="col-sm-8">
+                    <input name="logoPng" th:field="*{logoPng}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最新价格：</label>
+                <div class="col-sm-8">
+                    <input name="priceUsd" th:field="*{priceUsd}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最新价格：</label>
+                <div class="col-sm-8">
+                    <input name="priceBtc" th:field="*{priceBtc}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">24h的成交额：</label>
+                <div class="col-sm-8">
+                    <input name="volume24hUsd" th:field="*{volume24hUsd}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">流通市值：</label>
+                <div class="col-sm-8">
+                    <input name="marketCapUsd" th:field="*{marketCapUsd}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">流通数量：</label>
+                <div class="col-sm-8">
+                    <input name="availableSupply" th:field="*{availableSupply}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">总发行量：</label>
+                <div class="col-sm-8">
+                    <input name="totalSupply" th:field="*{totalSupply}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最大发行量：</label>
+                <div class="col-sm-8">
+                    <input name="maxSupply" th:field="*{maxSupply}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">1小时涨跌幅：</label>
+                <div class="col-sm-8">
+                    <input name="percentChange1h" th:field="*{percentChange1h}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">24小时涨跌幅：</label>
+                <div class="col-sm-8">
+                    <input name="percentChange24h" th:field="*{percentChange24h}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">7天涨跌幅：</label>
+                <div class="col-sm-8">
+                    <input name="percentChange7d" th:field="*{percentChange7d}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">行情更新时间：</label>
+                <div class="col-sm-8">
+                    <input name="lastUpdated" th:field="*{lastUpdated}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "digital/transaction";
+        $("#form-transaction-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-transaction-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>
