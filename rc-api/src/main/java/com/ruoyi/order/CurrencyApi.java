@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 法币业务接口
+ * 币币业务接口
  *
  * @author ruoyi
  * @date 2020-10-22
