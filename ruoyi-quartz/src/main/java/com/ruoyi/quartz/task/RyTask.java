@@ -1,8 +1,6 @@
 package com.ruoyi.quartz.task;
 
-import com.ruoyi.quartz.domain.RcTransactionData;
 import com.ruoyi.quartz.domain.RcTransactionPlatform;
-import com.ruoyi.quartz.service.IRcTransactionDataService;
 import com.ruoyi.quartz.service.IRcTransactionPlatformService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -48,39 +46,12 @@ public class RyTask {
         System.out.println("执行无参方法");
     }
 
-    @Autowired
-    private IRcTransactionDataService rcService;
 
     @Autowired
     private IRcTransactionPlatformService rcTransactionPlatformService;
 
-    public void ryaddRC() {
-        System.out.println("开始执行拉取详情数据.........................");
-        String uri = "https://fxhapi.feixiaohao.com/public/v1/ticker";
-        List<NameValuePair> paratmers = new ArrayList<NameValuePair>();
-        paratmers.add(new BasicNameValuePair("page", "1"));
-        try {
-            String result = makeAPICall(uri, paratmers);
-            System.out.println(result);
-            JSONArray jsonArray = JSONArray.fromObject(result);
-            Object[] objs = jsonArray.toArray();
-            for (Object object : objs) {
-                JSONObject jsonObject = JSONObject.fromObject(object);
-                RcTransactionData data = new RcTransactionData();
-                data.setName((String) jsonObject.getString("name"));
-                data.setSymbol((String) jsonObject.getString("symbol"));
-                rcService.insertRcTransactionData(data);
-            }
-        } catch (IOException e) {
-            System.out.println("Error: cannont access content - " + e.toString());
-        } catch (URISyntaxException e) {
-            System.out.println("Error: Invalid URL " + e.toString());
-        }
-        System.out.println(".........................结束执行拉取详情数据");
-    }
 
     /**
-     * 拉取详情数据的接口
      *
      * @param uri        接口地址
      * @param parameters 接口参数

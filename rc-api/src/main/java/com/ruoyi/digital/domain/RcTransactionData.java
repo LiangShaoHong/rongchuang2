@@ -1,26 +1,22 @@
-package com.ruoyi.quartz.domain;
+package com.ruoyi.digital.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
-import java.math.BigDecimal;
-
 /**
  * 实时各交易所币种交易数据对象 rc_transaction_data
- *
- * @author ruoyi
- * @date 2020-10-15
+ * 
+ * @author xiaoyu
+ * @date 2020-10-22
  */
 public class RcTransactionData extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** $column.columnComment */
-    @TableId(value = "id",type = IdType.AUTO)
+    /**  */
     private Long id;
 
     /** 币种英文名称 */
@@ -67,8 +63,8 @@ public class RcTransactionData extends BaseEntity
     @Excel(name = "总发行量")
     private BigDecimal totalSupply;
 
-    /** 最大发行量（最大发行量可能>总发行量，譬如有些币种会主动销毁一部分数量） */
-    @Excel(name = "最大发行量", readConverterExp = "最=大发行量可能>总发行量，譬如有些币种会主动销毁一部分数量")
+    /** 最大发行量（最大发行量可能&gt;总发行量，譬如有些币种会主动销毁一部分数量） */
+    @Excel(name = "最大发行量", readConverterExp = "最=大发行量可能&gt;总发行量，譬如有些币种会主动销毁一部分数量")
     private BigDecimal maxSupply;
 
     /** 1小时涨跌幅 */
@@ -87,120 +83,120 @@ public class RcTransactionData extends BaseEntity
     @Excel(name = "行情更新时间", readConverterExp = "1=0位unix时间戳")
     private String lastUpdated;
 
-    public void setId(Long id)
+    public void setId(Long id) 
     {
         this.id = id;
     }
 
-    public Long getId()
+    public Long getId() 
     {
         return id;
     }
-    public void setName(String name)
+    public void setName(String name) 
     {
         this.name = name;
     }
 
-    public String getName()
+    public String getName() 
     {
         return name;
     }
-    public void setSymbol(String symbol)
+    public void setSymbol(String symbol) 
     {
         this.symbol = symbol;
     }
 
-    public String getSymbol()
+    public String getSymbol() 
     {
         return symbol;
     }
-    public void setRank(String rank)
+    public void setRank(String rank) 
     {
         this.rank = rank;
     }
 
-    public String getRank()
+    public String getRank() 
     {
         return rank;
     }
-    public void setLogo(String logo)
+    public void setLogo(String logo) 
     {
         this.logo = logo;
     }
 
-    public String getLogo()
+    public String getLogo() 
     {
         return logo;
     }
-    public void setLogoPng(String logoPng)
+    public void setLogoPng(String logoPng) 
     {
         this.logoPng = logoPng;
     }
 
-    public String getLogoPng()
+    public String getLogoPng() 
     {
         return logoPng;
     }
-    public void setPriceUsd(BigDecimal priceUsd)
+    public void setPriceUsd(BigDecimal priceUsd) 
     {
         this.priceUsd = priceUsd;
     }
 
-    public BigDecimal getPriceUsd()
+    public BigDecimal getPriceUsd() 
     {
         return priceUsd;
     }
-    public void setPriceBtc(BigDecimal priceBtc)
+    public void setPriceBtc(BigDecimal priceBtc) 
     {
         this.priceBtc = priceBtc;
     }
 
-    public BigDecimal getPriceBtc()
+    public BigDecimal getPriceBtc() 
     {
         return priceBtc;
     }
-    public void setVolume24hUsd(BigDecimal volume24hUsd)
+    public void setVolume24hUsd(BigDecimal volume24hUsd) 
     {
         this.volume24hUsd = volume24hUsd;
     }
 
-    public BigDecimal getVolume24hUsd()
+    public BigDecimal getVolume24hUsd() 
     {
         return volume24hUsd;
     }
-    public void setMarketCapUsd(BigDecimal marketCapUsd)
+    public void setMarketCapUsd(BigDecimal marketCapUsd) 
     {
         this.marketCapUsd = marketCapUsd;
     }
 
-    public BigDecimal getMarketCapUsd()
+    public BigDecimal getMarketCapUsd() 
     {
         return marketCapUsd;
     }
-    public void setAvailableSupply(BigDecimal availableSupply)
+    public void setAvailableSupply(BigDecimal availableSupply) 
     {
         this.availableSupply = availableSupply;
     }
 
-    public BigDecimal getAvailableSupply()
+    public BigDecimal getAvailableSupply() 
     {
         return availableSupply;
     }
-    public void setTotalSupply(BigDecimal totalSupply)
+    public void setTotalSupply(BigDecimal totalSupply) 
     {
         this.totalSupply = totalSupply;
     }
 
-    public BigDecimal getTotalSupply()
+    public BigDecimal getTotalSupply() 
     {
         return totalSupply;
     }
-    public void setMaxSupply(BigDecimal maxSupply)
+    public void setMaxSupply(BigDecimal maxSupply) 
     {
         this.maxSupply = maxSupply;
     }
 
-    public BigDecimal getMaxSupply()
+    public BigDecimal getMaxSupply() 
     {
         return maxSupply;
     }
@@ -231,12 +227,12 @@ public class RcTransactionData extends BaseEntity
     {
         return percentChange7d;
     }
-    public void setLastUpdated(String lastUpdated)
+    public void setLastUpdated(String lastUpdated) 
     {
         this.lastUpdated = lastUpdated;
     }
 
-    public String getLastUpdated()
+    public String getLastUpdated() 
     {
         return lastUpdated;
     }
@@ -244,23 +240,23 @@ public class RcTransactionData extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-                .append("id", getId())
-                .append("name", getName())
-                .append("symbol", getSymbol())
-                .append("rank", getRank())
-                .append("logo", getLogo())
-                .append("logoPng", getLogoPng())
-                .append("priceUsd", getPriceUsd())
-                .append("priceBtc", getPriceBtc())
-                .append("volume24hUsd", getVolume24hUsd())
-                .append("marketCapUsd", getMarketCapUsd())
-                .append("availableSupply", getAvailableSupply())
-                .append("totalSupply", getTotalSupply())
-                .append("maxSupply", getMaxSupply())
-                .append("percentChange1h", getPercentChange1h())
-                .append("percentChange24h", getPercentChange24h())
-                .append("percentChange7d", getPercentChange7d())
-                .append("lastUpdated", getLastUpdated())
-                .toString();
+            .append("id", getId())
+            .append("name", getName())
+            .append("symbol", getSymbol())
+            .append("rank", getRank())
+            .append("logo", getLogo())
+            .append("logoPng", getLogoPng())
+            .append("priceUsd", getPriceUsd())
+            .append("priceBtc", getPriceBtc())
+            .append("volume24hUsd", getVolume24hUsd())
+            .append("marketCapUsd", getMarketCapUsd())
+            .append("availableSupply", getAvailableSupply())
+            .append("totalSupply", getTotalSupply())
+            .append("maxSupply", getMaxSupply())
+            .append("percentChange1h", getPercentChange1h())
+            .append("percentChange24h", getPercentChange24h())
+            .append("percentChange7d", getPercentChange7d())
+            .append("lastUpdated", getLastUpdated())
+            .toString();
     }
 }
