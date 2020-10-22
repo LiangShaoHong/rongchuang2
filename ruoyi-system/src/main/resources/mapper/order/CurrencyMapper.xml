@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.CurrencyMapper">
+
+    <resultMap type="Profit" id="ProfitResult">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="profitType" column="profit_type"/>
+        <result property="balance" column="balance"/>
+        <result property="earned" column="earned"/>
+        <result property="completed" column="completed"/>
+        <result property="lastTime" column="last_time"/>
+    </resultMap>
+    <select id="getFbPerInformation" parameterType="Integer" resultMap="ProfitResult">
+        select
+            b.money balance,a.earned,a.completed
+         from rc_user_profit a left join rc_user b on (a.user_id=b.id)
+         where a.user_id=#{userId} and a.profit_type='2'
+    </select>
+
+
+</mapper>
