@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.digital.mapper.RcExchangeRateMapper">
+
+    <resultMap type="RcExchangeRate" id="RcExchangeRateResult">
+        <result property="id"    column="id"    />
+        <result property="exchangeRateCode"    column="exchange_rate_code"    />
+        <result property="exchangeRateName"    column="exchange_rate_name"    />
+        <result property="exchangeRate"    column="exchange_rate"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectRcExchangeRateVo">
+        select id, exchange_rate_code, exchange_rate_name, exchange_rate, update_time from rc_exchange_rate
+    </sql>
+
+    <select id="selectRcExchangeRateList" parameterType="RcExchangeRate" resultMap="RcExchangeRateResult">
+        <include refid="selectRcExchangeRateVo"/>
+        <where>
+            <if test="exchangeRateCode != null  and exchangeRateCode != ''"> and exchange_rate_code = #{exchangeRateCode}</if>
+            <if test="exchangeRateName != null  and exchangeRateName != ''"> and exchange_rate_name like concat('%', #{exchangeRateName}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectRcExchangeRateById" parameterType="Long" resultMap="RcExchangeRateResult">
+        <include refid="selectRcExchangeRateVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertRcExchangeRate" parameterType="RcExchangeRate" useGeneratedKeys="true" keyProperty="id">
+        insert into rc_exchange_rate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="exchangeRateCode != null">exchange_rate_code,</if>
+            <if test="exchangeRateName != null">exchange_rate_name,</if>
+            <if test="exchangeRate != null">exchange_rate,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="exchangeRateCode != null">#{exchangeRateCode},</if>
+            <if test="exchangeRateName != null">#{exchangeRateName},</if>
+            <if test="exchangeRate != null">#{exchangeRate},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateRcExchangeRate" parameterType="RcExchangeRate">
+        update rc_exchange_rate
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="exchangeRateCode != null">exchange_rate_code = #{exchangeRateCode},</if>
+            <if test="exchangeRateName != null">exchange_rate_name = #{exchangeRateName},</if>
+            <if test="exchangeRate != null">exchange_rate = #{exchangeRate},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcExchangeRateById" parameterType="Long">
+        delete from rc_exchange_rate where id = #{id}
+    </delete>
+
+    <delete id="deleteRcExchangeRateByIds" parameterType="String">
+        delete from rc_exchange_rate where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
