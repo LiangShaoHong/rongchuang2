@@ -27,7 +27,9 @@ server:
     max-threads: 800
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
- 
+
+# mybatis-plus
+
 # 日志配置
 logging:
   level:
@@ -79,6 +81,7 @@ mybatis:
     # 加载全局的配置文件
     configLocation: classpath:mybatis/mybatis-config.xml
 
+# MyBatis
 # PageHelper分页插件
 pagehelper: 
   helperDialect: mysql
@@ -135,3 +138,7 @@ xss:
 swagger:
   # 是否开启swagger
   enabled: true
+mybatis-plus:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+
