@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('实时各交易所币种交易数据列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>币种英文名称：</label>
+                                <input type="text" name="name"/>
+                            </li>
+                            <li>
+                                <label>币种的简称：</label>
+                                <input type="text" name="symbol"/>
+                            </li>
+                            <li>
+                                <label>币种的排名：</label>
+                                <input type="text" name="rank"/>
+                            </li>
+                            <li>
+                                <label>币种的logo：</label>
+                                <input type="text" name="logo"/>
+                            </li>
+                            <li>
+                                <label>币种的logo：</label>
+                                <input type="text" name="logoPng"/>
+                            </li>
+                            <li>
+                                <label>最新价格：</label>
+                                <input type="text" name="priceUsd"/>
+                            </li>
+                            <li>
+                                <label>最新价格：</label>
+                                <input type="text" name="priceBtc"/>
+                            </li>
+                            <li>
+                                <label>24h的成交额：</label>
+                                <input type="text" name="volume24hUsd"/>
+                            </li>
+                            <li>
+                                <label>流通市值：</label>
+                                <input type="text" name="marketCapUsd"/>
+                            </li>
+                            <li>
+                                <label>流通数量：</label>
+                                <input type="text" name="availableSupply"/>
+                            </li>
+                            <li>
+                                <label>总发行量：</label>
+                                <input type="text" name="totalSupply"/>
+                            </li>
+                            <li>
+                                <label>最大发行量：</label>
+                                <input type="text" name="maxSupply"/>
+                            </li>
+                            <li>
+                                <label>1小时涨跌幅：</label>
+                                <input type="text" name="percentChange1h"/>
+                            </li>
+                            <li>
+                                <label>24小时涨跌幅：</label>
+                                <input type="text" name="percentChange24h"/>
+                            </li>
+                            <li>
+                                <label>7天涨跌幅：</label>
+                                <input type="text" name="percentChange7d"/>
+                            </li>
+                            <li>
+                                <label>行情更新时间：</label>
+                                <input type="text" name="lastUpdated"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="digital:transaction:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="digital:transaction:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="digital:transaction:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="digital:transaction:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('digital:transaction:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('digital:transaction:remove')}]];
+        var prefix = ctx + "digital/transaction";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "实时各交易所币种交易数据",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '',
+                    visible: false
+                },
+                {
+                    field: 'name',
+                    title: '币种英文名称'
+                },
+                {
+                    field: 'symbol',
+                    title: '币种的简称'
+                },
+                {
+                    field: 'rank',
+                    title: '币种的排名'
+                },
+                {
+                    field: 'logo',
+                    title: '币种的logo'
+                },
+                {
+                    field: 'logoPng',
+                    title: '币种的logo'
+                },
+                {
+                    field: 'priceUsd',
+                    title: '最新价格'
+                },
+                {
+                    field: 'priceBtc',
+                    title: '最新价格'
+                },
+                {
+                    field: 'volume24hUsd',
+                    title: '24h的成交额'
+                },
+                {
+                    field: 'marketCapUsd',
+                    title: '流通市值'
+                },
+                {
+                    field: 'availableSupply',
+                    title: '流通数量'
+                },
+                {
+                    field: 'totalSupply',
+                    title: '总发行量'
+                },
+                {
+                    field: 'maxSupply',
+                    title: '最大发行量'
+                },
+                {
+                    field: 'percentChange1h',
+                    title: '1小时涨跌幅'
+                },
+                {
+                    field: 'percentChange24h',
+                    title: '24小时涨跌幅'
+                },
+                {
+                    field: 'percentChange7d',
+                    title: '7天涨跌幅'
+                },
+                {
+                    field: 'lastUpdated',
+                    title: '行情更新时间'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

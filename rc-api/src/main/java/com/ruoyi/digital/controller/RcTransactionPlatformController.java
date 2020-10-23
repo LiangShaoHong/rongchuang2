@@ -1,4 +1,4 @@
-package com.ruoyi.quartz.controller;
+package com.ruoyi.digital.controller;
 
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.quartz.domain.RcTransactionPlatform;
-import com.ruoyi.quartz.service.IRcTransactionPlatformService;
+import com.ruoyi.digital.domain.RcTransactionPlatform;
+import com.ruoyi.digital.service.IRcTransactionPlatformService;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -22,19 +22,19 @@ import com.ruoyi.common.core.page.TableDataInfo;
 /**
  * 交易所信息Controller
  * 
- * @author ruoyi
- * @date 2020-10-16
+ * @author xiaoyu
+ * @date 2020-10-22
  */
 @Controller
-@RequestMapping("/system/platform")
+@RequestMapping("/digital/platform")
 public class RcTransactionPlatformController extends BaseController
 {
-    private String prefix = "system/platform";
+    private String prefix = "digital/platform";
 
     @Autowired
     private IRcTransactionPlatformService rcTransactionPlatformService;
 
-    @RequiresPermissions("system:platform:view")
+    @RequiresPermissions("digital:platform:view")
     @GetMapping()
     public String platform()
     {
@@ -44,7 +44,7 @@ public class RcTransactionPlatformController extends BaseController
     /**
      * 查询交易所信息列表
      */
-    @RequiresPermissions("system:platform:list")
+    @RequiresPermissions("digital:platform:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(RcTransactionPlatform rcTransactionPlatform)
@@ -57,7 +57,7 @@ public class RcTransactionPlatformController extends BaseController
     /**
      * 导出交易所信息列表
      */
-    @RequiresPermissions("system:platform:export")
+    @RequiresPermissions("digital:platform:export")
     @Log(title = "交易所信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -80,7 +80,7 @@ public class RcTransactionPlatformController extends BaseController
     /**
      * 新增保存交易所信息
      */
-    @RequiresPermissions("system:platform:add")
+    @RequiresPermissions("digital:platform:add")
     @Log(title = "交易所信息", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -103,7 +103,7 @@ public class RcTransactionPlatformController extends BaseController
     /**
      * 修改保存交易所信息
      */
-    @RequiresPermissions("system:platform:edit")
+    @RequiresPermissions("digital:platform:edit")
     @Log(title = "交易所信息", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -115,7 +115,7 @@ public class RcTransactionPlatformController extends BaseController
     /**
      * 删除交易所信息
      */
-    @RequiresPermissions("system:platform:remove")
+    @RequiresPermissions("digital:platform:remove")
     @Log(title = "交易所信息", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody

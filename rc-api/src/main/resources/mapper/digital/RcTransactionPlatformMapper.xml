@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ruoyi.quartz.mapper.RcTransactionPlatformMapper">
+<mapper namespace="com.ruoyi.digital.mapper.RcTransactionPlatformMapper">
     
     <resultMap type="RcTransactionPlatform" id="RcTransactionPlatformResult">
         <result property="id"    column="id"    />
@@ -48,11 +48,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectRcTransactionPlatformById" parameterType="Long" resultMap="RcTransactionPlatformResult">
         <include refid="selectRcTransactionPlatformVo"/>
         where id = #{id}
-    </select>
-
-    <select id="selectRcTransactionPlatformByCoinId" parameterType="String" resultMap="RcTransactionPlatformResult">
-        <include refid="selectRcTransactionPlatformVo"/>
-        where coin_id = #{coinId}
     </select>
         
     <insert id="insertRcTransactionPlatform" parameterType="RcTransactionPlatform" useGeneratedKeys="true" keyProperty="id">
@@ -110,27 +105,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">create_time = #{createTime},</if>
         </trim>
         where id = #{id}
-    </update>
-
-    <update id="updateRcTransactionPlatformByCoinId" parameterType="RcTransactionPlatform">
-        update rc_transaction_platform
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="coinId != null">coin_id = #{coinId},</if>
-            <if test="name != null">name = #{name},</if>
-            <if test="logo != null">logo = #{logo},</if>
-            <if test="rank != null">rank = #{rank},</if>
-            <if test="pairnum != null">pairnum = #{pairnum},</if>
-            <if test="volumn != null">volumn = #{volumn},</if>
-            <if test="volumnBtc != null">volumn_btc = #{volumnBtc},</if>
-            <if test="volumnCny != null">volumn_cny = #{volumnCny},</if>
-            <if test="tradeurl != null">tradeurl = #{tradeurl},</if>
-            <if test="changeVolumn != null">change_volumn = #{changeVolumn},</if>
-            <if test="exrank != null">exrank = #{exrank},</if>
-            <if test="assetsUsd != null">assets_usd = #{assetsUsd},</if>
-            <if test="riskLevel != null">risk_level = #{riskLevel},</if>
-            <if test="createTime != null">create_time = #{createTime},</if>
-        </trim>
-        where coin_id = #{coinId}
     </update>
 
     <delete id="deleteRcTransactionPlatformById" parameterType="Long">
