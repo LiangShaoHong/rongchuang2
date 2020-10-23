@@ -19,9 +19,6 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Autowired
     private LegalCurrencyMapper legalCurrencyMapper;
 
-    @Autowired
-    private RedisService redisService;
-
     @Override
     public ResultDto getFbPerInformation(String X_Token) {
         Profit profit = legalCurrencyMapper.getFbPerInformation(1);
@@ -48,7 +45,6 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     public ResultDto editFbAutomaticOrder(String X_Token, Boolean automatic) {
 
 
-//        redisService.set(tokenKey, token, Constants.LOGIN_TIMEOUT, Constants.DB_USER);
         return null;
     }
 
