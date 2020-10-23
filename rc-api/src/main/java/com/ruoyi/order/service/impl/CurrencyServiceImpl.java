@@ -4,9 +4,7 @@ import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.utils.ResultDto;
 import com.ruoyi.order.domain.Profit;
 import com.ruoyi.order.mapper.CurrencyMapper;
-import com.ruoyi.order.mapper.LegalCurrencyMapper;
 import com.ruoyi.order.service.CurrencyService;
-import com.ruoyi.order.service.LegalCurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

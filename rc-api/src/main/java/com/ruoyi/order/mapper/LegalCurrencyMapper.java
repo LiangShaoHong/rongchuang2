@@ -1,7 +1,8 @@
 package com.ruoyi.order.mapper;
 
+import com.ruoyi.order.domain.FrenchCurrencyOrder;
 import com.ruoyi.order.domain.Profit;
-import com.ruoyi.order.domain.RcFrenchCurrencyOrderRelease;
+import io.lettuce.core.dynamic.annotation.Param;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface LegalCurrencyMapper {
 
     public Profit getFbPerInformation(Integer userId);
 
+    public List<FrenchCurrencyOrder> getFbMyOrderList(@Param("userId") Integer userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+
+    public List<FrenchCurrencyOrder> getFbHistorical(@Param("userId") Integer userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 }

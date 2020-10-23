@@ -2,13 +2,15 @@ package com.ruoyi.order.service.impl;
 
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.utils.ResultDto;
+import com.ruoyi.framework.redis.RedisService;
+import com.ruoyi.order.domain.FrenchCurrencyOrder;
 import com.ruoyi.order.domain.Profit;
 import com.ruoyi.order.mapper.LegalCurrencyMapper;
 import com.ruoyi.order.service.LegalCurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Service
 public class LegalCurrencyServiceImpl implements LegalCurrencyService {
@@ -16,6 +18,9 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
 
     @Autowired
     private LegalCurrencyMapper legalCurrencyMapper;
+
+    @Autowired
+    private RedisService redisService;
 
     @Override
     public ResultDto getFbPerInformation(String X_Token) {
@@ -26,8 +31,12 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     }
 
     @Override
-    public ResultDto getFbMyOrderList(String X_Token, PageDomain pageDomain) {
-        return null;
+    public ResultDto getFbMyOrderList(String X_Token, Integer pageNum, Integer pageSize) {
+        Integer userId = 1;
+        pageNum = (pageNum - 1) * pageSize;
+        List<FrenchCurrencyOrder> frenchCurrencyOrder = legalCurrencyMapper.getFbMyOrderList(userId, pageNum, pageSize);
+        ResultDto resultDto = new ResultDto(1, "查询成功", frenchCurrencyOrder);
+        return resultDto;
     }
 
     @Override
@@ -37,17 +46,26 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
 
     @Override
     public ResultDto editFbAutomaticOrder(String X_Token, Boolean automatic) {
+
+
+//        redisService.set(tokenKey, token, Constants.LOGIN_TIMEOUT, Constants.DB_USER);
         return null;
     }
 
     @Override
-    public ResultDto getFbOptionalOrder(String X_Token, PageDomain pageDomain) {
+    public ResultDto getFbOptionalOrder(String X_Token, Integer pageNum, Integer pageSize) {
         return null;
     }
 
     @Override
-    public ResultDto getFbHistorical(String X_Token, PageDomain pageDomain) {
-        return null;
+    public ResultDto getFbHistorical(String X_Token, Integer pageNum, Integer pageSize) {
+
+
+        Integer userId = 1;
+        pageNum = (pageNum - 1) * pageSize;
+        List<FrenchCurrencyOrder> frenchCurrencyOrder = legalCurrencyMapper.getFbHistorical(userId, pageNum, pageSize);
+        ResultDto resultDto = new ResultDto(1, "查询成功", frenchCurrencyOrder);
+        return resultDto;
     }
 
     @Override
