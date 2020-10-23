@@ -37,9 +37,7 @@ public class LegalCurrencyApi {
     @RequestMapping("/getFbPerInformation")
     public ResultDto getFbPerInformation(HttpServletRequest request) {
         String X_Token = request.getHeader("X_Token");
-
         ResultDto resultDto = legalCurrencyService.getFbPerInformation(X_Token);
-
         return resultDto;
     }
 
@@ -54,7 +52,6 @@ public class LegalCurrencyApi {
     @RequestMapping("/getFbMyOrderList")
     public ResultDto getFbMyOrderList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         String X_Token = request.getHeader("X_Token");
-
         ResultDto resultDto = legalCurrencyService.getFbMyOrderList(X_Token, pageNum, pageSize);
         return resultDto;
     }
@@ -67,7 +64,6 @@ public class LegalCurrencyApi {
     @RequestMapping("/getFbAutomaticOrder")
     public ResultDto getFbAutomaticOrder(HttpServletRequest request) {
         String X_Token = request.getHeader("X_Token");
-
         ResultDto resultDto = legalCurrencyService.getFbAutomaticOrder(X_Token);
         return resultDto;
     }
@@ -81,7 +77,6 @@ public class LegalCurrencyApi {
     @RequestMapping("/editFbAutomaticOrder")
     public ResultDto editFbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
         String X_Token = request.getHeader("X_Token");
-
         ResultDto resultDto = legalCurrencyService.editFbAutomaticOrder(X_Token, automatic);
         return resultDto;
     }
@@ -96,7 +91,6 @@ public class LegalCurrencyApi {
     @RequestMapping("/getFbOptionalOrder")
     public ResultDto getFbOptionalOrder(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         String X_Token = request.getHeader("X_Token");
-
         ResultDto resultDto = legalCurrencyService.getFbOptionalOrder(X_Token, pageNum, pageSize);
         return resultDto;
     }
@@ -111,7 +105,6 @@ public class LegalCurrencyApi {
     @RequestMapping("/getFbHistorical")
     public ResultDto getFbHistorical(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         String X_Token = request.getHeader("X_Token");
-
         ResultDto resultDto = legalCurrencyService.getFbHistorical(X_Token, pageNum, pageSize);
         return resultDto;
     }

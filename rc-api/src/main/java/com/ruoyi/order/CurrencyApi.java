@@ -42,7 +42,7 @@ public class CurrencyApi {
             })
 
     @RequestMapping("/getBbPerInformation")
-    public ResultDto getFbPerInformation(HttpServletRequest request) {
+    public ResultDto getBbPerInformation(HttpServletRequest request) {
         String X_Token = request.getHeader("X_Token");
         ResultDto resultDto = currencyService.getBbPerInformation(X_Token);
         return resultDto;
@@ -57,9 +57,10 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
     @RequestMapping("/getBbMyOrderList")
-    public ResultDto getFbMyOrderList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+    public ResultDto getBbMyOrderList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+        ResultDto resultDto = currencyService.getBbMyOrderList(X_Token, pageNum, pageSize);
+        return resultDto;
     }
 
     @ApiOperation("查询自动抢单状态接口")
@@ -68,9 +69,10 @@ public class CurrencyApi {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true)
             })
     @RequestMapping("/getBbAutomaticOrder")
-    public ResultDto getFbAutomaticOrder(HttpServletRequest request) {
+    public ResultDto getBbAutomaticOrder(HttpServletRequest request) {
         String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+        ResultDto resultDto = currencyService.getBbAutomaticOrder(X_Token);
+        return resultDto;
     }
 
     @ApiOperation("改变自动抢单状态接口")
@@ -80,9 +82,10 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "Boolean", name = "automatic", value = "是否开启自动抢单", required = true)
             })
     @RequestMapping("/editBbAutomaticOrder")
-    public ResultDto editFbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
+    public ResultDto editBbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
         String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+        ResultDto resultDto = currencyService.editBbAutomaticOrder(X_Token, automatic);
+        return resultDto;
     }
 
     @ApiOperation("查询可选订单列表接口")
@@ -93,9 +96,10 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
     @RequestMapping("/getBbOptionalOrder")
-    public ResultDto getFbOptionalOrder(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+    public ResultDto getBbOptionalOrder(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+        ResultDto resultDto = currencyService.getBbOptionalOrder(X_Token, pageNum, pageSize);
+        return resultDto;
     }
 
     @ApiOperation("查询历史记录接口")
@@ -106,9 +110,10 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
     @RequestMapping("/getBbHistorical")
-    public ResultDto getFbHistorical(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+    public ResultDto getBbHistorical(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+        ResultDto resultDto = currencyService.getBbHistorical(X_Token, pageNum, pageSize);
+        return resultDto;
     }
 
 
@@ -120,9 +125,10 @@ public class CurrencyApi {
 
             })
     @RequestMapping("/getBbDetails")
-    public ResultDto getFbDetails(HttpServletRequest request, String id) {
+    public ResultDto getBbDetails(HttpServletRequest request, String id) {
         String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+        ResultDto resultDto = currencyService.getBbDetails(X_Token, id);
+        return resultDto;
     }
 
     @ApiOperation("抢订单接口")
@@ -133,7 +139,7 @@ public class CurrencyApi {
 
             })
     @RequestMapping("/robBbOrder")
-    public ResultDto robFbOrder(HttpServletRequest request, String id) {
+    public ResultDto robBbOrder(HttpServletRequest request, String id) {
         String X_Token = request.getHeader("X_Token");
         return new ResultDto(1);
     }

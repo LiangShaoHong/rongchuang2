@@ -19,7 +19,7 @@ public interface CurrencyService {
 
 
     @ApiOperation("查询我的订单列表接口")
-    public ResultDto getBbMyOrderList(String X_Token, PageDomain pageDomain);
+    public ResultDto getBbMyOrderList(String X_Token, Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询自动抢单状态接口")
     public ResultDto getBbAutomaticOrder(String X_Token);
@@ -28,10 +28,10 @@ public interface CurrencyService {
     public ResultDto editBbAutomaticOrder(String X_Token, Boolean automatic);
 
     @ApiOperation("查询可选订单列表接口")
-    public ResultDto getBbOptionalOrder(String X_Token, PageDomain pageDomain);
+    public ResultDto getBbOptionalOrder(String X_Token, Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询历史记录接口")
-    public ResultDto getBbHistorical(String X_Token, PageDomain pageDomain);
+    public ResultDto getBbHistorical(String X_Token, Integer pageNum, Integer pageSize);
 
 
     @ApiOperation("查询历史记录详情接口")

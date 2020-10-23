@@ -20,12 +20,20 @@
         <result property="transactionCurrency" column="transaction_currency"/>
         <result property="number" column="number"/>
         <result property="transactionType" column="transaction_type"/>
+		<result property="buyingSources" column="buying_sources"/>
+		<result property="whereToSell" column="where_toSell"/>
+        <result property="purchaseQuantity" column="purchase_quantity"/>
         <result property="purchasePrice" column="purchase_price"/>
+        <result property="sellQuantity" column="sell_quantity"/>
         <result property="sellPrice" column="sell_price"/>
+        <result property="spendUsdt" column="spend_usdt"/>
+        <result property="availableFiatMoney" column="available_fiat_money"/>
+        <result property="paymentImg" column="payment_img"/>
         <result property="profit" column="profit"/>
         <result property="orderState" column="order_state"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
+
     <select id="getFbPerInformation" parameterType="Integer" resultMap="ProfitResult">
         select
             b.money balance,a.earned,a.completed
@@ -42,12 +50,12 @@
 	a.transaction_type,
 	a.purchase_price,
 	a.sell_price,
-	(a.sell_price-a.purchase_price) profit,
+	(a.available_fiat_money-a.spend_usdt) profit,
 	b.order_state,
 	b.create_time
 FROM
 	rc_french_currency_order_release a
-LEFT JOIN rc_french_currency_order b ON (a.id = b.order_id)
+LEFT JOIN rc_french_currency_order b ON (a.id = b.rc_french_currency_order_release_id)
 WHERE
 	b.user_id = #{arg0}
 	and
@@ -59,7 +67,6 @@ WHERE
     </select>
 
 
-
     <select id="getFbHistorical" resultMap="FrenchCurrencyOrderResult">
         SELECT
 	b.id,
@@ -69,12 +76,12 @@ WHERE
 	a.transaction_type,
 	a.purchase_price,
 	a.sell_price,
-	(a.sell_price-a.purchase_price) profit,
+	(a.available_fiat_money-a.spend_usdt) profit,
 	b.order_state,
 	b.create_time
 FROM
 	rc_french_currency_order_release a
-LEFT JOIN rc_french_currency_order b ON (a.id = b.order_id)
+LEFT JOIN rc_french_currency_order b ON (a.id = b.rc_french_currency_order_release_id)
 WHERE
 	b.user_id = #{arg0}
 	and
@@ -83,6 +90,30 @@ WHERE
 	a.order_state = '1'
 	order by b.create_time desc
 	limit  #{arg1} ,#{arg2}
+    </select>
+
+
+    <select id="getFbDetails" resultMap="FrenchCurrencyOrderResult">
+        SELECT
+	b.id,
+	b.order_id,
+	a.transaction_currency,
+	a.number,
+	a.transaction_type,
+	a.purchase_quantity,
+	a.purchase_price,
+	a.sell_quantity,
+	a.sell_price,
+	a.spend_usdt,
+	a.available_fiat_money,
+	(a.available_fiat_money-a.spend_usdt) profit,
+	b.order_state,
+	b.payment_img
+FROM
+	rc_french_currency_order_release a
+LEFT JOIN rc_french_currency_order b ON (a.id = b.rc_french_currency_order_release_id)
+WHERE
+	b.user_id = #{arg0} and b.order_id=#{arg1}
     </select>
 
 </mapper>
