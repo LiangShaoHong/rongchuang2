@@ -8,9 +8,9 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@ApiModel("法币订单")
+@ApiModel("币币订单")
 @Data
-public class FrenchCurrencyOrder {
+public class CurrencyOrder {
 
     @ApiModelProperty("主键id")
     private Integer id;
@@ -50,9 +50,6 @@ public class FrenchCurrencyOrder {
 
     @ApiModelProperty("可得法币")
     private BigDecimal availableFiatMoney;
-
-    @ApiModelProperty("付款截图")
-    private String paymentImg;
 
     @ApiModelProperty("可收益")
     private BigDecimal profit;

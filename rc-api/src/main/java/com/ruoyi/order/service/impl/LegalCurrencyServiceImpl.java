@@ -66,7 +66,11 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
 
     @Override
     public ResultDto getFbDetails(String X_Token, String id) {
-        return null;
+
+        Integer userId = 1;
+        FrenchCurrencyOrder frenchCurrencyOrder =legalCurrencyMapper.getFbDetails(userId, id);
+        ResultDto resultDto = new ResultDto(1, "查询成功", frenchCurrencyOrder);
+        return resultDto;
     }
 
     @Override
