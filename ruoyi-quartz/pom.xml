@@ -65,6 +65,13 @@
             <artifactId>ruoyi-framework</artifactId>
         </dependency>
 
+        <!-- 多线程 -->
+        <dependency>
+            <groupId>com.aeuok</groupId>
+            <artifactId>task-spring-boot-starter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

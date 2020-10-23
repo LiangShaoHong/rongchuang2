@@ -10,9 +10,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,13 +34,13 @@ public class RcTransactionPlatformTask {
             paratmers.add(new BasicNameValuePair("pagesize", "100"));
             try {
                 String result = QuartzHttpUtils.makeAPICall(uri, paratmers);
+                if(result.isEmpty()){
+                    System.out.println("没有数据");
+                    return;
+                }
                 JSONObject sql = JSONObject.fromObject(result);
                 String result1 = sql.getString("data");
                 JSONArray jsonArray = JSONArray.fromObject(result1);
-                if(jsonArray.size() < 1){
-                    System.out.println("数据为空，请重试： " + jsonArray);
-                    return;
-                }
                 Object[] objs = jsonArray.toArray();
                 for (Object object : objs) {
                     JSONObject jsonObject = JSONObject.fromObject(object);
@@ -88,10 +86,8 @@ public class RcTransactionPlatformTask {
                     }
                 }
 
-            } catch (IOException e) {
-                System.out.println("Error: cannont access content - " + e.toString());
-            } catch (URISyntaxException e) {
-                System.out.println("Error: Invalid URL " + e.toString());
+            }catch (Exception e) {
+                System.out.println("错误信息： " + e.toString());
             }
 //        }
 
