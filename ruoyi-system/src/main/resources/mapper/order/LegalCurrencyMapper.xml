@@ -13,6 +13,19 @@
         <result property="completed" column="completed"/>
         <result property="lastTime" column="last_time"/>
     </resultMap>
+
+    <resultMap type="FrenchCurrencyOrder" id="FrenchCurrencyOrderResult">
+        <id property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="transactionCurrency" column="transaction_currency"/>
+        <result property="number" column="number"/>
+        <result property="transactionType" column="transaction_type"/>
+        <result property="purchasePrice" column="purchase_price"/>
+        <result property="sellPrice" column="sell_price"/>
+        <result property="profit" column="profit"/>
+        <result property="orderState" column="order_state"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
     <select id="getFbPerInformation" parameterType="Integer" resultMap="ProfitResult">
         select
             b.money balance,a.earned,a.completed
@@ -20,5 +33,56 @@
          where a.user_id=#{userId} and a.profit_type='1'
     </select>
 
+    <select id="getFbMyOrderList" resultMap="FrenchCurrencyOrderResult">
+        SELECT
+	b.id,
+	b.order_id,
+	a.transaction_currency,
+	a.number,
+	a.transaction_type,
+	a.purchase_price,
+	a.sell_price,
+	(a.sell_price-a.purchase_price) profit,
+	b.order_state,
+	b.create_time
+FROM
+	rc_french_currency_order_release a
+LEFT JOIN rc_french_currency_order b ON (a.id = b.order_id)
+WHERE
+	b.user_id = #{arg0}
+	and
+	(b.order_state ='1' or b.order_state ='2' or b.order_state ='3' or b.order_state ='4')
+	and
+	a.order_state = '1'
+	order by b.create_time desc
+	limit  #{arg1} ,#{arg2}
+    </select>
+
+
+
+    <select id="getFbHistorical" resultMap="FrenchCurrencyOrderResult">
+        SELECT
+	b.id,
+	b.order_id,
+	a.transaction_currency,
+	a.number,
+	a.transaction_type,
+	a.purchase_price,
+	a.sell_price,
+	(a.sell_price-a.purchase_price) profit,
+	b.order_state,
+	b.create_time
+FROM
+	rc_french_currency_order_release a
+LEFT JOIN rc_french_currency_order b ON (a.id = b.order_id)
+WHERE
+	b.user_id = #{arg0}
+	and
+	(b.order_state ='5' or b.order_state ='6' or b.order_state ='7' or b.order_state ='8')
+	and
+	a.order_state = '1'
+	order by b.create_time desc
+	limit  #{arg1} ,#{arg2}
+    </select>
 
 </mapper>
