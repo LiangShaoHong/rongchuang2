@@ -81,23 +81,23 @@ public class QuartzHttpUtils {
         return response;
     }
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args){
 //        String uri = "https://dncapi.bqrank.net/api/coin/web-coininfo";
 //        List<NameValuePair> paratmers = new ArrayList<NameValuePair>();
 //        paratmers.add(new BasicNameValuePair("code", "filecoinnew"));
 //        String result = makeAPICall(uri, paratmers);
 //        System.out.println(result);
 
-        JSONObject params = new JSONObject();
-        params.put("code", "bitcoin");
-        JSONObject resultPost = makeAPICallPost("https://dncapi.bqrank.net/api/coin/web-coininfo", params);
-        JSONArray jsonArray = JSONArray.fromObject(resultPost);
-        Object[] objs = jsonArray.toArray();
-        for (Object object : objs) {
-            JSONObject jsonObject = JSONObject.fromObject(object);
-            System.out.println(jsonObject.getString("code"));
-        }
-        System.out.println(resultPost);
+//        JSONObject params = new JSONObject();
+//        params.put("code", "bitcoin");
+//        JSONObject resultPost = makeAPICallPost("https://dncapi.bqrank.net/api/coin/web-coininfo", params);
+//        JSONArray jsonArray = JSONArray.fromObject(resultPost);
+//        Object[] objs = jsonArray.toArray();
+//        for (Object object : objs) {
+//            JSONObject jsonObject = JSONObject.fromObject(object);
+//            System.out.println(jsonObject.getString("code"));
+//        }
+//        System.out.println(resultPost);
 
 //        String uri = "https://dncapi.bqrank.net/api/home/web-newcoin";
 //        List<NameValuePair> paratmers = new ArrayList<NameValuePair>();
@@ -106,23 +106,21 @@ public class QuartzHttpUtils {
 //        JSONArray jsonArray = JSONArray.fromObject(sql.getString("data"));
 //        System.out.println(jsonArray);
 
-//        for (int i = 0; i < 10; i++) {
-//            String uri = "https://fxhapi.feixiaohao.com/public/v1/ticker";
-//            List<NameValuePair> paratmers = new ArrayList<NameValuePair>();
-//            paratmers.add(new BasicNameValuePair("start", i * 100 + ""));
-//            String result = makeAPICall(uri, paratmers);
-//            if(result.isEmpty()){
-//                System.out.println(i + "没有数据");
-//                return;
-//            }
-//            System.out.println(i);
-//            JSONArray jsonArray = JSONArray.fromObject(result);
-//            Object[] objs = jsonArray.toArray();
-//            for (Object object : objs) {
-//                JSONObject jsonObject = JSONObject.fromObject(object);
-//                System.out.println("数据-------11111111");
-//            }
-//        }
+        for (int i = 0; i < 5; i++) {
+            String uri = "https://fxhapi.feixiaohao.com/public/v1/ticker";
+            List<NameValuePair> paratmers = new ArrayList<NameValuePair>();
+            paratmers.add(new BasicNameValuePair("start", i * 100 + ""));
+            try {
+                String result = makeAPICall(uri, paratmers);
+                if(result.isEmpty()){
+                    System.out.println(i + "没有数据");
+                    continue;
+                }
+            }catch (Exception e) {
+                System.out.println("错误信息： " + e.toString());
+            }
+            System.out.println(i);
+        }
 
     }
 }

@@ -131,4 +131,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
+
+    <insert id="insertRcTransactionDataList" useGeneratedKeys="true" keyProperty="id" parameterType="RcTransactionData">
+        insert into rc_transaction_data (name,symbol,rank,logo,price_usd,price_btc,percent_change_24h,last_updated)
+        values
+        <foreach collection="list" item="dept" index="index" separator=",">
+            (
+            #{dept.name,jdbcType=VARCHAR}, #{dept.symbol,jdbcType=VARCHAR}, #{dept.rank,jdbcType=VARCHAR}, #{dept.logo,jdbcType=VARCHAR},
+            #{dept.priceUsd,jdbcType=DECIMAL},#{dept.priceBtc,jdbcType=DECIMAL},
+            #{dept.percentChange24h,jdbcType=VARCHAR},#{dept.lastUpdated,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+
+    <update id="updateRcTransactionDataList"  parameterType="java.util.List">
+        update rc_transaction_data
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="price_usd =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.priceUsd!=null">
+                        when id = #{item.id} then #{item.priceUsd}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="price_btc =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.priceBtc!=null">
+                        when id = #{item.id} then #{item.priceBtc}
+                    </if>
+                </foreach>
+            </trim>
+
+            <trim prefix="percent_change_24h =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.percentChange24h!=null">
+                        when id = #{item.id} then #{item.percentChange24h}
+                    </if>
+                </foreach>
+            </trim>
+
+            <trim prefix="last_updated =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.lastUpdated!=null">
+                        when id = #{item.id} then #{item.lastUpdated}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </update>
+
 </mapper>
