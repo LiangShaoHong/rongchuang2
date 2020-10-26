@@ -238,6 +238,7 @@
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
         <module>rc-api</module>
+
     </modules>
     <packaging>pom</packaging>
 

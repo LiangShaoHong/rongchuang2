@@ -285,6 +285,7 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
         filterChainDefinitionMap.put("/rc-api/legalCurrency/**", "anon");
         filterChainDefinitionMap.put("/rc-api/currency/**", "anon");
+        filterChainDefinitionMap.put("/rc-api/user/**", "anon");
 
         // 首页公告 轮播 系统消息 帮助接口
         filterChainDefinitionMap.put("/rc-api/home/**", "anon");

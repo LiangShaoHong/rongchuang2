@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.user.mapperplus.RcUserMapperPlus">
+    
+    <resultMap type="RcUser" id="RcUserResult">
+        <result property="id"    column="id"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="credit"    column="credit"    />
+        <result property="money"    column="money"    />
+        <result property="account"    column="account"    />
+        <result property="password"    column="password"    />
+        <result property="salt"    column="salt"    />
+        <result property="safeword"    column="safeword"    />
+        <result property="language"    column="language"    />
+        <result property="online"    column="online"    />
+        <result property="registertime"    column="registertime"    />
+        <result property="paidan"    column="paidan"    />
+        <result property="parentid"    column="parentid"    />
+        <result property="identity"    column="identity"    />
+        <result property="invitation"    column="invitation"    />
+        <result property="token"    column="token"    />
+        <result property="platformId"    column="platformId"    />
+    </resultMap>
+
+    <select id="selectCount" parameterType="Long" resultMap="RcUserResult">
+        <include refid="selectRcUserVo"/>
+        where id = #{id}
+    </select>
+
+
+</mapper>

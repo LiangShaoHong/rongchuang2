@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.user.mapper.RcUserMapper">
+    
+    <resultMap type="RcUser" id="RcUserResult">
+        <result property="id"    column="id"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="credit"    column="credit"    />
+        <result property="money"    column="money"    />
+        <result property="account"    column="account"    />
+        <result property="password"    column="password"    />
+        <result property="salt"    column="salt"    />
+        <result property="safeword"    column="safeword"    />
+        <result property="language"    column="language"    />
+        <result property="online"    column="online"    />
+        <result property="registertime"    column="registertime"    />
+        <result property="paidan"    column="paidan"    />
+        <result property="parentid"    column="parentid"    />
+        <result property="identity"    column="identity"    />
+        <result property="invitation"    column="invitation"    />
+        <result property="token"    column="token"    />
+        <result property="platformId"    column="platformId"    />
+    </resultMap>
+
+    <sql id="selectRcUserVo">
+        select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user
+    </sql>
+
+    <select id="selectRcUserList" parameterType="RcUser" resultMap="RcUserResult">
+        <include refid="selectRcUserVo"/>
+        <where>  
+            <if test="mobile != null  and mobile != ''"> and mobile = #{mobile}</if>
+            <if test="credit != null "> and credit = #{credit}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and salt = #{salt}</if>
+            <if test="safeword != null "> and safeword = #{safeword}</if>
+            <if test="language != null  and language != ''"> and language = #{language}</if>
+            <if test="online != null "> and online = #{online}</if>
+            <if test="registertime != null "> and registertime = #{registertime}</if>
+            <if test="paidan != null "> and paidan = #{paidan}</if>
+            <if test="parentid != null "> and parentid = #{parentid}</if>
+            <if test="identity != null  and identity != ''"> and identity = #{identity}</if>
+            <if test="invitation != null  and invitation != ''"> and invitation = #{invitation}</if>
+            <if test="token != null  and token != ''"> and token = #{token}</if>
+            <if test="platformId != null  and platformId != ''"> and platformId = #{platformId}</if>
+        </where>
+    </select>
+    
+    <select id="selectRcUserById" parameterType="Long" resultMap="RcUserResult">
+        <include refid="selectRcUserVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectinvitation" parameterType="String" resultType="com.ruoyi.common.json.JSONObject">
+
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where invitation = #{invitation}
+    </select>
+
+    <select id="selectmobile" parameterType="String" resultType="com.ruoyi.common.json.JSONObject">
+
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where mobile = #{mobile}
+    </select>
+    <select id="selectaccount" parameterType="String" resultMap="RcUserResult">
+
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where account = #{account}
+    </select>
+    <select id="selectverify" parameterType="String" resultMap="RcUserResult">
+
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where account = #{account} and account = #{password}
+    </select>
+
+    <insert id="insertRcUser" parameterType="RcUser" useGeneratedKeys="true" keyProperty="id">
+        insert into rc_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mobile != null">mobile,</if>
+            <if test="credit != null">credit,</if>
+            <if test="money != null">money,</if>
+            <if test="account != null">account,</if>
+            <if test="password != null">password,</if>
+            <if test="salt != null">salt,</if>
+            <if test="safeword != null">safeword,</if>
+            <if test="language != null">language,</if>
+            <if test="online != null">online,</if>
+            <if test="registertime != null">registertime,</if>
+            <if test="paidan != null">paidan,</if>
+            <if test="parentid != null">parentid,</if>
+            <if test="identity != null">identity,</if>
+            <if test="invitation != null">invitation,</if>
+            <if test="token != null">token,</if>
+            <if test="platformId != null">platformId,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mobile != null">#{mobile},</if>
+            <if test="credit != null">#{credit},</if>
+            <if test="money != null">#{money},</if>
+            <if test="account != null">#{account},</if>
+            <if test="password != null">#{password},</if>
+            <if test="salt != null">#{salt},</if>
+            <if test="safeword != null">#{safeword},</if>
+            <if test="language != null">#{language},</if>
+            <if test="online != null">#{online},</if>
+            <if test="registertime != null">#{registertime},</if>
+            <if test="paidan != null">#{paidan},</if>
+            <if test="parentid != null">#{parentid},</if>
+            <if test="identity != null">#{identity},</if>
+            <if test="invitation != null">#{invitation},</if>
+            <if test="token != null">#{token},</if>
+            <if test="platformId != null">#{platformId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRcUser" parameterType="RcUser">
+        update rc_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="credit != null">credit = #{credit},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="account != null">account = #{account},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="salt != null">salt = #{salt},</if>
+            <if test="safeword != null">safeword = #{safeword},</if>
+            <if test="language != null">language = #{language},</if>
+            <if test="online != null">online = #{online},</if>
+            <if test="registertime != null">registertime = #{registertime},</if>
+            <if test="paidan != null">paidan = #{paidan},</if>
+            <if test="parentid != null">parentid = #{parentid},</if>
+            <if test="identity != null">identity = #{identity},</if>
+            <if test="invitation != null">invitation = #{invitation},</if>
+            <if test="token != null">token = #{token},</if>
+            <if test="platformId != null">platformId = #{platformId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcUserById" parameterType="Long">
+        delete from rc_user where id = #{id}
+    </delete>
+
+    <delete id="deleteRcUserByIds" parameterType="String">
+        delete from rc_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
