@@ -22,8 +22,8 @@ import com.ruoyi.common.core.page.TableDataInfo;
 /**
  * 汇率Controller
  * 
- * @author xiaoxia
- * @date 2020-10-21
+ * @author xiaoyu
+ * @date 2020-10-26
  */
 @Controller
 @RequestMapping("/digital/rate")

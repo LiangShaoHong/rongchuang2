@@ -21,9 +21,9 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 实时各交易所币种交易数据Controller
- * 
+ *
  * @author xiaoyu
- * @date 2020-10-22
+ * @date 2020-10-26
  */
 @Controller
 @RequestMapping("/digital/transaction")

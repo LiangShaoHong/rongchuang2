@@ -15,12 +15,15 @@
                                 <input type="text" name="exchangeRateCode"/>
                             </li>
                             <li>
-                                <label>汇率：</label>
-                                <input type="text" name="exchangeRate"/>
-                            </li>
-                            <li>
                                 <label>汇率名称：</label>
                                 <input type="text" name="exchangeRateName"/>
+                            </li>
+                            <li>
+                                <label>汇率状态：</label>
+                                <select name="exchangeStatus" th:with="type=${@dict.getType('sys_show_hide')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -54,6 +57,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('digital:rate:edit')}]];
         var removeFlag = [[${@permission.hasPermi('digital:rate:remove')}]];
+        var exchangeStatusDatas = [[${@dict.getType('sys_show_hide')}]];
         var prefix = ctx + "digital/rate";
 
         $(function() {
@@ -77,12 +81,23 @@
                     title: '汇率代码'
                 },
                 {
+                    field: 'exchangeRateName',
+                    title: '汇率名称'
+                },
+                {
                     field: 'exchangeRate',
                     title: '汇率'
                 },
                 {
-                    field: 'exchangeRateName',
-                    title: '汇率名称'
+                    field: 'updateTime',
+                    title: '更新时间'
+                },
+                {
+                    field: 'exchangeStatus',
+                    title: '汇率状态',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(exchangeStatusDatas, value);
+                    }
                 },
                 {
                     title: '操作',

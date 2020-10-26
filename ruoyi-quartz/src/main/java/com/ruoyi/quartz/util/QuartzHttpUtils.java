@@ -2,6 +2,7 @@ package com.ruoyi.quartz.util;
 
 import com.aeuok.task.ann.Task;
 import com.aeuok.task.core.TaskContainerFactory;
+import com.ruoyi.common.utils.DateUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.http.*;
@@ -23,7 +24,11 @@ import org.springframework.scheduling.annotation.Async;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -247,7 +252,7 @@ public class QuartzHttpUtils {
 //        }
 //    }
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) throws IOException, URISyntaxException, ParseException {
 //        String uri = "https://dncapi.bqrank.net/api/coin/web-coininfo";
 //        List<NameValuePair> paratmers = new ArrayList<NameValuePair>();
 //        paratmers.add(new BasicNameValuePair("code", "filecoinnew"));
@@ -292,6 +297,15 @@ public class QuartzHttpUtils {
 //            }
 //            System.out.println(i);
 //        }
+
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String str = format.format(new Date(Long.valueOf("1603682043000")));
+//        Date dd = format.parse(str);
+//        System.out.println(str);
+//        System.out.println(dd);
+
+//        Date dd = format.parse(format.format(new Date(Long.valueOf("1603682043000"))));
+//        System.out.println(dd);
 
     }
 }

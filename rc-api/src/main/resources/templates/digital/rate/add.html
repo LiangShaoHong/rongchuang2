@@ -24,6 +24,15 @@
                     <input name="exchangeRate" class="form-control" type="text">
                 </div>
             </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">汇率状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('sys_show_hide')}">
+                        <input type="radio" th:id="${'exchangeStatus_' + dict.dictCode}" name="exchangeStatus" th:value="${dict.dictValue}" th:checked="${dict.default}">
+                        <label th:for="${'exchangeStatus_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <th:block th:include="include :: footer" />

@@ -2,10 +2,13 @@ package com.ruoyi.digital.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 数据列表对象 rc_transaction_info
@@ -94,14 +97,12 @@ public class RcTransactionInfo extends BaseEntity
 
     /** 币种上市时间 */
     @Excel(name = "币种上市时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date onlineTime;
-
-    /** 数据更新时间linux时间戳 */
-    @Excel(name = "数据更新时间linux时间戳")
-    private String dataUpdateTime;
+    private String onlineTime;
 
     /** 入库操作时间 */
-    @Excel(name = "入库操作时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @Excel(name = "入库操作时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastUpdatatime;
 
     public void setId(Long id)
@@ -275,24 +276,16 @@ public class RcTransactionInfo extends BaseEntity
     {
         return turnOver;
     }
-    public void setOnlineTime(Date onlineTime)
+    public void setOnlineTime(String onlineTime)
     {
         this.onlineTime = onlineTime;
     }
 
-    public Date getOnlineTime()
+    public String getOnlineTime()
     {
         return onlineTime;
     }
-    public void setDataUpdateTime(String dataUpdateTime)
-    {
-        this.dataUpdateTime = dataUpdateTime;
-    }
 
-    public String getDataUpdateTime()
-    {
-        return dataUpdateTime;
-    }
     public void setLastUpdatatime(Date lastUpdatatime)
     {
         this.lastUpdatatime = lastUpdatatime;
@@ -326,7 +319,6 @@ public class RcTransactionInfo extends BaseEntity
                 .append("vol", getVol())
                 .append("turnOver", getTurnOver())
                 .append("onlineTime", getOnlineTime())
-                .append("dataUpdateTime", getDataUpdateTime())
                 .append("lastUpdatatime", getLastUpdatatime())
                 .toString();
     }

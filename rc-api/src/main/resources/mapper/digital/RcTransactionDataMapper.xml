@@ -3,118 +3,93 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.digital.mapper.RcTransactionDataMapper">
-    
+
     <resultMap type="RcTransactionData" id="RcTransactionDataResult">
         <result property="id"    column="id"    />
         <result property="name"    column="name"    />
-        <result property="symbol"    column="symbol"    />
+        <result property="code"    column="code"    />
+        <result property="fullname"    column="fullname"    />
         <result property="rank"    column="rank"    />
         <result property="logo"    column="logo"    />
-        <result property="logoPng"    column="logo_png"    />
-        <result property="priceUsd"    column="price_usd"    />
-        <result property="priceBtc"    column="price_btc"    />
-        <result property="volume24hUsd"    column="volume_24h_usd"    />
-        <result property="marketCapUsd"    column="market_cap_usd"    />
-        <result property="availableSupply"    column="available_supply"    />
-        <result property="totalSupply"    column="total_supply"    />
-        <result property="maxSupply"    column="max_supply"    />
-        <result property="percentChange1h"    column="percent_change_1h"    />
-        <result property="percentChange24h"    column="percent_change_24h"    />
-        <result property="percentChange7d"    column="percent_change_7d"    />
+        <result property="currentPrice"    column="current_price"    />
+        <result property="currentPriceUsd"    column="current_price_usd"    />
+        <result property="marketValue"    column="market_value"    />
+        <result property="marketValueUsd"    column="market_value_usd"    />
+        <result property="changePercent"    column="change_percent"    />
         <result property="lastUpdated"    column="last_updated"    />
     </resultMap>
 
     <sql id="selectRcTransactionDataVo">
-        select id, name, symbol, rank, logo, logo_png, price_usd, price_btc, volume_24h_usd, market_cap_usd, available_supply, total_supply, max_supply, percent_change_1h, percent_change_24h, percent_change_7d, last_updated from rc_transaction_data
+        select id, name, code, fullname, rank, logo, current_price, current_price_usd, market_value, market_value_usd, change_percent, last_updated from rc_transaction_data
     </sql>
 
     <select id="selectRcTransactionDataList" parameterType="RcTransactionData" resultMap="RcTransactionDataResult">
         <include refid="selectRcTransactionDataVo"/>
-        <where>  
+        <where>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="symbol != null  and symbol != ''"> and symbol = #{symbol}</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="fullname != null  and fullname != ''"> and fullname like concat('%', #{fullname}, '%')</if>
             <if test="rank != null  and rank != ''"> and rank = #{rank}</if>
             <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
-            <if test="logoPng != null  and logoPng != ''"> and logo_png = #{logoPng}</if>
-            <if test="priceUsd != null "> and price_usd = #{priceUsd}</if>
-            <if test="priceBtc != null "> and price_btc = #{priceBtc}</if>
-            <if test="volume24hUsd != null "> and volume_24h_usd = #{volume24hUsd}</if>
-            <if test="marketCapUsd != null "> and market_cap_usd = #{marketCapUsd}</if>
-            <if test="availableSupply != null "> and available_supply = #{availableSupply}</if>
-            <if test="totalSupply != null "> and total_supply = #{totalSupply}</if>
-            <if test="maxSupply != null "> and max_supply = #{maxSupply}</if>
-            <if test="percentChange1h != null "> and percent_change_1h = #{percentChange1h}</if>
-            <if test="percentChange24h != null "> and percent_change_24h = #{percentChange24h}</if>
-            <if test="percentChange7d != null "> and percent_change_7d = #{percentChange7d}</if>
+            <if test="currentPrice != null "> and current_price = #{currentPrice}</if>
+            <if test="currentPriceUsd != null "> and current_price_usd = #{currentPriceUsd}</if>
+            <if test="marketValue != null "> and market_value = #{marketValue}</if>
+            <if test="marketValueUsd != null "> and market_value_usd = #{marketValueUsd}</if>
+            <if test="changePercent != null  and changePercent != ''"> and change_percent = #{changePercent}</if>
             <if test="lastUpdated != null  and lastUpdated != ''"> and last_updated = #{lastUpdated}</if>
         </where>
     </select>
-    
+
     <select id="selectRcTransactionDataById" parameterType="Long" resultMap="RcTransactionDataResult">
         <include refid="selectRcTransactionDataVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertRcTransactionData" parameterType="RcTransactionData">
         insert into rc_transaction_data
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="name != null">name,</if>
-            <if test="symbol != null">symbol,</if>
+            <if test="code != null">code,</if>
+            <if test="fullname != null">fullname,</if>
             <if test="rank != null">rank,</if>
             <if test="logo != null">logo,</if>
-            <if test="logoPng != null">logo_png,</if>
-            <if test="priceUsd != null">price_usd,</if>
-            <if test="priceBtc != null">price_btc,</if>
-            <if test="volume24hUsd != null">volume_24h_usd,</if>
-            <if test="marketCapUsd != null">market_cap_usd,</if>
-            <if test="availableSupply != null">available_supply,</if>
-            <if test="totalSupply != null">total_supply,</if>
-            <if test="maxSupply != null">max_supply,</if>
-            <if test="percentChange1h != null">percent_change_1h,</if>
-            <if test="percentChange24h != null">percent_change_24h,</if>
-            <if test="percentChange7d != null">percent_change_7d,</if>
+            <if test="currentPrice != null">current_price,</if>
+            <if test="currentPriceUsd != null">current_price_usd,</if>
+            <if test="marketValue != null">market_value,</if>
+            <if test="marketValueUsd != null">market_value_usd,</if>
+            <if test="changePercent != null">change_percent,</if>
             <if test="lastUpdated != null">last_updated,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="name != null">#{name},</if>
-            <if test="symbol != null">#{symbol},</if>
+            <if test="code != null">#{code},</if>
+            <if test="fullname != null">#{fullname},</if>
             <if test="rank != null">#{rank},</if>
             <if test="logo != null">#{logo},</if>
-            <if test="logoPng != null">#{logoPng},</if>
-            <if test="priceUsd != null">#{priceUsd},</if>
-            <if test="priceBtc != null">#{priceBtc},</if>
-            <if test="volume24hUsd != null">#{volume24hUsd},</if>
-            <if test="marketCapUsd != null">#{marketCapUsd},</if>
-            <if test="availableSupply != null">#{availableSupply},</if>
-            <if test="totalSupply != null">#{totalSupply},</if>
-            <if test="maxSupply != null">#{maxSupply},</if>
-            <if test="percentChange1h != null">#{percentChange1h},</if>
-            <if test="percentChange24h != null">#{percentChange24h},</if>
-            <if test="percentChange7d != null">#{percentChange7d},</if>
+            <if test="currentPrice != null">#{currentPrice},</if>
+            <if test="currentPriceUsd != null">#{currentPriceUsd},</if>
+            <if test="marketValue != null">#{marketValue},</if>
+            <if test="marketValueUsd != null">#{marketValueUsd},</if>
+            <if test="changePercent != null">#{changePercent},</if>
             <if test="lastUpdated != null">#{lastUpdated},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateRcTransactionData" parameterType="RcTransactionData">
         update rc_transaction_data
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null">name = #{name},</if>
-            <if test="symbol != null">symbol = #{symbol},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="fullname != null">fullname = #{fullname},</if>
             <if test="rank != null">rank = #{rank},</if>
             <if test="logo != null">logo = #{logo},</if>
-            <if test="logoPng != null">logo_png = #{logoPng},</if>
-            <if test="priceUsd != null">price_usd = #{priceUsd},</if>
-            <if test="priceBtc != null">price_btc = #{priceBtc},</if>
-            <if test="volume24hUsd != null">volume_24h_usd = #{volume24hUsd},</if>
-            <if test="marketCapUsd != null">market_cap_usd = #{marketCapUsd},</if>
-            <if test="availableSupply != null">available_supply = #{availableSupply},</if>
-            <if test="totalSupply != null">total_supply = #{totalSupply},</if>
-            <if test="maxSupply != null">max_supply = #{maxSupply},</if>
-            <if test="percentChange1h != null">percent_change_1h = #{percentChange1h},</if>
-            <if test="percentChange24h != null">percent_change_24h = #{percentChange24h},</if>
-            <if test="percentChange7d != null">percent_change_7d = #{percentChange7d},</if>
+            <if test="currentPrice != null">current_price = #{currentPrice},</if>
+            <if test="currentPriceUsd != null">current_price_usd = #{currentPriceUsd},</if>
+            <if test="marketValue != null">market_value = #{marketValue},</if>
+            <if test="marketValueUsd != null">market_value_usd = #{marketValueUsd},</if>
+            <if test="changePercent != null">change_percent = #{changePercent},</if>
             <if test="lastUpdated != null">last_updated = #{lastUpdated},</if>
         </trim>
         where id = #{id}
@@ -132,44 +107,63 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <insert id="insertRcTransactionDataList" useGeneratedKeys="true" keyProperty="id" parameterType="RcTransactionData">
-        REPLACE into rc_transaction_data (name,symbol,rank,logo,price_usd,price_btc,percent_change_24h,last_updated)
+        REPLACE into rc_transaction_data (name,code,fullname,rank,logo,current_price,current_price_usd,market_value,market_value_usd,change_percent,last_updated)
         values
         <foreach collection="list" item="dept" index="index" separator=",">
             (
-            #{dept.name,jdbcType=VARCHAR}, #{dept.symbol,jdbcType=VARCHAR}, #{dept.rank,jdbcType=VARCHAR}, #{dept.logo,jdbcType=VARCHAR},
-            #{dept.priceUsd,jdbcType=DECIMAL},#{dept.priceBtc,jdbcType=DECIMAL},
-            #{dept.percentChange24h,jdbcType=VARCHAR},#{dept.lastUpdated,jdbcType=VARCHAR}
+            #{dept.name,jdbcType=VARCHAR}, #{dept.code,jdbcType=VARCHAR}, #{dept.fullname,jdbcType=VARCHAR}, #{dept.rank,jdbcType=VARCHAR}, #{dept.logo,jdbcType=VARCHAR},
+            #{dept.currentPrice,jdbcType=DECIMAL},#{dept.currentPriceUsd,jdbcType=DECIMAL},
+            #{dept.marketValue,jdbcType=DECIMAL},#{dept.marketValueUsd,jdbcType=DECIMAL},
+            #{dept.changePercent,jdbcType=VARCHAR},#{dept.lastUpdated,jdbcType=VARCHAR}
             )
         </foreach>
     </insert>
 
-
     <update id="updateRcTransactionDataList"  parameterType="java.util.List">
         update rc_transaction_data
         <trim prefix="set" suffixOverrides=",">
-            <trim prefix="price_usd =case" suffix="end,">
+            <trim prefix="rank =case" suffix="end,">
                 <foreach collection="list" item="item" index="index">
-                    <if test="item.priceUsd!=null">
-                        when id = #{item.id} then #{item.priceUsd}
+                    <if test="item.rank!=null">
+                        when id = #{item.id} then #{item.rank}
                     </if>
                 </foreach>
             </trim>
-            <trim prefix="price_btc =case" suffix="end,">
+            <trim prefix="current_price =case" suffix="end,">
                 <foreach collection="list" item="item">
-                    <if test="item.priceBtc!=null">
-                        when id = #{item.id} then #{item.priceBtc}
+                    <if test="item.currentPrice!=null">
+                        when id = #{item.id} then #{item.currentPrice}
                     </if>
                 </foreach>
             </trim>
-
-            <trim prefix="percent_change_24h =case" suffix="end,">
+            <trim prefix="current_price_usd =case" suffix="end,">
                 <foreach collection="list" item="item">
-                    <if test="item.percentChange24h!=null">
-                        when id = #{item.id} then #{item.percentChange24h}
+                    <if test="item.currentPriceUsd!=null">
+                        when id = #{item.id} then #{item.currentPriceUsd}
                     </if>
                 </foreach>
             </trim>
-
+            <trim prefix="market_value =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.marketValue!=null">
+                        when id = #{item.id} then #{item.marketValue}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="market_value_usd =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.marketValueUsd!=null">
+                        when id = #{item.id} then #{item.marketValueUsd}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="change_percent =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.changePercent!=null">
+                        when id = #{item.id} then #{item.changePercent}
+                    </if>
+                </foreach>
+            </trim>
             <trim prefix="last_updated =case" suffix="end,">
                 <foreach collection="list" item="item">
                     <if test="item.lastUpdated!=null">

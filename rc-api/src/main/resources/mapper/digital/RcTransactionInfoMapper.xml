@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="vol"    column="vol"    />
         <result property="turnOver"    column="turn_over"    />
         <result property="onlineTime"    column="online_time"    />
-        <result property="updatetime"    column="updatetime"    />
+        <result property="updateTime"    column="updatetime"    />
         <result property="lastUpdatatime"    column="last_updatatime"    />
     </resultMap>
 
@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="vol != null "> and vol = #{vol}</if>
             <if test="turnOver != null "> and turn_over = #{turnOver}</if>
             <if test="onlineTime != null "> and online_time = #{onlineTime}</if>
-            <if test="updatetime != null  and updatetime != ''"> and updatetime = #{updatetime}</if>
+            <if test="updateTime != null  and updateTime != ''"> and updatetime = #{updateTime}</if>
             <if test="lastUpdatatime != null "> and last_updatatime = #{lastUpdatatime}</if>
         </where>
     </select>
@@ -87,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="vol != null">vol,</if>
             <if test="turnOver != null">turn_over,</if>
             <if test="onlineTime != null">online_time,</if>
-            <if test="updatetime != null">updatetime,</if>
+            <if test="updateTime != null">updatetime,</if>
             <if test="lastUpdatatime != null">last_updatatime,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -110,7 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="vol != null">#{vol},</if>
             <if test="turnOver != null">#{turnOver},</if>
             <if test="onlineTime != null">#{onlineTime},</if>
-            <if test="updatetime != null">#{updatetime},</if>
+            <if test="updateTime != null">#{updatetime},</if>
             <if test="lastUpdatatime != null">#{lastUpdatatime},</if>
          </trim>
     </insert>
@@ -166,7 +166,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{dept.coindesc,jdbcType=VARCHAR},#{dept.marketcap,jdbcType=DECIMAL},#{dept.marketcapTotalUsd,jdbcType=DECIMAL},#{dept.price,jdbcType=DECIMAL},
             #{dept.priceCny,jdbcType=DECIMAL},#{dept.changePercent,jdbcType=DECIMAL},#{dept.supply,jdbcType=DECIMAL},#{dept.totalSupply,jdbcType=DECIMAL},
             #{dept.circulationRate,jdbcType=DECIMAL},#{dept.amountDay,jdbcType=DECIMAL},#{dept.high,jdbcType=DECIMAL},#{dept.low,jdbcType=DECIMAL},
-            #{dept.vol,jdbcType=DECIMAL},#{dept.turnOver,jdbcType=DECIMAL},#{dept.onlineTime,jdbcType=DATE},
+            #{dept.vol,jdbcType=DECIMAL},#{dept.turnOver,jdbcType=DECIMAL},#{dept.onlineTime,jdbcType=VARCHAR},
             #{dept.updateTime,jdbcType=DATE},#{dept.lastUpdatatime,jdbcType=DATE}
             )
         </foreach>

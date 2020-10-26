@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,8 +38,6 @@ public class RcTransactionDataTask {
     @Autowired
     private IRcTransactionInfoService infoService;
 
-
-
     @Async
     public void second() throws InterruptedException {
         System.out.println("开始执行拉取详情数据.........................");
@@ -57,26 +56,31 @@ public class RcTransactionDataTask {
                     continue;
                 }
                 Thread.sleep(5000);
-                JSONArray jsonArray = JSONArray.fromObject(result);
+                JSONObject sql = JSONObject.fromObject(result);
+                JSONArray jsonArray = JSONArray.fromObject(sql.getString("data"));
                 Object[] objs = jsonArray.toArray();
                 List<RcTransactionData> addList = new ArrayList<>();
                 List<RcTransactionInfo> infoList = new ArrayList<>();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 for (Object object : objs) {
                     JSONObject jsonObject = JSONObject.fromObject(object);
                     RcTransactionData data=new RcTransactionData();
                     RcTransactionInfo infoData = new RcTransactionInfo();
 
                     data.setName((String)jsonObject.getString("name"));
-                    data.setSymbol((String)jsonObject.getString("symbol"));
+                    data.setCode((String)jsonObject.getString("code"));
+                    data.setFullname((String)jsonObject.getString("fullname"));
                     data.setRank(jsonObject.getString("rank"));
                     data.setLogo((String)jsonObject.getString("logo"));
-                    data.setPriceUsd(new BigDecimal(jsonObject.getString("price_usd")));
-                    data.setPriceBtc(new BigDecimal(jsonObject.getString("price_btc")));
-                    data.setPercentChange24h((String)jsonObject.getString("percent_change_24h"));
-                    data.setLastUpdated((String)jsonObject.getString("last_updated"));
+                    data.setCurrentPrice(new BigDecimal(jsonObject.getString("current_price")));
+                    data.setCurrentPriceUsd(new BigDecimal(jsonObject.getString("current_price_usd")));
+                    data.setMarketValue(new BigDecimal(jsonObject.getString("market_value")));
+                    data.setMarketValueUsd(new BigDecimal(jsonObject.getString("market_value_usd")));
+                    data.setChangePercent((String)jsonObject.getString("change_percent"));
+                    data.setLastUpdated(new Date());
 
                     JSONObject paramsInfo = new JSONObject();
-                    paramsInfo.put("code", jsonObject.getString("id"));
+                    paramsInfo.put("code", data.getCode());
                     JSONObject resultPost = QuartzHttpUtils.makeAPICallPost("https://dncapi.bqrank.net/api/coin/web-coininfo", paramsInfo);
                     JSONObject resultInfo = JSONObject.fromObject(resultPost.getString("data"));
                     if(!result.isEmpty()){
@@ -98,8 +102,8 @@ public class RcTransactionDataTask {
                         infoData.setLow(new BigDecimal(resultInfo.getString("low")));
                         infoData.setVol(new BigDecimal(resultInfo.getString("vol")));
                         infoData.setTurnOver(new BigDecimal(resultInfo.getString("turn_over")));
-                        infoData.setOnlineTime(new Date());
-                        infoData.setUpdateTime(new Date());
+                        infoData.setOnlineTime((String)resultInfo.getString("online_time"));
+                        infoData.setUpdateTime(format.parse(format.format(new Date(Long.valueOf((String)resultInfo.getString("updatetime") + "000")))));
                         infoData.setLastUpdatatime(new Date());
                         infoList.add(infoData);
                     }
