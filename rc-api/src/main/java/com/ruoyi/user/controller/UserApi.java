@@ -19,6 +19,8 @@ import com.ruoyi.user.service.IRcUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,16 +46,25 @@ public class UserApi extends BaseController {
     private RcUserMapperPlus rcUserMapperPlus;
     @Autowired
     private RcUserSmsMapper rcUserSmsMapper;
-
+    @Autowired
     private RcUserMapper rcUserMapper;
-
+    @Lazy
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     /**
-     * 新增收款账户
+     * 会员注册
      *
 
      * @return
      */
+    @RequestMapping("/rc-api/user/ceshi")
+    public String ceshi(String invi){
+        JSONObject selectinvitation = rcUserMapper.selectinvitation(invi);
+
+
+        return selectinvitation.toString();
+
+    }
     @RequestMapping("/rc-api/user/register")
     public Result addBank(@RequestParam("account") String account,
                           @RequestParam("password") String passWord,
@@ -63,36 +74,37 @@ public class UserApi extends BaseController {
 
                           HttpServletRequest request) throws ParseException {
 
-      //产生邀请码
+        //产生邀请码
         String showId = OrderNumUtil.getRandomNum(8);
         //检测产生的邀请码是否被使用了
 
         //JSONObject userByShowId = userService.getUserByShowId(showId, MsgConstants.IS_NO, null);
-        QueryWrapper queryWrapper=new QueryWrapper();
-        queryWrapper.eq("invitation",showId);
 
-        Integer integer = rcUserMapperPlus.selectCount(queryWrapper);
 
-        if (integer>0){
+        JSONObject selectinvitation = rcUserMapper.selectinvitation(showId);
+        Integer integer =0;
+
+        if (selectinvitation!=null){
             return Result.isFail().msg("请重试");
         }
         //检查验证码是否过期
-        Object o = redisService.get(InfoConstants.VERIFICATION_PHONE_MAP + mobile, InfoConstants.DB_MESSAGE);
-        if (null == o) {
-            return Result.isFail().msg(MsgConstants.PLEASE_SEND_AGAIN);
-        }
-        //验证输入的验证码是否正确
-        if (!String.valueOf(o).equals(verificationCode)) {
-            return Result.isFail().msg(MsgConstants.VERIFICATION_ERROR);
-        }
+//        Object o = redisService.get(InfoConstants.VERIFICATION_PHONE_MAP + mobile, InfoConstants.DB_MESSAGE);
+//        if (null == o) {
+//            return Result.isFail().msg(MsgConstants.PLEASE_SEND_AGAIN);
+//        }
+//        //验证输入的验证码是否正确
+//        if (!String.valueOf(o).equals(verificationCode)) {
+//            return Result.isFail().msg(MsgConstants.VERIFICATION_ERROR);
+//        }
         //检测手机号是否存在正在使用
         //User checkUser = userService.getUserByTel(mobile, MsgConstants.IS_NO, null, platformBase.getId());
-       QueryWrapper queryWrapper1=new QueryWrapper();
+        QueryWrapper queryWrapper1=new QueryWrapper();
 
         queryWrapper1.eq("mobile",mobile);
-        Integer integer1 = rcUserMapperPlus.selectCount(queryWrapper1);
+        JSONObject selectmobile = rcUserMapper.selectmobile(mobile);
 
-        if (integer1>0) {
+
+        if (selectmobile !=null) {
             return Result.isFail().msg(MsgConstants.USER_ALLREADY_EXITS);
         }
 //        //检测是否存在被封的号
@@ -120,6 +132,7 @@ public class UserApi extends BaseController {
 //        // 注册
 //        User u = userService.register(platformBase.getId(), user, invitationCode);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
         String registertime=df.format(new Date());
         RcUser u = new RcUser(0l,
@@ -132,15 +145,15 @@ public class UserApi extends BaseController {
                 0l,
                 language,
                 0,
-               new Date(registertime) ,
+                df.parse(registertime) ,
                 0,
                 0l,
-                "",
+                "12",
                 "",
                 "",
                 "0");
 
-        int insert = rcUserMapperPlus.insert(u);
+        int insert = rcUserMapper.insertRcUser(u);
         if (insert==0) {
             return Result.isFail().msg(MsgConstants.INVITATION_UNUSER);
         }
@@ -188,26 +201,20 @@ public class UserApi extends BaseController {
         Date nowDate = DateUtils.getNowDate();
         QueryWrapper queryWrapperlogin=new QueryWrapper();
         queryWrapperlogin.eq("account",account);
-        Integer integerlogin = rcUserMapperPlus.selectCount(queryWrapperlogin);
-        if(integerlogin==0){
+
+        RcUser rcUser = rcUserMapper.selectaccount(account);
+        if(rcUser==null){
 
             return Result.isFail().msg("查无此账号");
         }
-        RcUser rcUser = rcUserMapperPlus.selectOne(queryWrapperlogin);
-        if (null == rcUser){
-            //插入登录失败日志
-            Map<String, Object> extractPublicParam = super.extractPublicParam(request);
-            //获取请求的ip地址
-            String ip = (String) extractPublicParam.get("extra_ip");
+        //RcUser rcUser = rcUserMapper.selectaccount(queryWrapperlogin);
 
-            return Result.isFail().msg("请重新注册");
-        }
         String password = bCryptPasswordEncoder.encode(rcUser.getInvitation() + pass);
         QueryWrapper verify=new QueryWrapper();
         verify.eq("password",password);
         verify.eq("account",account);
-        Integer integerverify = rcUserMapperPlus.selectCount(verify);
-        if(integerverify==0){
+        RcUser selectverify = rcUserMapper.selectverify(account, password);
+        if(selectverify==null){
             return Result.isFail().msg("账号密码不匹配");
         }
 

@@ -75,5 +75,32 @@ public interface RcUserMapper
      * @param invitation 邀请码
      * @return 结果
      */
-    public int selectCount(String invitation);
+    /**tring
+     *查询邀请码是否被使用
+     *
+     * @param invitation 邀请码
+     * @return 结果
+     */
+    JSONObject selectinvitation(@Param("invitation") String invitation);
+    /**tring
+     *查询手机号是否被使用
+     *
+     * @param mobile 邀请码
+     * @return 结果
+     */
+    JSONObject selectmobile(@Param("mobile") String mobile);
+    /**tring
+     *查询账号是否被使用
+     * @param account 账号
+
+     * @return 结果
+     */
+    RcUser selectaccount(@Param("account") String account);
+    /**tring
+     *查询账号是否被使用
+     * @param account 账号
+     * @param password 密码
+     * @return 结果
+     */
+    RcUser selectverify(@Param("account") String account,@Param("password") String password);
 }

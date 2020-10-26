@@ -54,10 +54,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectRcUserVo"/>
         where id = #{id}
     </select>
-    <select id="selectCount" parameterType="Long" resultMap="RcUserResult">
-        <include refid="selectRcUserVo"/>
-        where id = #{id}
+    <select id="selectinvitation" parameterType="String" resultType="com.ruoyi.common.json.JSONObject">
+
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where invitation = #{invitation}
     </select>
+
+    <select id="selectmobile" parameterType="String" resultType="com.ruoyi.common.json.JSONObject">
+
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where mobile = #{mobile}
+    </select>
+    <select id="selectaccount" parameterType="String" resultMap="RcUserResult">
+
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where account = #{account}
+    </select>
+    <select id="selectverify" parameterType="String" resultMap="RcUserResult">
+
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where account = #{account} and account = #{password}
+    </select>
+
     <insert id="insertRcUser" parameterType="RcUser" useGeneratedKeys="true" keyProperty="id">
         insert into rc_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
