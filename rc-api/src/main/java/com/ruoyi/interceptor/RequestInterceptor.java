@@ -36,6 +36,7 @@ public class RequestInterceptor implements HandlerInterceptor {
      * return false时，被请求时，拦截器执行到此处将不会继续操作
      * return true时，请求将会继续执行后面的操作
      */
+    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
         // 设置服务器端编码
@@ -115,12 +116,14 @@ public class RequestInterceptor implements HandlerInterceptor {
      * 请求处理之后进行调用，但是在视图被渲染之前（Controller方法调用之后）
      *
      */
+    @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
     }
 
     /**
      * 在整个请求结束之后被调用，也就是在DispatcherServlet 渲染了对应的视图之后执行（主要是用于进行资源清理工作）
      */
+    @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
     }
 
