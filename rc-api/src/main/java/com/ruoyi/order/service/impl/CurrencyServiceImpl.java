@@ -1,12 +1,13 @@
 package com.ruoyi.order.service.impl;
 
+import com.ruoyi.common.Result;
 import com.ruoyi.common.core.page.PageDomain;
-import com.ruoyi.common.utils.ResultDto;
 import com.ruoyi.order.domain.CurrencyOrder;
 import com.ruoyi.order.domain.FrenchCurrencyOrder;
 import com.ruoyi.order.domain.Profit;
 import com.ruoyi.order.mapper.CurrencyMapper;
 import com.ruoyi.order.service.CurrencyService;
+import com.ruoyi.user.domain.RcUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,60 +21,53 @@ public class CurrencyServiceImpl implements CurrencyService {
     private CurrencyMapper currencyMapper;
 
     @Override
-    public ResultDto getBbPerInformation(String X_Token) {
-        Profit profit = currencyMapper.getBbPerInformation(1);
-        ResultDto resultDto = new ResultDto(1, "查询成功", profit);
-        return resultDto;
+    public Result getBbPerInformation(RcUser rcUser) {
+        Profit profit = currencyMapper.getBbPerInformation(rcUser.getId());
+        return new Result().code(1).msg("查询成功").data(profit);
     }
 
     @Override
-    public ResultDto getBbMyOrderList(String X_Token, Integer pageNum, Integer pageSize) {
-        Integer userId = 1;
+    public Result getBbMyOrderList(RcUser rcUser, Integer pageNum, Integer pageSize) {
         pageNum = (pageNum - 1) * pageSize;
-        List<CurrencyOrder> currencyOrder = currencyMapper.getBbMyOrderList(userId, pageNum, pageSize);
-        ResultDto resultDto = new ResultDto(1, "查询成功", currencyOrder);
-        return resultDto;
+        List<CurrencyOrder> currencyOrderList = currencyMapper.getBbMyOrderList(rcUser.getId(), pageNum, pageSize);
+        return new Result().code(1).msg("查询成功").data(currencyOrderList);
     }
 
     @Override
-    public ResultDto getBbAutomaticOrder(String X_Token) {
+    public Result getBbAutomaticOrder(RcUser rcUser) {
         return null;
     }
 
     @Override
-    public ResultDto editBbAutomaticOrder(String X_Token, Boolean automatic) {
+    public Result editBbAutomaticOrder(RcUser rcUser, Boolean automatic) {
         return null;
     }
 
     @Override
-    public ResultDto getBbOptionalOrder(String X_Token, Integer pageNum, Integer pageSize) {
+    public Result getBbOptionalOrder(RcUser rcUser, Integer pageNum, Integer pageSize) {
         return null;
     }
 
     @Override
-    public ResultDto getBbHistorical(String X_Token, Integer pageNum, Integer pageSize) {
-        Integer userId = 1;
+    public Result getBbHistorical(RcUser rcUser, Integer pageNum, Integer pageSize) {
         pageNum = (pageNum - 1) * pageSize;
-        List<CurrencyOrder> currencyOrder = currencyMapper.getBbHistorical(userId, pageNum, pageSize);
-        ResultDto resultDto = new ResultDto(1, "查询成功", currencyOrder);
-        return resultDto;
+        List<CurrencyOrder> currencyOrderList = currencyMapper.getBbHistorical(rcUser.getId(), pageNum, pageSize);
+        return new Result().code(1).msg("查询成功").data(currencyOrderList);
     }
 
     @Override
-    public ResultDto getBbDetails(String X_Token, String id) {
-        Integer userId = 1;
-        CurrencyOrder CurrencyOrder = currencyMapper.getBbDetails(userId, id);
-        ResultDto resultDto = new ResultDto(1, "查询成功", CurrencyOrder);
-        return resultDto;
+    public Result getBbDetails(RcUser rcUser, String id) {
+        CurrencyOrder currencyOrder = currencyMapper.getBbDetails(rcUser.getId(), id);
+        return new Result().code(1).msg("查询成功").data(currencyOrder);
     }
 
     @Override
-    public ResultDto bbConfirm(String X_Token, String id) {
+    public Result bbConfirm(RcUser rcUser, String id) {
         return null;
     }
 
     @Override
-    public ResultDto robBbOrder(String X_Token, String id) {
+    public Result robBbOrder(RcUser rcUser, String id) {
         return null;
     }
 }

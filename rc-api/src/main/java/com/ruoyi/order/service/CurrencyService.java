@@ -1,7 +1,9 @@
 package com.ruoyi.order.service;
 
+import com.ruoyi.common.Result;
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.utils.ResultDto;
+import com.ruoyi.user.domain.RcUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -15,33 +17,31 @@ import io.swagger.annotations.ApiOperation;
 public interface CurrencyService {
 
     @ApiOperation("查询个人信息接口")
-    public ResultDto getBbPerInformation(String X_Token);
+    public Result getBbPerInformation(RcUser user);
 
 
     @ApiOperation("查询我的订单列表接口")
-    public ResultDto getBbMyOrderList(String X_Token, Integer pageNum, Integer pageSize);
+    public Result getBbMyOrderList(RcUser user, Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询自动抢单状态接口")
-    public ResultDto getBbAutomaticOrder(String X_Token);
+    public Result getBbAutomaticOrder(RcUser user);
 
     @ApiOperation("改变自动抢单状态接口")
-    public ResultDto editBbAutomaticOrder(String X_Token, Boolean automatic);
+    public Result editBbAutomaticOrder(RcUser user, Boolean automatic);
 
     @ApiOperation("查询可选订单列表接口")
-    public ResultDto getBbOptionalOrder(String X_Token, Integer pageNum, Integer pageSize);
+    public Result getBbOptionalOrder(RcUser user, Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询历史记录接口")
-    public ResultDto getBbHistorical(String X_Token, Integer pageNum, Integer pageSize);
+    public Result getBbHistorical(RcUser user, Integer pageNum, Integer pageSize);
 
 
     @ApiOperation("查询历史记录详情接口")
-    public ResultDto getBbDetails(String X_Token, String id);
+    public Result getBbDetails(RcUser user, String id);
 
     @ApiOperation("确定收款接口")
-
-    public ResultDto bbConfirm(String X_Token, String id);
+    public Result bbConfirm(RcUser user, String id);
 
     @ApiOperation("抢订单接口")
-
-    public ResultDto robBbOrder(String X_Token, String id);
+    public Result robBbOrder(RcUser user, String id);
 }

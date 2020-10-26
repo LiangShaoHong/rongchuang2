@@ -16,12 +16,12 @@ import java.util.List;
 public interface CurrencyMapper {
 
 
-    public Profit getBbPerInformation(Integer userId);
+    public Profit getBbPerInformation(Long userId);
 
-    public List<CurrencyOrder> getBbMyOrderList(@Param("userId") Integer userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    public List<CurrencyOrder> getBbMyOrderList(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
-    public List<CurrencyOrder> getBbHistorical(@Param("userId") Integer userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    public List<CurrencyOrder> getBbHistorical(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
-    public CurrencyOrder getBbDetails(@Param("userId") Integer userId, @Param("id") String id);
+    public CurrencyOrder getBbDetails(@Param("userId") Long userId, @Param("id") String id);
 
 }

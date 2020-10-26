@@ -1,9 +1,15 @@
 package com.ruoyi.order.service;
 
+import com.ruoyi.common.Result;
 import com.ruoyi.common.core.page.PageDomain;
 import com.ruoyi.common.utils.ResultDto;
+import com.ruoyi.order.domain.FrenchCurrencyOrder;
+import com.ruoyi.order.domain.Profit;
+import com.ruoyi.user.domain.RcUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import java.util.List;
 
 /**
  * 法币业务接口
@@ -15,33 +21,33 @@ import io.swagger.annotations.ApiOperation;
 public interface LegalCurrencyService {
 
     @ApiOperation("查询个人信息接口")
-    public ResultDto getFbPerInformation(String X_Token);
+    public Result getFbPerInformation(RcUser user);
 
 
     @ApiOperation("查询我的订单列表接口")
-    public ResultDto getFbMyOrderList(String X_Token, Integer pageNum, Integer pageSize);
+    public Result getFbMyOrderList(RcUser user, Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询自动抢单状态接口")
-    public ResultDto getFbAutomaticOrder(String X_Token);
+    public Result getFbAutomaticOrder(RcUser user);
 
     @ApiOperation("改变自动抢单状态接口")
-    public ResultDto editFbAutomaticOrder(String X_Token, Boolean automatic);
+    public Result editFbAutomaticOrder(RcUser user, Boolean automatic);
 
     @ApiOperation("查询可选订单列表接口")
-    public ResultDto getFbOptionalOrder(String X_Token, Integer pageNum, Integer pageSize);
+    public Result getFbOptionalOrder(RcUser user, Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询历史记录接口")
-    public ResultDto getFbHistorical(String X_Token, Integer pageNum, Integer pageSize);
+    public Result getFbHistorical(RcUser user, Integer pageNum, Integer pageSize);
 
 
     @ApiOperation("查询历史记录详情接口")
-    public ResultDto getFbDetails(String X_Token, String id);
+    public Result getFbDetails(RcUser user, String id);
 
     @ApiOperation("确定收款接口")
 
-    public ResultDto fbConfirm(String X_Token, String id);
+    public Result fbConfirm(RcUser user, String id);
 
     @ApiOperation("抢订单接口")
 
-    public ResultDto robFbOrder(String X_Token, String id);
+    public Result robFbOrder(RcUser user, String id);
 }

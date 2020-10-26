@@ -1,17 +1,25 @@
 package com.ruoyi.order;
 
 
-import com.ruoyi.common.core.page.PageDomain;
+import com.ruoyi.common.Constants;
+import com.ruoyi.common.Result;
+import com.ruoyi.common.SystemUtil;
 import com.ruoyi.common.utils.ResultDto;
+import com.ruoyi.order.domain.FrenchCurrencyOrder;
+import com.ruoyi.order.domain.Profit;
 import com.ruoyi.order.service.LegalCurrencyService;
+import com.ruoyi.user.domain.RcUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 法币业务接口
@@ -28,6 +36,10 @@ public class LegalCurrencyApi {
     @Autowired
     private LegalCurrencyService legalCurrencyService;
 
+
+    @Resource
+    private SystemUtil systemUtil;
+
     @ApiOperation("查询个人信息接口")
     @ApiImplicitParams(
             {
@@ -35,10 +47,9 @@ public class LegalCurrencyApi {
 
             })
     @RequestMapping("/getFbPerInformation")
-    public ResultDto getFbPerInformation(HttpServletRequest request) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = legalCurrencyService.getFbPerInformation(X_Token);
-        return resultDto;
+    public Result getFbPerInformation(HttpServletRequest request) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return legalCurrencyService.getFbPerInformation(user);
     }
 
 
@@ -50,10 +61,9 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
     @RequestMapping("/getFbMyOrderList")
-    public ResultDto getFbMyOrderList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = legalCurrencyService.getFbMyOrderList(X_Token, pageNum, pageSize);
-        return resultDto;
+    public Result getFbMyOrderList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return legalCurrencyService.getFbMyOrderList(user, pageNum, pageSize);
     }
 
     @ApiOperation("查询自动抢单状态接口")
@@ -62,10 +72,9 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true)
             })
     @RequestMapping("/getFbAutomaticOrder")
-    public ResultDto getFbAutomaticOrder(HttpServletRequest request) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = legalCurrencyService.getFbAutomaticOrder(X_Token);
-        return resultDto;
+    public Result getFbAutomaticOrder(HttpServletRequest request) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return legalCurrencyService.getFbAutomaticOrder(user);
     }
 
     @ApiOperation("改变自动抢单状态接口")
@@ -75,10 +84,9 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "Boolean", name = "automatic", value = "是否开启自动抢单", required = true)
             })
     @RequestMapping("/editFbAutomaticOrder")
-    public ResultDto editFbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = legalCurrencyService.editFbAutomaticOrder(X_Token, automatic);
-        return resultDto;
+    public Result editFbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return legalCurrencyService.editFbAutomaticOrder(user, automatic);
     }
 
     @ApiOperation("查询可选订单列表接口")
@@ -89,10 +97,9 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
     @RequestMapping("/getFbOptionalOrder")
-    public ResultDto getFbOptionalOrder(HttpServletRequest request, Integer pageNum, Integer pageSize) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = legalCurrencyService.getFbOptionalOrder(X_Token, pageNum, pageSize);
-        return resultDto;
+    public Result getFbOptionalOrder(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return legalCurrencyService.getFbOptionalOrder(user, pageNum, pageSize);
     }
 
     @ApiOperation("查询历史记录接口")
@@ -103,10 +110,9 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
     @RequestMapping("/getFbHistorical")
-    public ResultDto getFbHistorical(HttpServletRequest request, Integer pageNum, Integer pageSize) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = legalCurrencyService.getFbHistorical(X_Token, pageNum, pageSize);
-        return resultDto;
+    public Result getFbHistorical(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return legalCurrencyService.getFbHistorical(user, pageNum, pageSize);
     }
 
 
@@ -118,10 +124,9 @@ public class LegalCurrencyApi {
 
             })
     @RequestMapping("/getFbDetails")
-    public ResultDto getFbDetails(HttpServletRequest request, String id) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = legalCurrencyService.getFbDetails(X_Token, id);
-        return resultDto;
+    public Result getFbDetails(HttpServletRequest request, String id) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return legalCurrencyService.getFbDetails(user, id);
     }
 
     @ApiOperation("确定收款接口")
@@ -132,10 +137,9 @@ public class LegalCurrencyApi {
 
             })
     @RequestMapping("/fbConfirm")
-    public ResultDto fbConfirm(HttpServletRequest request, String id) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = legalCurrencyService.fbConfirm(X_Token, id);
-        return resultDto;
+    public Result fbConfirm(HttpServletRequest request, String id) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return legalCurrencyService.fbConfirm(user, id);
     }
 
     @ApiOperation("抢订单接口")
@@ -146,9 +150,9 @@ public class LegalCurrencyApi {
 
             })
     @RequestMapping("/robFbOrder")
-    public ResultDto robFbOrder(HttpServletRequest request, String id) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = legalCurrencyService.robFbOrder(X_Token, id);
-        return resultDto;
+    public Result robFbOrder(HttpServletRequest request, String id) {
+
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return legalCurrencyService.robFbOrder(user, id);
     }
 }

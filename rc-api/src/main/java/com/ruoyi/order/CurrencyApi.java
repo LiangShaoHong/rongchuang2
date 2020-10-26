@@ -1,7 +1,10 @@
 package com.ruoyi.order;
 
+import com.ruoyi.common.Result;
+import com.ruoyi.common.SystemUtil;
 import com.ruoyi.common.utils.ResultDto;
 import com.ruoyi.order.service.CurrencyService;
+import com.ruoyi.user.domain.RcUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -9,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -25,6 +29,8 @@ public class CurrencyApi {
     @Autowired
     private CurrencyService currencyService;
 
+    @Resource
+    private SystemUtil systemUtil;
 
     @ApiOperation("查询个人信息接口")
     @ApiImplicitParams(
@@ -35,10 +41,9 @@ public class CurrencyApi {
             })
 
     @RequestMapping("/getBbPerInformation")
-    public ResultDto getBbPerInformation(HttpServletRequest request) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = currencyService.getBbPerInformation(X_Token);
-        return resultDto;
+    public Result getBbPerInformation(HttpServletRequest request) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return currencyService.getBbPerInformation(user);
     }
 
 
@@ -50,10 +55,9 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
     @RequestMapping("/getBbMyOrderList")
-    public ResultDto getBbMyOrderList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = currencyService.getBbMyOrderList(X_Token, pageNum, pageSize);
-        return resultDto;
+    public Result getBbMyOrderList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return currencyService.getBbMyOrderList(user, pageNum, pageSize);
     }
 
     @ApiOperation("查询自动抢单状态接口")
@@ -62,10 +66,9 @@ public class CurrencyApi {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true)
             })
     @RequestMapping("/getBbAutomaticOrder")
-    public ResultDto getBbAutomaticOrder(HttpServletRequest request) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = currencyService.getBbAutomaticOrder(X_Token);
-        return resultDto;
+    public Result getBbAutomaticOrder(HttpServletRequest request) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return currencyService.getBbAutomaticOrder(user);
     }
 
     @ApiOperation("改变自动抢单状态接口")
@@ -75,10 +78,9 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "Boolean", name = "automatic", value = "是否开启自动抢单", required = true)
             })
     @RequestMapping("/editBbAutomaticOrder")
-    public ResultDto editBbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = currencyService.editBbAutomaticOrder(X_Token, automatic);
-        return resultDto;
+    public Result editBbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return currencyService.editBbAutomaticOrder(user, automatic);
     }
 
     @ApiOperation("查询可选订单列表接口")
@@ -89,10 +91,9 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
     @RequestMapping("/getBbOptionalOrder")
-    public ResultDto getBbOptionalOrder(HttpServletRequest request, Integer pageNum, Integer pageSize) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = currencyService.getBbOptionalOrder(X_Token, pageNum, pageSize);
-        return resultDto;
+    public Result getBbOptionalOrder(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return currencyService.getBbOptionalOrder(user, pageNum, pageSize);
     }
 
     @ApiOperation("查询历史记录接口")
@@ -103,10 +104,9 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
     @RequestMapping("/getBbHistorical")
-    public ResultDto getBbHistorical(HttpServletRequest request, Integer pageNum, Integer pageSize) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = currencyService.getBbHistorical(X_Token, pageNum, pageSize);
-        return resultDto;
+    public Result getBbHistorical(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return currencyService.getBbHistorical(user, pageNum, pageSize);
     }
 
 
@@ -118,10 +118,9 @@ public class CurrencyApi {
 
             })
     @RequestMapping("/getBbDetails")
-    public ResultDto getBbDetails(HttpServletRequest request, String id) {
-        String X_Token = request.getHeader("X_Token");
-        ResultDto resultDto = currencyService.getBbDetails(X_Token, id);
-        return resultDto;
+    public Result getBbDetails(HttpServletRequest request, String id) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return currencyService.getBbDetails(user, id);
     }
 
     @ApiOperation("抢订单接口")
@@ -132,8 +131,8 @@ public class CurrencyApi {
 
             })
     @RequestMapping("/robBbOrder")
-    public ResultDto robBbOrder(HttpServletRequest request, String id) {
-        String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+    public Result robBbOrder(HttpServletRequest request, String id) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return currencyService.robBbOrder(user, id);
     }
 }
