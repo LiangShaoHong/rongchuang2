@@ -91,4 +91,14 @@ public class RcTransactionDataServiceImpl implements IRcTransactionDataService
     {
         return rcTransactionDataMapper.deleteRcTransactionDataById(id);
     }
+
+    @Override
+    public void insertRcTransactionDataList(List<RcTransactionData> listData) {
+        rcTransactionDataMapper.insertRcTransactionDataList(listData);
+    }
+
+    @Override
+    public void updateRcTransactionDataList(List<RcTransactionData> listData) {
+        rcTransactionDataMapper.updateRcTransactionDataList(listData);
+    }
 }

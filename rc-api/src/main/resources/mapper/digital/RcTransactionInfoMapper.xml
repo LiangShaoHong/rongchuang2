@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.digital.mapper.RcTransactionInfoMapper">
+    
+    <resultMap type="RcTransactionInfo" id="RcTransactionInfoResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="fullname"    column="fullname"    />
+        <result property="logo"    column="logo"    />
+        <result property="coindesc"    column="coindesc"    />
+        <result property="marketcap"    column="marketcap"    />
+        <result property="marketcapTotalUsd"    column="marketcap_total_usd"    />
+        <result property="price"    column="price"    />
+        <result property="priceCny"    column="price_cny"    />
+        <result property="changePercent"    column="change_percent"    />
+        <result property="supply"    column="supply"    />
+        <result property="totalSupply"    column="totalSupply"    />
+        <result property="circulationRate"    column="circulationRate"    />
+        <result property="amountDay"    column="amount_day"    />
+        <result property="high"    column="high"    />
+        <result property="low"    column="low"    />
+        <result property="vol"    column="vol"    />
+        <result property="turnOver"    column="turn_over"    />
+        <result property="onlineTime"    column="online_time"    />
+        <result property="updateTime"    column="updatetime"    />
+        <result property="lastUpdatatime"    column="last_updatatime"    />
+    </resultMap>
+
+    <sql id="selectRcTransactionInfoVo">
+        select id, code, name, fullname, logo, coindesc, marketcap, marketcap_total_usd, price, price_cny, change_percent, supply, totalSupply, circulationRate, amount_day, high, low, vol, turn_over, online_time, updatetime, last_updatatime from rc_transaction_info
+    </sql>
+
+    <select id="selectRcTransactionInfoList" parameterType="RcTransactionInfo" resultMap="RcTransactionInfoResult">
+        <include refid="selectRcTransactionInfoVo"/>
+        <where>  
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="fullname != null  and fullname != ''"> and fullname like concat('%', #{fullname}, '%')</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="coindesc != null  and coindesc != ''"> and coindesc = #{coindesc}</if>
+            <if test="marketcap != null "> and marketcap = #{marketcap}</if>
+            <if test="marketcapTotalUsd != null "> and marketcap_total_usd = #{marketcapTotalUsd}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="priceCny != null "> and price_cny = #{priceCny}</if>
+            <if test="changePercent != null "> and change_percent = #{changePercent}</if>
+            <if test="supply != null "> and supply = #{supply}</if>
+            <if test="totalSupply != null "> and totalSupply = #{totalSupply}</if>
+            <if test="circulationRate != null "> and circulationRate = #{circulationRate}</if>
+            <if test="amountDay != null "> and amount_day = #{amountDay}</if>
+            <if test="high != null "> and high = #{high}</if>
+            <if test="low != null "> and low = #{low}</if>
+            <if test="vol != null "> and vol = #{vol}</if>
+            <if test="turnOver != null "> and turn_over = #{turnOver}</if>
+            <if test="onlineTime != null "> and online_time = #{onlineTime}</if>
+            <if test="updateTime != null  and updateTime != ''"> and updatetime = #{updateTime}</if>
+            <if test="lastUpdatatime != null "> and last_updatatime = #{lastUpdatatime}</if>
+        </where>
+    </select>
+    
+    <select id="selectRcTransactionInfoById" parameterType="Long" resultMap="RcTransactionInfoResult">
+        <include refid="selectRcTransactionInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRcTransactionInfo" parameterType="RcTransactionInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into rc_transaction_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">code,</if>
+            <if test="name != null">name,</if>
+            <if test="fullname != null">fullname,</if>
+            <if test="logo != null">logo,</if>
+            <if test="coindesc != null">coindesc,</if>
+            <if test="marketcap != null">marketcap,</if>
+            <if test="marketcapTotalUsd != null">marketcap_total_usd,</if>
+            <if test="price != null">price,</if>
+            <if test="priceCny != null">price_cny,</if>
+            <if test="changePercent != null">change_percent,</if>
+            <if test="supply != null">supply,</if>
+            <if test="totalSupply != null">totalSupply,</if>
+            <if test="circulationRate != null">circulationRate,</if>
+            <if test="amountDay != null">amount_day,</if>
+            <if test="high != null">high,</if>
+            <if test="low != null">low,</if>
+            <if test="vol != null">vol,</if>
+            <if test="turnOver != null">turn_over,</if>
+            <if test="onlineTime != null">online_time,</if>
+            <if test="updateTime != null">updatetime,</if>
+            <if test="lastUpdatatime != null">last_updatatime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">#{code},</if>
+            <if test="name != null">#{name},</if>
+            <if test="fullname != null">#{fullname},</if>
+            <if test="logo != null">#{logo},</if>
+            <if test="coindesc != null">#{coindesc},</if>
+            <if test="marketcap != null">#{marketcap},</if>
+            <if test="marketcapTotalUsd != null">#{marketcapTotalUsd},</if>
+            <if test="price != null">#{price},</if>
+            <if test="priceCny != null">#{priceCny},</if>
+            <if test="changePercent != null">#{changePercent},</if>
+            <if test="supply != null">#{supply},</if>
+            <if test="totalSupply != null">#{totalSupply},</if>
+            <if test="circulationRate != null">#{circulationRate},</if>
+            <if test="amountDay != null">#{amountDay},</if>
+            <if test="high != null">#{high},</if>
+            <if test="low != null">#{low},</if>
+            <if test="vol != null">#{vol},</if>
+            <if test="turnOver != null">#{turnOver},</if>
+            <if test="onlineTime != null">#{onlineTime},</if>
+            <if test="updateTime != null">#{updatetime},</if>
+            <if test="lastUpdatatime != null">#{lastUpdatatime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRcTransactionInfo" parameterType="RcTransactionInfo">
+        update rc_transaction_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="fullname != null">fullname = #{fullname},</if>
+            <if test="logo != null">logo = #{logo},</if>
+            <if test="coindesc != null">coindesc = #{coindesc},</if>
+            <if test="marketcap != null">marketcap = #{marketcap},</if>
+            <if test="marketcapTotalUsd != null">marketcap_total_usd = #{marketcapTotalUsd},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="priceCny != null">price_cny = #{priceCny},</if>
+            <if test="changePercent != null">change_percent = #{changePercent},</if>
+            <if test="supply != null">supply = #{supply},</if>
+            <if test="totalSupply != null">totalSupply = #{totalSupply},</if>
+            <if test="circulationRate != null">circulationRate = #{circulationRate},</if>
+            <if test="amountDay != null">amount_day = #{amountDay},</if>
+            <if test="high != null">high = #{high},</if>
+            <if test="low != null">low = #{low},</if>
+            <if test="vol != null">vol = #{vol},</if>
+            <if test="turnOver != null">turn_over = #{turnOver},</if>
+            <if test="onlineTime != null">online_time = #{onlineTime},</if>
+            <if test="updatetime != null">updatetime = #{updatetime},</if>
+            <if test="lastUpdatatime != null">last_updatatime = #{lastUpdatatime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcTransactionInfoById" parameterType="Long">
+        delete from rc_transaction_info where id = #{id}
+    </delete>
+
+    <delete id="deleteRcTransactionInfoByIds" parameterType="String">
+        delete from rc_transaction_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="insertRcTransactionInfoList" useGeneratedKeys="true" keyProperty="id" parameterType="RcTransactionInfo">
+        REPLACE into rc_transaction_info (code,name,fullname,logo,coindesc,
+        marketcap,marketcap_total_usd,price,price_cny,
+        change_percent,supply,totalSupply,circulationRate,amount_day,high,
+        low,vol,turn_over,online_time,updatetime,last_updatatime)
+        values
+        <foreach collection="list" item="dept" index="index" separator=",">
+            (
+            #{dept.code,jdbcType=VARCHAR}, #{dept.name,jdbcType=VARCHAR}, #{dept.fullname,jdbcType=VARCHAR}, #{dept.logo,jdbcType=VARCHAR},
+            #{dept.coindesc,jdbcType=VARCHAR},#{dept.marketcap,jdbcType=DECIMAL},#{dept.marketcapTotalUsd,jdbcType=DECIMAL},#{dept.price,jdbcType=DECIMAL},
+            #{dept.priceCny,jdbcType=DECIMAL},#{dept.changePercent,jdbcType=DECIMAL},#{dept.supply,jdbcType=DECIMAL},#{dept.totalSupply,jdbcType=DECIMAL},
+            #{dept.circulationRate,jdbcType=DECIMAL},#{dept.amountDay,jdbcType=DECIMAL},#{dept.high,jdbcType=DECIMAL},#{dept.low,jdbcType=DECIMAL},
+            #{dept.vol,jdbcType=DECIMAL},#{dept.turnOver,jdbcType=DECIMAL},#{dept.onlineTime,jdbcType=VARCHAR},
+            #{dept.updateTime,jdbcType=DATE},#{dept.lastUpdatatime,jdbcType=DATE}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

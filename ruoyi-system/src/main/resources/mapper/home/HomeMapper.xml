@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.home.mapper.RcHomeMapper">
+
+    <resultMap type="RcNoticeHome" id="RcNoticeResult">
+        <result property="id"    column="id"    />
+        <result property="noticeTitle"    column="notice_title"    />
+        <result property="noticeContent"    column="notice_content"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <resultMap type="RcHelpHome" id="RcHelpResult">
+        <result property="id"    column="id"    />
+        <result property="helpTitle"    column="help_title"    />
+        <result property="helpContent"    column="help_content"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <resultMap type="RcLunboHome" id="RcLunboResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="img"    column="img"    />
+        <result property="isHref"    column="isHref"    />
+        <result property="hrefUrl"    column="hrefUrl"    />
+        <result property="sort"    column="sort"    />
+        <result property="isShow"    column="isShow"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="isDel"    column="isDel"    />
+        <result property="memo"    column="memo"    />
+    </resultMap>
+
+    <resultMap type="RcInformationHome" id="RcInformationResult">
+        <result property="id"    column="id"    />
+        <result property="infoTitle"    column="info_title"    />
+        <result property="infoContent"    column="info_content"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="infoUser"    column="info_user"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <select id="getNoticeList" resultMap="RcNoticeResult">
+        SELECT id,notice_title,notice_content,create_time FROM rc_notice
+        order by create_time desc
+        limit #{arg0} ,#{arg1}
+    </select>
+
+    <select id="getNoticeDetail" resultMap="RcNoticeResult">
+        SELECT id,notice_title,notice_content,create_time FROM rc_notice
+        WHERE id=#{arg0}
+    </select>
+
+    <select id="getNewNotice" resultMap="RcNoticeResult">
+        SELECT id,notice_title,notice_content,create_time FROM rc_notice
+        order by create_time desc
+        limit 1
+    </select>
+
+    <select id="getLunboList" resultMap="RcLunboResult">
+        SELECT id,name,img,isHref,hrefUrl,sort FROM rc_lunbo ORDER BY sort DESC
+    </select>
+
+    <select id="getInfoList" resultMap="RcInformationResult">
+        SELECT id,info_title,info_content,create_time FROM rc_information
+        order by create_time desc
+        limit #{arg0} ,#{arg1}
+    </select>
+
+    <select id="getHelpList" resultMap="RcHelpResult">
+        SELECT id,help_title,help_content,create_time FROM rc_help
+        order by create_time desc
+        limit #{arg0} ,#{arg1}
+    </select>
+
+    <select id="getHelpDetail" resultMap="RcHelpResult">
+        SELECT id,help_title,help_content,create_time FROM rc_help
+        WHERE id=#{arg0}
+    </select>
+
+</mapper>

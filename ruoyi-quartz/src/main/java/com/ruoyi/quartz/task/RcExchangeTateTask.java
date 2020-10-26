@@ -10,9 +10,7 @@ import net.sf.json.JSONObject;
 import org.apache.http.NameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,12 +37,12 @@ public class RcExchangeTateTask {
         String uri = "https://dncapi.bqrank.net/api/coin/web-rate";
         try {
             String result = QuartzHttpUtils.makeAPICall(uri, new ArrayList<NameValuePair>());
-            JSONObject sql = JSONObject.fromObject(result);
-            JSONArray jsonArray = JSONArray.fromObject(sql.getString("data"));
-            if(jsonArray.size() < 1){
-                System.out.println("数据为空，请重试： " + jsonArray);
+            if(result.isEmpty()){
+                System.out.println("没有数据");
                 return;
             }
+            JSONObject sql = JSONObject.fromObject(result);
+            JSONArray jsonArray = JSONArray.fromObject(sql.getString("data"));
             Object[] objs = jsonArray.toArray();
             for (Object object : objs) {
                 JSONObject jsonObject = JSONObject.fromObject(object);
@@ -69,11 +67,7 @@ public class RcExchangeTateTask {
                 }
 
             }
-        } catch (IOException e) {
-            System.out.println("Error: cannont access content - " + e.toString());
-        } catch (URISyntaxException e) {
-            System.out.println("Error: Invalid URL " + e.toString());
-        } catch (Exception e) {
+        }catch (Exception e) {
             System.out.println("错误信息： " + e.toString());
         }
         System.out.println(".........................结束执行拉取汇率数据");

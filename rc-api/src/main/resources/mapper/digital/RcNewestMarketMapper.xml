@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.digital.mapper.RcNewestMarketMapper">
+    
+    <resultMap type="RcNewestMarket" id="RcNewestMarketResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="market"    column="market"    />
+        <result property="platform"    column="platform"    />
+        <result property="platformName"    column="platform_name"    />
+        <result property="time"    column="time"    />
+        <result property="price"    column="price"    />
+        <result property="priceCny"    column="price_cny"    />
+        <result property="volumn"    column="volumn"    />
+        <result property="changePercent"    column="change_percent"    />
+        <result property="fullNameZh"    column="full_name_zh"    />
+        <result property="volUsd"    column="vol_usd"    />
+        <result property="logo"    column="logo"    />
+        <result property="fullName"    column="full_name"    />
+        <result property="circualing"    column="circualing"    />
+        <result property="isMineable"    column="is_mineable"    />
+        <result property="changerateUtc"    column="changerate_utc"    />
+        <result property="changerateUtc8"    column="changerate_utc8"    />
+        <result property="lastUpdate"    column="last_update"    />
+    </resultMap>
+
+    <sql id="selectRcNewestMarketVo">
+        select id, code, name, market, platform, platform_name, time, price, price_cny, volumn, change_percent, full_name_zh, vol_usd, logo, full_name, circualing, is_mineable, changerate_utc, changerate_utc8, last_update from rc_newest_market
+    </sql>
+
+    <select id="selectRcNewestMarketList" parameterType="RcNewestMarket" resultMap="RcNewestMarketResult">
+        <include refid="selectRcNewestMarketVo"/>
+        <where>  
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="market != null  and market != ''"> and market = #{market}</if>
+            <if test="platform != null  and platform != ''"> and platform = #{platform}</if>
+            <if test="platformName != null  and platformName != ''"> and platform_name like concat('%', #{platformName}, '%')</if>
+            <if test="time != null  and time != ''"> and time = #{time}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="priceCny != null "> and price_cny = #{priceCny}</if>
+            <if test="volumn != null  and volumn != ''"> and volumn = #{volumn}</if>
+            <if test="changePercent != null "> and change_percent = #{changePercent}</if>
+            <if test="fullNameZh != null  and fullNameZh != ''"> and full_name_zh = #{fullNameZh}</if>
+            <if test="volUsd != null  and volUsd != ''"> and vol_usd = #{volUsd}</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="fullName != null  and fullName != ''"> and full_name like concat('%', #{fullName}, '%')</if>
+            <if test="circualing != null  and circualing != ''"> and circualing = #{circualing}</if>
+            <if test="isMineable != null  and isMineable != ''"> and is_mineable = #{isMineable}</if>
+            <if test="changerateUtc != null  and changerateUtc != ''"> and changerate_utc = #{changerateUtc}</if>
+            <if test="changerateUtc8 != null  and changerateUtc8 != ''"> and changerate_utc8 = #{changerateUtc8}</if>
+            <if test="lastUpdate != null "> and last_update = #{lastUpdate}</if>
+        </where>
+    </select>
+    
+    <select id="selectRcNewestMarketById" parameterType="Long" resultMap="RcNewestMarketResult">
+        <include refid="selectRcNewestMarketVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRcNewestMarket" parameterType="RcNewestMarket">
+        insert into rc_newest_market
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="code != null">code,</if>
+            <if test="name != null">name,</if>
+            <if test="market != null">market,</if>
+            <if test="platform != null">platform,</if>
+            <if test="platformName != null">platform_name,</if>
+            <if test="time != null">time,</if>
+            <if test="price != null">price,</if>
+            <if test="priceCny != null">price_cny,</if>
+            <if test="volumn != null">volumn,</if>
+            <if test="changePercent != null">change_percent,</if>
+            <if test="fullNameZh != null">full_name_zh,</if>
+            <if test="volUsd != null">vol_usd,</if>
+            <if test="logo != null">logo,</if>
+            <if test="fullName != null">full_name,</if>
+            <if test="circualing != null">circualing,</if>
+            <if test="isMineable != null">is_mineable,</if>
+            <if test="changerateUtc != null">changerate_utc,</if>
+            <if test="changerateUtc8 != null">changerate_utc8,</if>
+            <if test="lastUpdate != null">last_update,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="code != null">#{code},</if>
+            <if test="name != null">#{name},</if>
+            <if test="market != null">#{market},</if>
+            <if test="platform != null">#{platform},</if>
+            <if test="platformName != null">#{platformName},</if>
+            <if test="time != null">#{time},</if>
+            <if test="price != null">#{price},</if>
+            <if test="priceCny != null">#{priceCny},</if>
+            <if test="volumn != null">#{volumn},</if>
+            <if test="changePercent != null">#{changePercent},</if>
+            <if test="fullNameZh != null">#{fullNameZh},</if>
+            <if test="volUsd != null">#{volUsd},</if>
+            <if test="logo != null">#{logo},</if>
+            <if test="fullName != null">#{fullName},</if>
+            <if test="circualing != null">#{circualing},</if>
+            <if test="isMineable != null">#{isMineable},</if>
+            <if test="changerateUtc != null">#{changerateUtc},</if>
+            <if test="changerateUtc8 != null">#{changerateUtc8},</if>
+            <if test="lastUpdate != null">#{lastUpdate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRcNewestMarket" parameterType="RcNewestMarket">
+        update rc_newest_market
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="market != null">market = #{market},</if>
+            <if test="platform != null">platform = #{platform},</if>
+            <if test="platformName != null">platform_name = #{platformName},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="priceCny != null">price_cny = #{priceCny},</if>
+            <if test="volumn != null">volumn = #{volumn},</if>
+            <if test="changePercent != null">change_percent = #{changePercent},</if>
+            <if test="fullNameZh != null">full_name_zh = #{fullNameZh},</if>
+            <if test="volUsd != null">vol_usd = #{volUsd},</if>
+            <if test="logo != null">logo = #{logo},</if>
+            <if test="fullName != null">full_name = #{fullName},</if>
+            <if test="circualing != null">circualing = #{circualing},</if>
+            <if test="isMineable != null">is_mineable = #{isMineable},</if>
+            <if test="changerateUtc != null">changerate_utc = #{changerateUtc},</if>
+            <if test="changerateUtc8 != null">changerate_utc8 = #{changerateUtc8},</if>
+            <if test="lastUpdate != null">last_update = #{lastUpdate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcNewestMarketById" parameterType="Long">
+        delete from rc_newest_market where id = #{id}
+    </delete>
+
+    <delete id="deleteRcNewestMarketByIds" parameterType="String">
+        delete from rc_newest_market where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

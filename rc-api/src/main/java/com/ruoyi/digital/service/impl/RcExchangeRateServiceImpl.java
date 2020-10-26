@@ -12,8 +12,8 @@ import com.ruoyi.common.core.text.Convert;
 /**
  * 汇率Service业务层处理
  * 
- * @author xiaoxia
- * @date 2020-10-21
+ * @author xiaoyu
+ * @date 2020-10-26
  */
 @Service
 public class RcExchangeRateServiceImpl implements IRcExchangeRateService 

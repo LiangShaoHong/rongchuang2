@@ -6,8 +6,8 @@ import com.ruoyi.digital.domain.RcExchangeRate;
 /**
  * 汇率Mapper接口
  * 
- * @author xiaoxia
- * @date 2020-10-21
+ * @author xiaoyu
+ * @date 2020-10-26
  */
 public interface RcExchangeRateMapper 
 {
