@@ -131,9 +131,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
-
     <insert id="insertRcTransactionDataList" useGeneratedKeys="true" keyProperty="id" parameterType="RcTransactionData">
-        insert into rc_transaction_data (name,symbol,rank,logo,price_usd,price_btc,percent_change_24h,last_updated)
+        REPLACE into rc_transaction_data (name,symbol,rank,logo,price_usd,price_btc,percent_change_24h,last_updated)
         values
         <foreach collection="list" item="dept" index="index" separator=",">
             (

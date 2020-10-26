@@ -64,7 +64,7 @@
     </select>
 
     <select id="getLunboList" resultMap="RcLunboResult">
-        SELECT id,name,img,isHref,hrefUrl FROM rc_lunbo ORDER BY sort DESC
+        SELECT id,name,img,isHref,hrefUrl,sort FROM rc_lunbo ORDER BY sort DESC
     </select>
 
     <select id="getInfoList" resultMap="RcInformationResult">

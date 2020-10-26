@@ -91,4 +91,9 @@ public class RcTransactionInfoServiceImpl implements IRcTransactionInfoService
     {
         return rcTransactionInfoMapper.deleteRcTransactionInfoById(id);
     }
+
+    @Override
+    public void insertRcTransactionInfoList(List<RcTransactionInfo> list) {
+        rcTransactionInfoMapper.insertRcTransactionInfoList(list);
+    }
 }

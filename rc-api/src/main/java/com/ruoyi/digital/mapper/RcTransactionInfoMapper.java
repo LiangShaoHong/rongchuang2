@@ -58,4 +58,6 @@ public interface RcTransactionInfoMapper
      * @return 结果
      */
     public int deleteRcTransactionInfoByIds(String[] ids);
+
+    public void insertRcTransactionInfoList(List<RcTransactionInfo> rcTransactionInfo);
 }

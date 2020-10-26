@@ -58,4 +58,6 @@ public interface IRcTransactionInfoService
      * @return 结果
      */
     public int deleteRcTransactionInfoById(Long id);
+
+    public void insertRcTransactionInfoList(List<RcTransactionInfo> list);
 }
