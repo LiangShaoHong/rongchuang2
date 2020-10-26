@@ -33,7 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-@RestController("/rc-api/user")
+@RestController("RcUserApi")
 public class UserApi extends BaseController {
     @Autowired
     IRcUserService iRcUserService;
@@ -57,7 +57,7 @@ public class UserApi extends BaseController {
 
      * @return
      */
-    @RequestMapping("/ceshi")
+    @RequestMapping("/rc-api/user/ceshi")
     public String ceshi(String invi){
         JSONObject selectinvitation = rcUserMapper.selectinvitation(invi);
 
@@ -65,7 +65,7 @@ public class UserApi extends BaseController {
         return selectinvitation.toString();
 
     }
-    @RequestMapping("/register")
+    @RequestMapping("/rc-api/user/register")
     public Result addBank(@RequestParam("account") String account,
                           @RequestParam("password") String passWord,
                           @RequestParam("mobile") String mobile,
@@ -177,7 +177,7 @@ public class UserApi extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping("/mobilelogin")
+    @RequestMapping("/rc_api/user/login")
     public Result login(HttpServletRequest request) {
         //域名解析，获取平台号
         String originName = super.getOrigin(request);
