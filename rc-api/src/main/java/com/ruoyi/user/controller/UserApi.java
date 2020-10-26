@@ -33,7 +33,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-@RestController("RcUserApi")
+
+@RestController
+@RequestMapping("/rc-api/user")
+
 public class UserApi extends BaseController {
     @Autowired
     IRcUserService iRcUserService;
@@ -57,15 +60,15 @@ public class UserApi extends BaseController {
 
      * @return
      */
-    @RequestMapping("/rc-api/user/ceshi")
-    public String ceshi(String invi){
-        JSONObject selectinvitation = rcUserMapper.selectinvitation(invi);
+    @RequestMapping("/ceshi")
+    public RcUser ceshi(String invi){
+        RcUser selectaccount = rcUserMapper.selectaccount(invi);
 
 
-        return selectinvitation.toString();
+        return selectaccount;
 
     }
-    @RequestMapping("/rc-api/user/register")
+    @RequestMapping("/register")
     public Result addBank(@RequestParam("account") String account,
                           @RequestParam("password") String passWord,
                           @RequestParam("mobile") String mobile,
@@ -149,7 +152,7 @@ public class UserApi extends BaseController {
                 0,
                 0l,
                 "12",
-                "",
+                showId,
                 "",
                 "0");
 
@@ -174,13 +177,14 @@ public class UserApi extends BaseController {
     /**
      * 会员登录
      *
-     * @param request
+     * @param
      * @return
      */
-    @RequestMapping("/rc_api/user/login")
-    public Result login(HttpServletRequest request) {
+    @RequestMapping("/mobilelogin")
+    public Result login(@RequestParam("account") String account,
+                        @RequestParam("pass") String pass,HttpServletRequest request) {
         //域名解析，获取平台号
-        String originName = super.getOrigin(request);
+       // String originName = super.getOrigin(request);
 //        PlatformBase platformBase = sysPlatformInfoService.getPlatformBaseByDomain(MsgConstants.IS_NO, MsgConstants.IS_NO, originName);
 //        if (null == platformBase) {
 //            log.info("域名查找平台号出错，查找的域名为："+originName);
@@ -193,29 +197,28 @@ public class UserApi extends BaseController {
 //                return Result.isFail().msg("系统维护中");
 //            }
 //        }
-        String account = request.getParameter("account");
-        String pass = request.getParameter("pass");
+//        String account = request.getParameter("account");
+//        String pass = request.getParameter("pass");
         //先去user表查找会员，如果没有会员，就去旧的表old_user查找，等旧的表也找不到会员，再返回账号密码不匹配
         //User user = userService.login(account, pass, platformBase.getId());
         //当前时间
         Date nowDate = DateUtils.getNowDate();
-        QueryWrapper queryWrapperlogin=new QueryWrapper();
-        queryWrapperlogin.eq("account",account);
+
 
         RcUser rcUser = rcUserMapper.selectaccount(account);
+
         if(rcUser==null){
 
             return Result.isFail().msg("查无此账号");
         }
         //RcUser rcUser = rcUserMapper.selectaccount(queryWrapperlogin);
+        String invitation = rcUser.getInvitation();
+        boolean matches = bCryptPasswordEncoder.matches(invitation + pass, rcUser.getPassword());
 
-        String password = bCryptPasswordEncoder.encode(rcUser.getInvitation() + pass);
-        QueryWrapper verify=new QueryWrapper();
-        verify.eq("password",password);
-        verify.eq("account",account);
-        RcUser selectverify = rcUserMapper.selectverify(account, password);
-        if(selectverify==null){
-            return Result.isFail().msg("账号密码不匹配");
+        //RcUser selectverify = rcUserMapper.selectverify(account, password);
+
+        if(matches==false){
+            return Result.isFail().msg("密码错误");
         }
 
 //        if (MsgConstants.IS_YES == user.getIsDel()){
