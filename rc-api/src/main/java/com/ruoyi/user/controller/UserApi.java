@@ -33,7 +33,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-@RestController("/rc-api/user")
+
+@RestController
+@RequestMapping("/rc-api/user")
 public class UserApi extends BaseController {
     @Autowired
     IRcUserService iRcUserService;
