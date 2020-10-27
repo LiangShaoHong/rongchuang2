@@ -100,7 +100,7 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Override
     public Result robFbOrder(RcUser user, String id) {
         String lockKey = Constants.DB_ORDER + id;
-        RedisLock lock = new RedisLock(redisTemplate, lockKey, 2000, 4000);
+        RedisLock lock = new RedisLock(redisTemplate, lockKey, 5000, 10000);
         try {
             if (lock.lock()) {
                 FrenchCurrencyOrder frenchCurrencyOrder = legalCurrencyMapper.getFbOrderById(id);
@@ -125,19 +125,15 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
 
                 }
             } else {
-
                 return Result.isFail("订单已被领取");
 
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-
             //为了让分布式锁的算法更稳键些，持有锁的客户端在解锁之前应该再检查一次自己的锁是否已经超时，再去做DEL操作，因为可能客户端因为某个耗时的操作而挂起，
             //操作完的时候锁因为超时已经被别人获得，这时就不必解锁了。 ————这里没有做
             lock.unlock();
-            redisService.remove("6_lock", Constants.DB_ORDER);
-
         }
         return null;
     }
