@@ -58,4 +58,6 @@ public interface IRcNewestMarketService
      * @return 结果
      */
     public int deleteRcNewestMarketById(Long id);
+
+    public void insertRcNewestMarketList(List<RcNewestMarket> list);
 }

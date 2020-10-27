@@ -58,4 +58,6 @@ public interface RcNewestMarketMapper
      * @return 结果
      */
     public int deleteRcNewestMarketByIds(String[] ids);
+
+    public void insertRcNewestMarketList(List<RcNewestMarket> list);
 }

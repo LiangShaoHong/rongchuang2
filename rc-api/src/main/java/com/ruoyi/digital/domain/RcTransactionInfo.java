@@ -31,6 +31,10 @@ public class RcTransactionInfo extends BaseEntity
     @Excel(name = "币种英文名称")
     private String name;
 
+    /** 币种英文名称 */
+    @Excel(name = "币种英文名称")
+    private String symbol;
+
     /** 币种中文名称 */
     @Excel(name = "币种中文名称")
     private String fullname;
@@ -126,6 +130,15 @@ public class RcTransactionInfo extends BaseEntity
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public String getSymbol()
+    {
+        return symbol;
+    }
+    public void setSymbol(String symbol)
+    {
+        this.symbol = symbol;
     }
 
     public String getName()
@@ -301,6 +314,7 @@ public class RcTransactionInfo extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
                 .append("id", getId())
                 .append("code", getCode())
+                .append("symbol",getSupply())
                 .append("name", getName())
                 .append("fullname", getFullname())
                 .append("logo", getLogo())
