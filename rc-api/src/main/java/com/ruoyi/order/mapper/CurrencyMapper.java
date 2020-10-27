@@ -24,4 +24,5 @@ public interface CurrencyMapper {
 
     public CurrencyOrder getBbDetails(@Param("userId") Long userId, @Param("id") String id);
 
+
 }

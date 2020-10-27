@@ -23,4 +23,7 @@ public interface LegalCurrencyMapper {
 
     public FrenchCurrencyOrder getFbDetails(@Param("userId") Long userId, @Param("id") String id);
 
+    public List<FrenchCurrencyOrder> getFbOptionalOrder(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+
+    public FrenchCurrencyOrder getFbOrderById(@Param("id") String id);
 }

@@ -28,6 +28,11 @@ public class Constants {
     public static final String DB_CONFIG = "config:";
 
     /**
+     * redis Token库
+     */
+    public static final String DB_ORDER = "order:";
+
+    /**
      * 用户对应系统收款账号储存过期时间（秒）
      */
     public static final long SYS_BANK_TIMEOUT = 30 * 60;
@@ -35,6 +40,6 @@ public class Constants {
     /**
      * 短信验证码过期时间（秒）
      */
-    public static final long MESSAGE_VERIFICATIONCODE_TIMEOUT =10 * 60;
+    public static final long MESSAGE_VERIFICATIONCODE_TIMEOUT = 10 * 60;
 
 }

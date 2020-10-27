@@ -151,7 +151,6 @@ public class LegalCurrencyApi {
             })
     @RequestMapping("/robFbOrder")
     public Result robFbOrder(HttpServletRequest request, String id) {
-
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.robFbOrder(user, id);
     }
