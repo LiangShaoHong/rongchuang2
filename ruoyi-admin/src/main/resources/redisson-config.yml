@@ -2,7 +2,7 @@
 singleServerConfig:
   address: "redis://127.0.0.1:6379"
   password:
-  clientName: dx-task
+  clientName:
   database: 5 #选择使用哪个数据库0~15
   idleConnectionTimeout: 10000
   pingTimeout: 1000
