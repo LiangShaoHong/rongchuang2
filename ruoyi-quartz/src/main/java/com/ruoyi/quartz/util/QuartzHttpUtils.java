@@ -2,7 +2,9 @@ package com.ruoyi.quartz.util;
 
 import com.aeuok.task.ann.Task;
 import com.aeuok.task.core.TaskContainerFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.digital.domain.RcTransactionInfo;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.http.*;
@@ -272,7 +274,12 @@ public class QuartzHttpUtils {
 //        params.put("code", "bitcoin");
 //        JSONObject resultPost = makeAPICallPost("https://dncapi.bqrank.net/api/coin/web-coininfo", params);
 //        JSONObject result = JSONObject.fromObject(resultPost.getString("data"));
-////        System.out.println(!result.isEmpty());
+////        System.out.println(result);
+//        ObjectMapper mapper = new ObjectMapper();
+//        RcTransactionInfo info = mapper.readValue(result.toString(), RcTransactionInfo.class);
+//        System.out.println(info);
+
+//        System.out.println(!result.isEmpty());
 //        System.out.println(result);
 
 //        String uri = "https://dncapi.bqrank.net/api/home/web-newcoin";

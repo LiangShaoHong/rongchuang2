@@ -2,8 +2,8 @@ package com.ruoyi.digital.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -12,10 +12,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 数据列表对象 rc_transaction_info
- *
+ * JsonIgnoreProperties
+ * 将这个注解写在类上之后，就会忽略类中不存在的字段。这个注解还可以指定要忽略的字段
  * @author xiaoyu
  * @date 2020-10-23
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RcTransactionInfo extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
