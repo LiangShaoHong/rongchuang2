@@ -27,7 +27,7 @@ public class RcUser extends BaseEntity
 
     /** 信用分 */
     @Excel(name = "信用分")
-    private Long credit;
+    private Integer credit;
 
     /** 钱包金额 */
     @Excel(name = "钱包金额")
@@ -47,7 +47,7 @@ public class RcUser extends BaseEntity
 
     /** 安全码 */
     @Excel(name = "安全码")
-    private Long safeword;
+    private Integer safeword;
 
     /** 选择的语言 */
     @Excel(name = "选择的语言")
@@ -67,7 +67,7 @@ public class RcUser extends BaseEntity
 
     /** 上级id */
     @Excel(name = "上级id")
-    private Long parentid;
+    private Integer parentid;
 
     /** 身份 */
     @Excel(name = "身份")
@@ -84,8 +84,6 @@ public class RcUser extends BaseEntity
     /** 平台id */
     @Excel(name = "平台id")
     private String platformId;
-
-
 
     public void setId(Long id) 
     {
@@ -105,12 +103,12 @@ public class RcUser extends BaseEntity
     {
         return mobile;
     }
-    public void setCredit(Long credit) 
+    public void setCredit(Integer credit)
     {
         this.credit = credit;
     }
 
-    public Long getCredit() 
+    public Integer getCredit()
     {
         return credit;
     }
@@ -150,12 +148,12 @@ public class RcUser extends BaseEntity
     {
         return salt;
     }
-    public void setSafeword(Long safeword) 
+    public void setSafeword(Integer safeword)
     {
         this.safeword = safeword;
     }
 
-    public Long getSafeword() 
+    public Integer getSafeword()
     {
         return safeword;
     }
@@ -195,12 +193,12 @@ public class RcUser extends BaseEntity
     {
         return paidan;
     }
-    public void setParentid(Long parentid) 
+    public void setParentid(Integer parentid)
     {
         this.parentid = parentid;
     }
 
-    public Long getParentid() 
+    public Integer getParentid()
     {
         return parentid;
     }
@@ -232,7 +230,21 @@ public class RcUser extends BaseEntity
         return token;
     }
 
-    public RcUser(Long id, String mobile, Long credit, BigDecimal money, String account, String password, String salt, Long safeword, String language, Integer online, Date registertime, Integer paidan, Long parentid, String identity, String invitation, String token, String platformId) {
+    public void setPlatformId(String platformId)
+    {
+        this.platformId = platformId;
+    }
+
+    public String getPlatformId() 
+    {
+        return platformId;
+    }
+
+    public RcUser(){
+
+    }
+
+    public RcUser(Long id, String mobile, Integer credit, BigDecimal money, String account, String password, String salt, Integer safeword, String language, Integer online, Date registertime, Integer paidan, Integer parentid, String identity, String invitation, String token, String platformId) {
         this.id = id;
         this.mobile = mobile;
         this.credit = credit;
@@ -250,16 +262,6 @@ public class RcUser extends BaseEntity
         this.invitation = invitation;
         this.token = token;
         this.platformId = platformId;
-    }
-
-    public void setPlatformId(String platformId)
-    {
-        this.platformId = platformId;
-    }
-
-    public String getPlatformId() 
-    {
-        return platformId;
     }
 
     @Override

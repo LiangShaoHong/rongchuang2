@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ruoyi.common.json.JSONObject;
 import com.ruoyi.user.domain.RcUser;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户注册Service接口
@@ -60,5 +61,26 @@ public interface IRcUserService
      * @return 结果
      */
     public int deleteRcUserById(Long id);
-    JSONObject getUserByShowId(String showId, Integer isDel, Integer isUse);
+
+    /**
+     * 查询推荐码是否被使用
+     * @param invitation    推荐码
+     * @return
+     */
+    JSONObject selectinvitation(String invitation);
+
+    /**
+     * 查询手机号是否被使用
+     * @param mobile    手机号
+     * @return
+     */
+    JSONObject selectmobile(String mobile);
+
+    /**
+     * 登陆
+     * @param account   账号
+     * @param pass      密码
+     * @return
+     */
+    RcUser selectaccount(String account, String pass);
 }

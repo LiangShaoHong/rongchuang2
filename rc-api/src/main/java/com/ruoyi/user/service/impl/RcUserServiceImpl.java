@@ -3,7 +3,9 @@ package com.ruoyi.user.service.impl;
 import java.util.List;
 
 import com.ruoyi.common.json.JSONObject;
+import com.ruoyi.common.utils.security.Md5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.ruoyi.user.mapper.RcUserMapper;
 import com.ruoyi.user.domain.RcUser;
@@ -22,6 +24,9 @@ public class RcUserServiceImpl implements IRcUserService
     @Autowired
     private RcUserMapper rcUserMapper;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     /**
      * 查询用户注册
      * 
@@ -35,8 +40,26 @@ public class RcUserServiceImpl implements IRcUserService
     }
 
     @Override
-    public JSONObject getUserByShowId(String showId, Integer isDel, Integer isUse) {
-        return rcUserMapper.getUserByShowId(showId, isDel, isUse);
+    public JSONObject selectinvitation(String invitation) {
+        return rcUserMapper.selectinvitation(invitation);
+    }
+
+    @Override
+    public JSONObject selectmobile(String mobile) {
+        return rcUserMapper.selectmobile(mobile);
+    }
+
+    @Override
+    public RcUser selectaccount(String account, String pass) {
+        RcUser user = rcUserMapper.selectaccount(account);
+        //对账号密码进行校验
+        if (user != null) {
+            boolean verify = bCryptPasswordEncoder.matches(user.getInvitation() + pass, user.getPassword());
+            if (verify) {
+                return user;
+            }
+        }
+        return null;
     }
 
     /**

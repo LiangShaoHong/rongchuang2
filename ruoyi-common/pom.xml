@@ -127,14 +127,16 @@
             <version>1.5.21</version>
         </dependency>
 
+        <!-- spring-boot-starter-data-redis 加入redis缓存 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
         <!-- swagger2-UI-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.auth0</groupId>

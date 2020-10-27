@@ -2,7 +2,10 @@ package com.ruoyi.digital;
 
 
 import com.ruoyi.common.utils.ResultDto;
+import com.ruoyi.common.utils.redis.RedisService;
+import com.ruoyi.digital.domain.RcExchangeRate;
 import com.ruoyi.digital.service.IRcDigitalService;
+import com.ruoyi.digital.service.IRcExchangeRateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 首页货币信息接口
@@ -26,6 +30,11 @@ public class DigitalApi {
     @Autowired
     private IRcDigitalService rcService;
 
+    @Autowired
+    private RedisService redisService;
+    @Autowired
+    private IRcExchangeRateService rcExchangeRateService;
+
     @ApiOperation("获取货币信息接口")
     @ApiImplicitParams(
             {
@@ -33,6 +42,15 @@ public class DigitalApi {
             })
     @PostMapping("/getRateList")
     public ResultDto getRateList(HttpServletRequest request) {
+//        RcExchangeRate rcExchangeRate = new RcExchangeRate();
+//        List<RcExchangeRate> list = rcExchangeRateService.selectRcExchangeRateList(rcExchangeRate);
+//        if (redisService.exists("uid666", "rate:")) {
+//            System.out.println("数据已存在");
+//            List<RcExchangeRate> ll = (List<RcExchangeRate>) redisService.get("uid666","rate:");
+//            System.out.println(ll);
+//        }else {
+//            redisService.set("uid666",list,"rate:");
+//        }
         ResultDto resultDto = rcService.getRateList();
         return resultDto;
     }
