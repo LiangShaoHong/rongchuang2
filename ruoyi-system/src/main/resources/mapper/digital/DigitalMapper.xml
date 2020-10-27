@@ -4,16 +4,114 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.digital.mapper.RcDigitalMapper">
 
-    <resultMap type="RcExchangeRate" id="RcExchangeRateResult">
+    <resultMap type="RcExchangeRateDigital" id="RcExchangeRateResult">
         <result property="id"    column="id"    />
         <result property="exchangeRateCode"    column="exchange_rate_code"    />
         <result property="exchangeRateName"    column="exchange_rate_name"    />
         <result property="exchangeRate"    column="exchange_rate"    />
     </resultMap>
 
-    <select id="selectRcExchangeRateList" resultMap="RcExchangeRateResult">
+    <resultMap type="RcTransactionDataDigital" id="RcTransactionDataResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="code"    column="code"    />
+        <result property="fullname"    column="fullname"    />
+        <result property="rank"    column="rank"    />
+        <result property="logo"    column="logo"    />
+        <result property="currentPriceUsd"    column="current_price_usd"    />
+        <result property="marketValueUsd"    column="market_value_usd"    />
+        <result property="changePercent"    column="change_percent"    />
+        <result property="lastUpdated"    column="last_updated"    />
+    </resultMap>
+
+    <resultMap type="RcNewestMarketDigital" id="RcNewestMarketResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="logo"    column="logo"    />
+        <result property="fullName"    column="full_name"    />
+        <result property="time"    column="time"    />
+        <result property="price"    column="price"    />
+        <result property="priceCny"    column="price_cny"    />
+        <result property="changePercent"    column="change_percent"    />
+        <result property="lastUpdate"    column="last_update"    />
+    </resultMap>
+
+    <resultMap type="RcTransactionInfoDigital" id="RcTransactionInfoResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="fullname"    column="fullname"    />
+        <result property="symbol"    column="symbol"    />
+        <result property="logo"    column="logo"    />
+        <result property="coindesc"    column="coindesc"    />
+        <result property="marketcap"    column="marketcap"    />
+        <result property="marketcapTotalUsd"    column="marketcap_total_usd"    />
+        <result property="price"    column="price"    />
+        <result property="priceCny"    column="price_cny"    />
+        <result property="changePercent"    column="change_percent"    />
+        <result property="supply"    column="supply"    />
+        <result property="totalSupply"    column="totalSupply"    />
+        <result property="circulationRate"    column="circulationRate"    />
+        <result property="amountDay"    column="amount_day"    />
+        <result property="high"    column="high"    />
+        <result property="low"    column="low"    />
+        <result property="vol"    column="vol"    />
+        <result property="turnOver"    column="turn_over"    />
+        <result property="onlineTime"    column="online_time"    />
+        <result property="updateTime"    column="updatetime"    />
+        <result property="lastUpdatatime"    column="last_updatatime"    />
+    </resultMap>
+
+    <resultMap type="RcTransactionPlatform" id="RcTransactionPlatformResult">
+        <result property="id"    column="id"    />
+        <result property="coinId"    column="coin_id"    />
+        <result property="name"    column="name"    />
+        <result property="logo"    column="logo"    />
+        <result property="rank"    column="rank"    />
+        <result property="pairnum"    column="pairnum"    />
+        <result property="volumn"    column="volumn"    />
+        <result property="volumnBtc"    column="volumn_btc"    />
+        <result property="volumnCny"    column="volumn_cny"    />
+        <result property="tradeurl"    column="tradeurl"    />
+        <result property="changeVolumn"    column="change_volumn"    />
+        <result property="exrank"    column="exrank"    />
+        <result property="assetsUsd"    column="assets_usd"    />
+        <result property="riskLevel"    column="risk_level"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <select id="getRateList" resultMap="RcExchangeRateResult">
         SELECT id,exchange_rate_code,exchange_rate_name,exchange_rate FROM rc_exchange_rate
         WHERE exchange_status=0
+    </select>
+
+    <select id="getDataList" resultMap="RcTransactionDataResult">
+        SELECT id,code,name,fullname,rank,logo,current_price_usd,market_value_usd,change_percent FROM rc_transaction_data
+        ORDER BY rank
+        limit #{arg0},#{arg1}
+    </select>
+
+    <select id="getMarketList" resultMap="RcNewestMarketResult">
+        SELECT id,code,name,logo,full_name,time,price,price_cny,change_percent FROM rc_newest_market
+        limit #{arg0},#{arg1}
+    </select>
+
+    <select id="getInfoByCode" resultMap="RcTransactionInfoResult">
+        SELECT id,code,name,fullname,symbol,logo,coindesc,marketcap,marketcap_total_usd,price,price_cny,change_percent,supply,totalSupply,circulationRate,amount_day,high,low,vol,turn_over,online_time FROM rc_transaction_info
+        where code=#{arg0}
+    </select>
+
+    <select id="getClinchList" resultMap="RcTransactionInfoResult">
+        SELECT id,code,name,fullname,symbol,logo,supply,totalSupply,vol,circulationRate FROM rc_transaction_info
+        ORDER BY vol DESC
+        limit #{arg0},#{arg1}
+    </select>
+
+    <select id="getPlatformList" resultMap="RcTransactionPlatformResult">
+        select id, coin_id, name, logo, rank, pairnum, volumn, volumn_btc, volumn_cny, tradeurl, change_volumn, exrank, assets_usd, risk_level, create_time from rc_transaction_platform
+        ORDER BY rank
+        limit #{arg0},#{arg1}
     </select>
 
 </mapper>

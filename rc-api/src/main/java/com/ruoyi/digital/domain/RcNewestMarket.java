@@ -58,7 +58,7 @@ public class RcNewestMarket extends BaseEntity
 
     /** 24H涨幅 */
     @Excel(name = "24H涨幅")
-    private BigDecimal changePercent;
+    private String changePercent;
 
     /**  */
     @Excel(name = "")
@@ -186,12 +186,12 @@ public class RcNewestMarket extends BaseEntity
     {
         return volumn;
     }
-    public void setChangePercent(BigDecimal changePercent) 
+    public void setChangePercent(String changePercent)
     {
         this.changePercent = changePercent;
     }
 
-    public BigDecimal getChangePercent() 
+    public String getChangePercent()
     {
         return changePercent;
     }

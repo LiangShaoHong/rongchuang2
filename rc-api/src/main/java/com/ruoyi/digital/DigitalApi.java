@@ -33,7 +33,7 @@ public class DigitalApi {
             })
     @PostMapping("/getRateList")
     public ResultDto getRateList(HttpServletRequest request) {
-        ResultDto resultDto = rcService.selectRcExchangeRateList();
+        ResultDto resultDto = rcService.getRateList();
         return resultDto;
     }
 
@@ -45,8 +45,8 @@ public class DigitalApi {
             })
     @PostMapping("/getMarketList")
     public ResultDto getMarketList(HttpServletRequest request, Integer pageNumber, Integer limit) {
-        String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+        ResultDto resultDto = rcService.getMarketList(pageNumber,limit);
+        return resultDto;
     }
 
     @ApiOperation("查询首页成交榜额列表接口")
@@ -57,8 +57,8 @@ public class DigitalApi {
             })
     @PostMapping("/getClinchList")
     public ResultDto getClinchList(HttpServletRequest request, Integer pageNumber, Integer limit) {
-        String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+        ResultDto resultDto = rcService.getClinchList(pageNumber,limit);
+        return resultDto;
     }
 
     @ApiOperation("查询首页市值行情列表接口")
@@ -69,10 +69,9 @@ public class DigitalApi {
             })
     @PostMapping("/getDataList")
     public ResultDto getDataList(HttpServletRequest request, Integer pageNumber, Integer limit) {
-        String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+        ResultDto resultDto = rcService.getDataList(pageNumber,limit);
+        return resultDto;
     }
-
 
     @ApiOperation("查询首页交易所列表接口")
     @ApiImplicitParams(
@@ -82,7 +81,19 @@ public class DigitalApi {
             })
     @PostMapping("/getPlatformList")
     public ResultDto getPlatformList(HttpServletRequest request, Integer pageNumber, Integer limit) {
-        String X_Token = request.getHeader("X_Token");
-        return new ResultDto(1);
+        ResultDto resultDto = rcService.getPlatformList(pageNumber,limit);
+        return resultDto;
     }
+
+    @ApiOperation("查询币种详情接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "code", value = "code", required = true)
+            })
+    @PostMapping("/getInfoByCode")
+    public ResultDto getInfoByCode(HttpServletRequest request, String code) {
+        ResultDto resultDto = rcService.getInfoByCode(code);
+        return resultDto;
+    }
+
 }

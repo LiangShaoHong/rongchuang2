@@ -83,10 +83,11 @@ public class RcTransactionDataTask {
                     paramsInfo.put("code", data.getCode());
                     JSONObject resultPost = QuartzHttpUtils.makeAPICallPost("https://dncapi.bqrank.net/api/coin/web-coininfo", paramsInfo);
                     JSONObject resultInfo = JSONObject.fromObject(resultPost.getString("data"));
-                    if(!result.isEmpty()){
+                    if(!resultInfo.isEmpty()){
                         infoData.setCode((String)resultInfo.getString("code"));
                         infoData.setName((String)resultInfo.getString("name"));
                         infoData.setFullname((String)resultInfo.getString("name_zh"));
+                        infoData.setSymbol((String)resultInfo.getString("symbol"));
                         infoData.setLogo((String)resultInfo.getString("logo"));
                         infoData.setCoindesc((String)resultInfo.getString("coindesc"));
                         infoData.setMarketcap(new BigDecimal(resultInfo.getString("marketcap")));

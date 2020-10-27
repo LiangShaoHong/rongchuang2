@@ -146,4 +146,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
+    <insert id="insertRcNewestMarketList" useGeneratedKeys="true" keyProperty="id" parameterType="RcNewestMarket">
+        REPLACE into rc_newest_market (code,name,logo,full_name,time,price,price_cny,change_percent,last_update)
+        values
+        <foreach collection="list" item="dept" index="index" separator=",">
+            (
+            #{dept.code,jdbcType=VARCHAR}, #{dept.name,jdbcType=VARCHAR}, #{dept.logo,jdbcType=VARCHAR}, #{dept.fullName,jdbcType=VARCHAR}, #{dept.time,jdbcType=VARCHAR},
+            #{dept.price,jdbcType=DECIMAL},#{dept.priceCny,jdbcType=DECIMAL},
+            #{dept.changePercent,jdbcType=VARCHAR},#{dept.lastUpdate,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
 </mapper>

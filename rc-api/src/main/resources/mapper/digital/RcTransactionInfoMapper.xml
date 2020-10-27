@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="code"    column="code"    />
         <result property="name"    column="name"    />
         <result property="fullname"    column="fullname"    />
+        <result property="symbol"    column="symbol"    />
         <result property="logo"    column="logo"    />
         <result property="coindesc"    column="coindesc"    />
         <result property="marketcap"    column="marketcap"    />
@@ -155,14 +156,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <insert id="insertRcTransactionInfoList" useGeneratedKeys="true" keyProperty="id" parameterType="RcTransactionInfo">
-        REPLACE into rc_transaction_info (code,name,fullname,logo,coindesc,
+        REPLACE into rc_transaction_info (code,name,fullname,symbol,logo,coindesc,
         marketcap,marketcap_total_usd,price,price_cny,
         change_percent,supply,totalSupply,circulationRate,amount_day,high,
         low,vol,turn_over,online_time,updatetime,last_updatatime)
         values
         <foreach collection="list" item="dept" index="index" separator=",">
             (
-            #{dept.code,jdbcType=VARCHAR}, #{dept.name,jdbcType=VARCHAR}, #{dept.fullname,jdbcType=VARCHAR}, #{dept.logo,jdbcType=VARCHAR},
+            #{dept.code,jdbcType=VARCHAR}, #{dept.name,jdbcType=VARCHAR}, #{dept.fullname,jdbcType=VARCHAR}, #{dept.symbol,jdbcType=VARCHAR}, #{dept.logo,jdbcType=VARCHAR},
             #{dept.coindesc,jdbcType=VARCHAR},#{dept.marketcap,jdbcType=DECIMAL},#{dept.marketcapTotalUsd,jdbcType=DECIMAL},#{dept.price,jdbcType=DECIMAL},
             #{dept.priceCny,jdbcType=DECIMAL},#{dept.changePercent,jdbcType=DECIMAL},#{dept.supply,jdbcType=DECIMAL},#{dept.totalSupply,jdbcType=DECIMAL},
             #{dept.circulationRate,jdbcType=DECIMAL},#{dept.amountDay,jdbcType=DECIMAL},#{dept.high,jdbcType=DECIMAL},#{dept.low,jdbcType=DECIMAL},

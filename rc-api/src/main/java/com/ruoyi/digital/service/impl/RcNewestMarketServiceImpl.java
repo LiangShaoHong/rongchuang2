@@ -91,4 +91,9 @@ public class RcNewestMarketServiceImpl implements IRcNewestMarketService
     {
         return rcNewestMarketMapper.deleteRcNewestMarketById(id);
     }
+
+    @Override
+    public void insertRcNewestMarketList(List<RcNewestMarket> list) {
+        rcNewestMarketMapper.insertRcNewestMarketList(list);
+    }
 }
