@@ -15,12 +15,15 @@ import java.util.List;
 public interface LegalCurrencyMapper {
 
 
-    public Profit getFbPerInformation(Integer userId);
+    public Profit getFbPerInformation(Long userId);
 
-    public List<FrenchCurrencyOrder> getFbMyOrderList(@Param("userId") Integer userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    public List<FrenchCurrencyOrder> getFbMyOrderList(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
-    public List<FrenchCurrencyOrder> getFbHistorical(@Param("userId") Integer userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    public List<FrenchCurrencyOrder> getFbHistorical(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
-    public FrenchCurrencyOrder getFbDetails(@Param("userId") Integer userId, @Param("id") String id);
+    public FrenchCurrencyOrder getFbDetails(@Param("userId") Long userId, @Param("id") String id);
 
+    public List<FrenchCurrencyOrder> getFbOptionalOrder(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+
+    public FrenchCurrencyOrder getFbOrderById(@Param("id") String id);
 }

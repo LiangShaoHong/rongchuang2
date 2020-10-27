@@ -20,8 +20,8 @@
         <result property="transactionCurrency" column="transaction_currency"/>
         <result property="number" column="number"/>
         <result property="transactionType" column="transaction_type"/>
-		<result property="buyingSources" column="buying_sources"/>
-		<result property="whereToSell" column="where_toSell"/>
+        <result property="buyingSources" column="buying_sources"/>
+        <result property="whereToSell" column="where_to_sell"/>
         <result property="purchaseQuantity" column="purchase_quantity"/>
         <result property="purchasePrice" column="purchase_price"/>
         <result property="sellQuantity" column="sell_quantity"/>
@@ -34,7 +34,7 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
-    <select id="getFbPerInformation" parameterType="Integer" resultMap="ProfitResult">
+    <select id="getFbPerInformation" parameterType="Long" resultMap="ProfitResult">
         select
             b.money balance,a.earned,a.completed
          from rc_user_profit a left join rc_user b on (a.user_id=b.id)
@@ -100,6 +100,8 @@ WHERE
 	a.transaction_currency,
 	a.number,
 	a.transaction_type,
+	a.buying_sources,
+	a.where_to_sell,
 	a.purchase_quantity,
 	a.purchase_price,
 	a.sell_quantity,
@@ -114,6 +116,65 @@ FROM
 LEFT JOIN rc_french_currency_order b ON (a.id = b.rc_french_currency_order_release_id)
 WHERE
 	b.user_id = #{arg0} and b.order_id=#{arg1}
+    </select>
+
+    <select id="getFbOptionalOrder" resultMap="FrenchCurrencyOrderResult">
+       SELECT
+    a.id,
+	a.transaction_currency,
+	a.number,
+	a.transaction_type,
+	a.buying_sources,
+	a.where_to_sell,
+	a.purchase_quantity,
+	a.purchase_price,
+	a.sell_quantity,
+	a.sell_price,
+	a.spend_usdt,
+	a.available_fiat_money,
+	(a.available_fiat_money-a.spend_usdt) profit,
+	a.order_state,
+	a.release_time create_time
+FROM
+	rc_french_currency_order_release a
+WHERE
+	(area IN (
+		SELECT
+			d.region
+		FROM
+			rc_user b,
+			rc_user_area c,
+			rc_collection_account_type d
+		WHERE
+			b.id = c.user_id
+		AND c.rc_collection_account_type_id = d.id
+		AND b.id = #{arg0}
+	) OR a.assign_user_id =#{arg0})
+AND a.order_state = '2'
+	ORDER BY a.release_time desc
+	LIMIT  #{arg1} ,#{arg2}
+    </select>
+
+    <select id="getFbOrderById" resultMap="FrenchCurrencyOrderResult">
+       SELECT
+    a.id,
+	a.transaction_currency,
+	a.number,
+	a.transaction_type,
+	a.buying_sources,
+	a.where_to_sell,
+	a.purchase_quantity,
+	a.purchase_price,
+	a.sell_quantity,
+	a.sell_price,
+	a.spend_usdt,
+	a.available_fiat_money,
+	(a.available_fiat_money-a.spend_usdt) profit,
+	a.order_state
+FROM
+	rc_french_currency_order_release a
+WHERE
+	 a.id=#{id}
     </select>
 
 </mapper>

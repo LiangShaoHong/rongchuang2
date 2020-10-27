@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.RcFrenchCurrencyOrderMapper">
+    
+    <resultMap type="RcFrenchCurrencyOrder" id="RcFrenchCurrencyOrderResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="rcFrenchCurrencyOrderReleaseId"    column="rc_french_currency_order_release_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="paymentImg"    column="payment_img"    />
+        <result property="orderState"    column="order_state"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectRcFrenchCurrencyOrderVo">
+        select id, order_id, rc_french_currency_order_release_id, user_id, payment_img, order_state, create_time from rc_french_currency_order
+    </sql>
+
+    <select id="selectRcFrenchCurrencyOrderList" parameterType="RcFrenchCurrencyOrder" resultMap="RcFrenchCurrencyOrderResult">
+        <include refid="selectRcFrenchCurrencyOrderVo"/>
+        <where>  
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="rcFrenchCurrencyOrderReleaseId != null "> and rc_french_currency_order_release_id = #{rcFrenchCurrencyOrderReleaseId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="paymentImg != null  and paymentImg != ''"> and payment_img = #{paymentImg}</if>
+            <if test="orderState != null  and orderState != ''"> and order_state = #{orderState}</if>
+        </where>
+    </select>
+    
+    <select id="selectRcFrenchCurrencyOrderById" parameterType="Long" resultMap="RcFrenchCurrencyOrderResult">
+        <include refid="selectRcFrenchCurrencyOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRcFrenchCurrencyOrder" parameterType="RcFrenchCurrencyOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into rc_french_currency_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="rcFrenchCurrencyOrderReleaseId != null">rc_french_currency_order_release_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="paymentImg != null">payment_img,</if>
+            <if test="orderState != null">order_state,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="rcFrenchCurrencyOrderReleaseId != null">#{rcFrenchCurrencyOrderReleaseId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="paymentImg != null">#{paymentImg},</if>
+            <if test="orderState != null">#{orderState},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRcFrenchCurrencyOrder" parameterType="RcFrenchCurrencyOrder">
+        update rc_french_currency_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="rcFrenchCurrencyOrderReleaseId != null">rc_french_currency_order_release_id = #{rcFrenchCurrencyOrderReleaseId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="paymentImg != null">payment_img = #{paymentImg},</if>
+            <if test="orderState != null">order_state = #{orderState},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcFrenchCurrencyOrderById" parameterType="Long">
+        delete from rc_french_currency_order where id = #{id}
+    </delete>
+
+    <delete id="deleteRcFrenchCurrencyOrderByIds" parameterType="String">
+        delete from rc_french_currency_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

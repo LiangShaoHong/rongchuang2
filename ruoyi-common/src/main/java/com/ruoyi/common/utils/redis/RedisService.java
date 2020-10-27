@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,6 @@ public class RedisService {
 
     @Autowired
     private RedisTemplate redisTemplate;
-
 
     /**
      * 写入缓存
@@ -66,8 +67,7 @@ public class RedisService {
      *
      * @param key
      * @param value
-     * @param expireTime
-     *            秒
+     * @param expireTime 秒
      * @return
      */
     public boolean set(String key, Object value, Long expireTime, String db) {
@@ -150,6 +150,7 @@ public class RedisService {
         hash.put(key, hashKey, value);
         redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
     }
+
     /**
      * 哈希获取数据
      *
@@ -179,8 +180,7 @@ public class RedisService {
      * 列表左侧添加
      *
      * @param key
-     * @param value
-     * return: the length of the list after the push operations.
+     * @param value return: the length of the list after the push operations.
      */
     public Long lPush(String key, Object value, String db) {
         key = db + key;
@@ -249,7 +249,6 @@ public class RedisService {
     /**
      * 根据下标获取列表数据
      *
-     *
      * @param key
      * @param index
      * @param db
@@ -292,10 +291,8 @@ public class RedisService {
      * 无序集合添加
      *
      * @param key
-     * @param value
-     *
-     * return:the number of elements that were added to the set,
-     * not includingall the elements already present into the set.
+     * @param value return:the number of elements that were added to the set,
+     *              not includingall the elements already present into the set.
      */
     public Long setAdd(String key, Object value, String db) {
         key = db + key;
@@ -342,6 +339,7 @@ public class RedisService {
         set.add(key, value);
         redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
     }
+
     /**
      * 无序列表移除一个元素
      *
@@ -436,6 +434,7 @@ public class RedisService {
 
     /**
      * 计数器，返回自增后的结果
+     *
      * @param key
      * @param expireTime
      * @param timeUnit
