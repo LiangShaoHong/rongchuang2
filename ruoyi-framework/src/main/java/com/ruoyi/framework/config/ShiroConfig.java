@@ -291,6 +291,8 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/rc-api/home/**", "anon");
         // 首页货币信息接口
         filterChainDefinitionMap.put("/rc-api/digital/**", "anon");
+        // 测试MQ
+        filterChainDefinitionMap.put("/rc-api/mq/**", "anon");
 
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");

@@ -1,7 +1,7 @@
 package com.ruoyi.home;
 
 
-import com.ruoyi.common.utils.ResultDto;
+import com.ruoyi.common.Result;
 import com.ruoyi.home.service.IHomeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -32,9 +32,8 @@ public class HomeApi {
                     @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
             })
     @PostMapping("/getNoticeList")
-    public ResultDto getNoticeList(HttpServletRequest request, Integer pageNumber, Integer limit) {
-        ResultDto resultDto = homeService.getNoticeList(pageNumber, limit);
-        return resultDto;
+    public Result getNoticeList(HttpServletRequest request, Integer pageNumber, Integer limit) {
+        return homeService.getNoticeList(pageNumber, limit);
     }
 
     @ApiOperation("查询公告详情接口")
@@ -43,9 +42,8 @@ public class HomeApi {
                     @ApiImplicitParam(dataType = "int", name = "id", value = "当前id", required = true)
             })
     @PostMapping("/getNoticeDetail")
-    public ResultDto getNoticeDetail(HttpServletRequest request, Integer id) {
-        ResultDto resultDto = homeService.getNoticeDetail(id);
-        return resultDto;
+    public Result getNoticeDetail(HttpServletRequest request, Integer id) {
+        return homeService.getNoticeDetail(id);
     }
 
     @ApiOperation("查询最新公告接口")
@@ -54,9 +52,8 @@ public class HomeApi {
 
             })
     @PostMapping("/getNewNotice")
-    public ResultDto getNewNotice(HttpServletRequest request) {
-        ResultDto resultDto = homeService.getNewNotice();
-        return resultDto;
+    public Result getNewNotice(HttpServletRequest request) {
+        return homeService.getNewNotice();
     }
 
     @ApiOperation("查询图片轮播接口")
@@ -65,9 +62,8 @@ public class HomeApi {
 
             })
     @PostMapping("/getLunboList")
-    public ResultDto getLunboList(HttpServletRequest request) {
-        ResultDto resultDto = homeService.getLunboList();
-        return resultDto;
+    public Result getLunboList(HttpServletRequest request) {
+        return homeService.getLunboList();
     }
 
     @ApiOperation("查询系统消息接口")
@@ -77,9 +73,8 @@ public class HomeApi {
                     @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
             })
     @PostMapping("/getInfoList")
-    public ResultDto getInfoList(HttpServletRequest request, Integer pageNumber, Integer limit) {
-        ResultDto resultDto = homeService.getInfoList(pageNumber,limit);
-        return resultDto;
+    public Result getInfoList(HttpServletRequest request, Integer pageNumber, Integer limit) {
+        return homeService.getInfoList(pageNumber,limit);
     }
 
     @ApiOperation("查询帮助列表接口")
@@ -89,9 +84,8 @@ public class HomeApi {
                     @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
             })
     @PostMapping("/getHelpList")
-    public ResultDto getHelpList(HttpServletRequest request, Integer pageNumber, Integer limit) {
-        ResultDto resultDto = homeService.getHelpList(pageNumber, limit);
-        return resultDto;
+    public Result getHelpList(HttpServletRequest request, Integer pageNumber, Integer limit) {
+        return homeService.getHelpList(pageNumber, limit);
     }
 
     @ApiOperation("查询帮助详情接口")
@@ -100,9 +94,8 @@ public class HomeApi {
                     @ApiImplicitParam(dataType = "int", name = "id", value = "当前id", required = true)
             })
     @PostMapping("/getHelpDetail")
-    public ResultDto getHelpDetail(HttpServletRequest request, Integer id) {
-        ResultDto resultDto = homeService.getHelpDetail(id);
-        return resultDto;
+    public Result getHelpDetail(HttpServletRequest request, Integer id) {
+        return homeService.getHelpDetail(id);
     }
 
 }

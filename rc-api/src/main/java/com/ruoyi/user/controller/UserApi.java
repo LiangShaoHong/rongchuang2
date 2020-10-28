@@ -2,33 +2,24 @@ package com.ruoyi.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ruoyi.common.SystemUtil;
-import com.ruoyi.common.constant.InfoConstants;
 import com.ruoyi.common.constant.MsgConstants;
 import com.ruoyi.common.json.JSONObject;
-import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.JWTUtil;
 import com.ruoyi.common.utils.OrderNumUtil;
-import com.ruoyi.common.utils.SnowflakeIdWorker;
 import com.ruoyi.common.utils.redis.RedisService;
 import com.ruoyi.controller.BaseController;
 import com.ruoyi.common.Constants;
 import com.ruoyi.common.Result;
-import com.ruoyi.framework.web.domain.server.Sys;
 import com.ruoyi.user.domain.RcUser;
-import com.ruoyi.user.mapper.RcUserMapper;
-import com.ruoyi.user.mapperplus.RcUserMapperPlus;
-import com.ruoyi.user.mapperplus.RcUserSmsMapper;
 import com.ruoyi.user.service.IRcUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
@@ -117,15 +108,7 @@ public class UserApi extends BaseController {
         // 保存登录token信息（userID为key）
         String tokenKey = Constants.DB_TOKEN + u.getPlatformId() + u.getId();
         redisService.set(tokenKey, token, Constants.LOGIN_TIMEOUT, Constants.DB_USER);
-
         return Result.isOk().data(data).msg(MsgConstants.USER_LOGIN_OK);
-    }
-
-    @RequestMapping("/ttt")
-    public Result login(HttpServletRequest request) {
-        RcUser user = (RcUser) systemUtil.getPlatformIdAndUserId(request);
-        System.out.println(user);
-        return Result.isOk().data(user).msg(MsgConstants.USER_LOGIN_OK);
     }
 
     /**
@@ -144,10 +127,6 @@ public class UserApi extends BaseController {
         if (null == user){
             return Result.isFail().msg("账号密码不匹配");
         }
-        System.out.println("----------------登陆用户信息");
-        System.out.println(user);
-        System.out.println("----------------登陆用户信息");
-
         String token = JWTUtil.sign(user.getPlatformId() + account,user.getInvitation());
         JSONObject data = new JSONObject();
         data.put("X_Token", token);
