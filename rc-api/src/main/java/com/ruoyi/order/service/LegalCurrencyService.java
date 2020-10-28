@@ -8,6 +8,7 @@ import com.ruoyi.order.domain.Profit;
 import com.ruoyi.user.domain.RcUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -43,11 +44,12 @@ public interface LegalCurrencyService {
     @ApiOperation("查询历史记录详情接口")
     public Result getFbDetails(RcUser user, String id);
 
-    @ApiOperation("确定收款接口")
+    @ApiOperation("确定付款接口")
+    public Result fbConfirm_a(RcUser user, String id, String paymentImg);
 
+    @ApiOperation("确定收款接口")
     public Result fbConfirm(RcUser user, String id);
 
     @ApiOperation("抢订单接口")
-
     public Result robFbOrder(RcUser user, String id);
 }

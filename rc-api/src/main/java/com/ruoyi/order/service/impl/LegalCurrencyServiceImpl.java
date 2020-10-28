@@ -18,9 +18,12 @@ import com.ruoyi.order.mapper.RcFrenchCurrencyOrderMapper;
 import com.ruoyi.order.mapper.RcFrenchCurrencyOrderReleaseMapper;
 import com.ruoyi.order.service.LegalCurrencyService;
 import com.ruoyi.user.domain.RcUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -29,6 +32,8 @@ import java.util.List;
 @Service
 public class LegalCurrencyServiceImpl implements LegalCurrencyService {
 
+    @Autowired
+    private static final Logger log = LoggerFactory.getLogger(LegalCurrencyServiceImpl.class);
 
     @Autowired
     private LegalCurrencyMapper legalCurrencyMapper;
@@ -87,18 +92,22 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
         return new Result().code(1).msg("查询成功").data(frenchCurrencyOrder);
     }
 
+
     @Override
-    public Result fbConfirm(RcUser user, String id) {
-        return null;
+    public Result fbConfirm_a(RcUser user, String id, String paymentImg) {
+        legalCurrencyMapper.updateFbConfirm_a(user.getId(), paymentImg, id);
+        return new Result().code(1).msg("提交成功").data("");
     }
 
-
-    @Autowired
-    private RedisService redisService;
-
+    @Override
+    public Result fbConfirm(RcUser user, String id) {
+        legalCurrencyMapper.updateFbConfirm(user.getId(), id);
+        return new Result().code(1).msg("提交成功").data("");
+    }
 
     @Override
     public Result robFbOrder(RcUser user, String id) {
+        log.info("调用法币抢订单接口");
         String lockKey = Constants.DB_ORDER + id;
         RedisLock lock = new RedisLock(redisTemplate, lockKey, 5000, 10000);
         try {
@@ -129,6 +138,7 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
 
             }
         } catch (InterruptedException e) {
+            log.error(e.getMessage());
             e.printStackTrace();
         } finally {
             //为了让分布式锁的算法更稳键些，持有锁的客户端在解锁之前应该再检查一次自己的锁是否已经超时，再去做DEL操作，因为可能客户端因为某个耗时的操作而挂起，

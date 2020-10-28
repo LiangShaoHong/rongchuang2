@@ -4,7 +4,11 @@ package com.ruoyi.order;
 import com.ruoyi.common.Constants;
 import com.ruoyi.common.Result;
 import com.ruoyi.common.SystemUtil;
+import com.ruoyi.common.config.Global;
+import com.ruoyi.common.config.ServerConfig;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.ResultDto;
+import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.order.domain.FrenchCurrencyOrder;
 import com.ruoyi.order.domain.Profit;
 import com.ruoyi.order.service.LegalCurrencyService;
@@ -14,8 +18,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +43,9 @@ public class LegalCurrencyApi {
 
     @Resource
     private SystemUtil systemUtil;
+
+    @Autowired
+    private ServerConfig serverConfig;
 
     @ApiOperation("查询个人信息接口")
     @ApiImplicitParams(
@@ -127,6 +134,20 @@ public class LegalCurrencyApi {
     public Result getFbDetails(HttpServletRequest request, String id) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.getFbDetails(user, id);
+    }
+
+    @ApiOperation("确定付款接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "id", value = "订单id", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "paymentImg", value = "付款截图", required = true)
+
+            })
+    @RequestMapping("/fbConfirm_a")
+    public Result fbConfirm_a(HttpServletRequest request, String id, String paymentImg) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        return legalCurrencyService.fbConfirm_a(user, id, paymentImg);
     }
 
     @ApiOperation("确定收款接口")
