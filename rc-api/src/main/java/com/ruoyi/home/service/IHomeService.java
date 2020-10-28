@@ -1,6 +1,6 @@
 package com.ruoyi.home.service;
 
-import com.ruoyi.common.utils.ResultDto;
+import com.ruoyi.common.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -11,24 +11,24 @@ import io.swagger.annotations.ApiOperation;
 public interface IHomeService {
 
     @ApiOperation("查询公告列表接口")
-    ResultDto getNoticeList(Integer pageNumber, Integer limit);
+    Result getNoticeList(Integer pageNumber, Integer limit);
 
     @ApiOperation("查询公告详情接口")
-    ResultDto getNoticeDetail(Integer id);
+    Result getNoticeDetail(Integer id);
 
     @ApiOperation("查询最新公告接口")
-    ResultDto getNewNotice();
+    Result getNewNotice();
 
     @ApiOperation("查询图片轮播接口")
-    ResultDto getLunboList();
+    Result getLunboList();
 
     @ApiOperation("查询系统消息接口")
-    ResultDto getInfoList(Integer pageNumber, Integer limit);
+    Result getInfoList(Integer pageNumber, Integer limit);
 
     @ApiOperation("查询帮助列表接口")
-    ResultDto getHelpList(Integer pageNumber, Integer limit);
+    Result getHelpList(Integer pageNumber, Integer limit);
 
     @ApiOperation("查询帮助详情接口")
-    ResultDto getHelpDetail(Integer id);
+    Result getHelpDetail(Integer id);
 
 }

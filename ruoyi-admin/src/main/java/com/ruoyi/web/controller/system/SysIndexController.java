@@ -49,6 +49,9 @@ public class SysIndexController extends BaseController
         mmap.put("copyrightYear", Global.getCopyrightYear());
         mmap.put("demoEnabled", Global.isDemoEnabled());
 
+        // 平台ID 默认1
+        mmap.put("platformId", "1");
+
         // 菜单导航显示风格
         String menuStyle = configService.selectConfigByKey("sys.index.menuStyle");
         // 移动端，默认使左侧导航菜单，否则取默认配置
