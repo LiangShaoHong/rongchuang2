@@ -15,6 +15,77 @@
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link th:href="@{/css/skins.css}" rel="stylesheet"/>
     <link th:href="@{/ruoyi/css/ry-ui.css?v=4.4.0}" rel="stylesheet"/>
+
+	<script type="text/javascript" th:if="${platformId!='0'}">
+		let limitConnect = 10;  // 断线重连次数
+		let timeConnect = 0;
+		//获取当前域名
+		let domain = window.location.host;
+		let url = "ws://" + domain + ":9326/websocket?platformId=[[${platformId}]]";
+		let ws = webSocketInit(url);
+		/**
+		 * socket初始化
+		 * @param service
+		 */
+		function webSocketInit(service){
+			let ws = new WebSocket(service);
+			ws.onopen = function () {
+				console.log("连接成功");
+			};
+			ws.onmessage = function (e) {
+				console.log(e.data);
+				let res = eval('(' + e.data + ')');
+				if (res.code == "1") {
+					let data = res.data;
+					playVoice(data);
+				}
+			};
+			ws.onclose = function () {
+				console.log('服务器已经断开');
+				reconnect(service);
+			};
+			return ws;
+		}
+
+		/**
+		 * 重连
+		 * @param service
+		 */
+		function reconnect(service) {
+			if (limitConnect > 0) {
+				limitConnect--;
+				timeConnect++;
+				console.log("第" + timeConnect + "次重连");
+				// 进行重连
+				setTimeout(function () {
+					webSocketInit(service);
+				}, 2000);
+			} else {
+				console.log("socket连接超时");
+			}
+		}
+
+		/**
+		 * 心跳
+		 */
+		setInterval(function () {
+			let data = {
+				code:"0"
+			}
+			let param = JSON.stringify(data);
+			ws.send(param);
+		}, 1000 * 10);
+
+		/**
+		 * 播放提示声
+		 * @param name
+		 */
+		function playVoice(name) {
+			var url = "ruoyi/sound/" + name + ".mp3";
+			var audio = new Audio(url);
+			audio.play();
+		}
+	</script>
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden">
 <div id="wrapper">

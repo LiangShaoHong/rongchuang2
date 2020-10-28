@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ruoyi.common.SystemUtil;
 import com.ruoyi.common.constant.MsgConstants;
 import com.ruoyi.common.json.JSONObject;
+import com.ruoyi.common.push.PushService;
 import com.ruoyi.common.utils.JWTUtil;
 import com.ruoyi.common.utils.OrderNumUtil;
 import com.ruoyi.common.utils.redis.RedisService;
@@ -48,6 +49,9 @@ public class UserApi extends BaseController {
 
     @Resource
     private SystemUtil systemUtil;
+
+    @Autowired
+    private PushService pushService;
 
     @Lazy
     @Autowired
@@ -136,6 +140,14 @@ public class UserApi extends BaseController {
         // 保存登录token信息（userID为key）
         String tokenKey = Constants.DB_TOKEN + user.getPlatformId() + user.getId();
         redisService.set(tokenKey, token, Constants.LOGIN_TIMEOUT, Constants.DB_USER);
+
+        // websocket 通知后台 有用户登陆 首页页面输出用户名和音乐
+        JSONObject msg = new JSONObject();
+        msg.put("code", "1");
+        msg.put("account", user.getAccount());
+        msg.put("data", "withdraw");
+        pushService.sendToGroup(user.getPlatformId(), msg.toString());
+
         return Result.isOk().data(data).msg(MsgConstants.USER_LOGIN_OK);
     }
 
