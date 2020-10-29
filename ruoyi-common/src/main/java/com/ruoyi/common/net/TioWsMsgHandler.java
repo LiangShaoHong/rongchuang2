@@ -37,17 +37,17 @@ public class TioWsMsgHandler implements IWsMsgHandler {
     public HttpResponse handshake(HttpRequest request, HttpResponse httpResponse, ChannelContext channelContext) {
 
         String platformId = request.getParam("platformId");
-//        String userId = request.getParam("userId");
-
-        log.info("platformId={}", platformId);
+        String userId = request.getParam("userId");
 
         //绑定用户
-//        Tio.bindUser(channelContext, userId);
-//        WsOnlineContext.bindUser(userId, channelContext);
+        Tio.bindUser(channelContext, userId);
+        WsOnlineContext.bindUser(userId, channelContext);
+        log.info("userId={}", userId);
 
         //绑定群组
         Tio.bindGroup(channelContext, platformId);
         WsOnlineContext.bingGroup(platformId, channelContext);
+        log.info("platformId={}", platformId);
 
         return httpResponse;
     }

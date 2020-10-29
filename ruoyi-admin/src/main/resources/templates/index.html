@@ -21,7 +21,7 @@
 		let timeConnect = 0;
 		//获取当前域名
 		let domain = window.location.host;
-		let url = "ws://" + domain + ":9326/websocket?platformId=[[${platformId}]]";
+		let url = "ws://" + domain + ":9326/websocket?platformId=[[${platformId}]]&userId=[[${userId}]]";
 		let ws = webSocketInit(url);
 		/**
 		 * socket初始化
@@ -70,7 +70,8 @@
 		 */
 		setInterval(function () {
 			let data = {
-				code:"0"
+				code:"0",
+				userid:"ssxxfgr"
 			}
 			let param = JSON.stringify(data);
 			ws.send(param);

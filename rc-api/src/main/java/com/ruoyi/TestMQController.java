@@ -29,6 +29,7 @@ public class TestMQController {
         JSONObject data = new JSONObject();
         data.put("name", "张三");
         senderService.sendQueueMessage(JmsConstant.queueTestMq, data);
+        senderService.sendQueueDelayMessage(JmsConstant.queueTestMq, data, 10000);
         return Result.isOk();
     }
 }

@@ -37,9 +37,10 @@ import java.util.Map;
 @RequestMapping("/rc-api/user")
 public class UserApi extends BaseController {
 
+    private static final Logger log = LoggerFactory.getLogger(UserApi.class);
+
     @Autowired
     IRcUserService iRcUserService;
-    private static final Logger log = LoggerFactory.getLogger(UserApi.class);
 
     @Autowired
     private RedisService redisService;
@@ -147,6 +148,11 @@ public class UserApi extends BaseController {
         msg.put("account", user.getAccount());
         msg.put("data", "withdraw");
         pushService.sendToGroup(user.getPlatformId(), msg.toString());
+
+
+        JSONObject msg1 = new JSONObject();
+        msg1.put("xx", "我来了");
+        pushService.sendToUser("2", msg1.toString());
 
         return Result.isOk().data(data).msg(MsgConstants.USER_LOGIN_OK);
     }
