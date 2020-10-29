@@ -14,8 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="transactionCurrency"    column="transaction_currency"    />
         <result property="purchaseQuantity"    column="purchase_quantity"    />
         <result property="purchasePrice"    column="purchase_price"    />
-        <result property="sellingQuantity"    column="selling_quantity"    />
-        <result property="sellingPrice"    column="selling_price"    />
+        <result property="sellQuantity"    column="sell_quantity"    />
+        <result property="sellPrice"    column="sell_price"    />
         <result property="spendUsdt"    column="spend_usdt"    />
         <result property="availableFiatMoney"    column="available_fiat_money"    />
         <result property="profit"    column="profit"    />
@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectRcFrenchCurrencyOrderReleaseVo">
-        select id, transaction_type, order_type, seller_user_id, buying_sources, where_to_sell, transaction_currency, purchase_quantity, purchase_price, selling_quantity, selling_price, spend_usdt, available_fiat_money, profit, order_state, assign_user_id, area, release_time from rc_french_currency_order_release
+        select id, transaction_type, order_type, seller_user_id, buying_sources, where_to_sell, transaction_currency, purchase_quantity, purchase_price, sell_quantity, sell_price, spend_usdt, available_fiat_money, profit, order_state, assign_user_id, area, release_time from rc_french_currency_order_release
     </sql>
 
     <select id="selectRcFrenchCurrencyOrderReleaseList" parameterType="RcFrenchCurrencyOrderRelease" resultMap="RcFrenchCurrencyOrderReleaseResult">
@@ -40,8 +40,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="transactionCurrency != null  and transactionCurrency != ''"> and transaction_currency = #{transactionCurrency}</if>
             <if test="purchaseQuantity != null "> and purchase_quantity = #{purchaseQuantity}</if>
             <if test="purchasePrice != null "> and purchase_price = #{purchasePrice}</if>
-            <if test="sellingQuantity != null "> and selling_quantity = #{sellingQuantity}</if>
-            <if test="sellingPrice != null "> and selling_price = #{sellingPrice}</if>
+            <if test="sellQuantity != null "> and sell_quantity = #{sellQuantity}</if>
+            <if test="sellPrice != null "> and sell_price = #{sellPrice}</if>
             <if test="spendUsdt != null "> and spend_usdt = #{spendUsdt}</if>
             <if test="availableFiatMoney != null "> and available_fiat_money = #{availableFiatMoney}</if>
             <if test="profit != null "> and profit = #{profit}</if>
@@ -68,8 +68,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="transactionCurrency != null">transaction_currency,</if>
             <if test="purchaseQuantity != null">purchase_quantity,</if>
             <if test="purchasePrice != null">purchase_price,</if>
-            <if test="sellingQuantity != null">selling_quantity,</if>
-            <if test="sellingPrice != null">selling_price,</if>
+            <if test="sellQuantity != null">sell_quantity,</if>
+            <if test="sellPrice != null">sell_price,</if>
             <if test="spendUsdt != null">spend_usdt,</if>
             <if test="availableFiatMoney != null">available_fiat_money,</if>
             <if test="profit != null">profit,</if>
@@ -87,8 +87,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="transactionCurrency != null">#{transactionCurrency},</if>
             <if test="purchaseQuantity != null">#{purchaseQuantity},</if>
             <if test="purchasePrice != null">#{purchasePrice},</if>
-            <if test="sellingQuantity != null">#{sellingQuantity},</if>
-            <if test="sellingPrice != null">#{sellingPrice},</if>
+            <if test="sellQuantity != null">#{sellQuantity},</if>
+            <if test="sellPrice != null">#{sellPrice},</if>
             <if test="spendUsdt != null">#{spendUsdt},</if>
             <if test="availableFiatMoney != null">#{availableFiatMoney},</if>
             <if test="profit != null">#{profit},</if>
@@ -110,8 +110,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="transactionCurrency != null">transaction_currency = #{transactionCurrency},</if>
             <if test="purchaseQuantity != null">purchase_quantity = #{purchaseQuantity},</if>
             <if test="purchasePrice != null">purchase_price = #{purchasePrice},</if>
-            <if test="sellingQuantity != null">selling_quantity = #{sellingQuantity},</if>
-            <if test="sellingPrice != null">selling_price = #{sellingPrice},</if>
+            <if test="sellQuantity != null">sell_quantity = #{sellQuantity},</if>
+            <if test="sellPrice != null">sell_price = #{sellPrice},</if>
             <if test="spendUsdt != null">spend_usdt = #{spendUsdt},</if>
             <if test="availableFiatMoney != null">available_fiat_money = #{availableFiatMoney},</if>
             <if test="profit != null">profit = #{profit},</if>

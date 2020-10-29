@@ -40,7 +40,7 @@ public class CurrencyApi {
 
             })
 
-    @RequestMapping("/getBbPerInformation")
+    @PostMapping("/getBbPerInformation")
     public Result getBbPerInformation(HttpServletRequest request) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return currencyService.getBbPerInformation(user);
@@ -54,7 +54,7 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
-    @RequestMapping("/getBbMyOrderList")
+    @PostMapping("/getBbMyOrderList")
     public Result getBbMyOrderList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return currencyService.getBbMyOrderList(user, pageNum, pageSize);
@@ -65,7 +65,7 @@ public class CurrencyApi {
             {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true)
             })
-    @RequestMapping("/getBbAutomaticOrder")
+    @PostMapping("/getBbAutomaticOrder")
     public Result getBbAutomaticOrder(HttpServletRequest request) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return currencyService.getBbAutomaticOrder(user);
@@ -77,7 +77,7 @@ public class CurrencyApi {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
                     @ApiImplicitParam(dataType = "Boolean", name = "automatic", value = "是否开启自动抢单", required = true)
             })
-    @RequestMapping("/editBbAutomaticOrder")
+    @PostMapping("/editBbAutomaticOrder")
     public Result editBbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return currencyService.editBbAutomaticOrder(user, automatic);
@@ -90,7 +90,7 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
-    @RequestMapping("/getBbOptionalOrder")
+    @PostMapping("/getBbOptionalOrder")
     public Result getBbOptionalOrder(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return currencyService.getBbOptionalOrder(user, pageNum, pageSize);
@@ -103,7 +103,7 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
-    @RequestMapping("/getBbHistorical")
+    @PostMapping("/getBbHistorical")
     public Result getBbHistorical(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return currencyService.getBbHistorical(user, pageNum, pageSize);
@@ -117,7 +117,7 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "String", name = "id", value = "主键id", required = true)
 
             })
-    @RequestMapping("/getBbDetails")
+    @PostMapping("/getBbDetails")
     public Result getBbDetails(HttpServletRequest request, String id) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return currencyService.getBbDetails(user, id);
@@ -130,7 +130,7 @@ public class CurrencyApi {
                     @ApiImplicitParam(dataType = "String", name = "id", value = "订单id", required = true)
 
             })
-    @RequestMapping("/robBbOrder")
+    @PostMapping("/robBbOrder")
     public Result robBbOrder(HttpServletRequest request, String id) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return currencyService.robBbOrder(user, id);

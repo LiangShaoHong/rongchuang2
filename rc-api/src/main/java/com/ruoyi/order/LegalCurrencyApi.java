@@ -53,7 +53,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true)
 
             })
-    @RequestMapping("/getFbPerInformation")
+    @PostMapping("/getFbPerInformation")
     public Result getFbPerInformation(HttpServletRequest request) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.getFbPerInformation(user);
@@ -67,7 +67,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
-    @RequestMapping("/getFbMyOrderList")
+    @PostMapping("/getFbMyOrderList")
     public Result getFbMyOrderList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.getFbMyOrderList(user, pageNum, pageSize);
@@ -78,7 +78,7 @@ public class LegalCurrencyApi {
             {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true)
             })
-    @RequestMapping("/getFbAutomaticOrder")
+    @PostMapping("/getFbAutomaticOrder")
     public Result getFbAutomaticOrder(HttpServletRequest request) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.getFbAutomaticOrder(user);
@@ -90,7 +90,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
                     @ApiImplicitParam(dataType = "Boolean", name = "automatic", value = "是否开启自动抢单", required = true)
             })
-    @RequestMapping("/editFbAutomaticOrder")
+    @PostMapping("/editFbAutomaticOrder")
     public Result editFbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.editFbAutomaticOrder(user, automatic);
@@ -103,7 +103,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
-    @RequestMapping("/getFbOptionalOrder")
+    @PostMapping("/getFbOptionalOrder")
     public Result getFbOptionalOrder(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.getFbOptionalOrder(user, pageNum, pageSize);
@@ -116,7 +116,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
-    @RequestMapping("/getFbHistorical")
+    @PostMapping("/getFbHistorical")
     public Result getFbHistorical(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.getFbHistorical(user, pageNum, pageSize);
@@ -130,7 +130,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "String", name = "id", value = "主键id", required = true)
 
             })
-    @RequestMapping("/getFbDetails")
+    @PostMapping("/getFbDetails")
     public Result getFbDetails(HttpServletRequest request, String id) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.getFbDetails(user, id);
@@ -144,7 +144,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "String", name = "paymentImg", value = "付款截图", required = true)
 
             })
-    @RequestMapping("/fbConfirm_a")
+    @PostMapping("/fbConfirm_a")
     public Result fbConfirm_a(HttpServletRequest request, String id, String paymentImg) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.fbConfirm_a(user, id, paymentImg);
@@ -157,7 +157,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "String", name = "id", value = "订单id", required = true)
 
             })
-    @RequestMapping("/fbConfirm")
+    @PostMapping("/fbConfirm")
     public Result fbConfirm(HttpServletRequest request, String id) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.fbConfirm(user, id);
@@ -170,7 +170,7 @@ public class LegalCurrencyApi {
                     @ApiImplicitParam(dataType = "String", name = "id", value = "订单id", required = true)
 
             })
-    @RequestMapping("/robFbOrder")
+    @PostMapping("/robFbOrder")
     public Result robFbOrder(HttpServletRequest request, String id) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
         return legalCurrencyService.robFbOrder(user, id);

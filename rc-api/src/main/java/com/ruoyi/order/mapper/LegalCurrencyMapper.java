@@ -2,7 +2,9 @@ package com.ruoyi.order.mapper;
 
 import com.ruoyi.order.domain.FrenchCurrencyOrder;
 import com.ruoyi.order.domain.Profit;
+import com.ruoyi.order.domain.RcFrenchCurrencyOrder;
 import io.lettuce.core.dynamic.annotation.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -33,5 +35,7 @@ public interface LegalCurrencyMapper {
 
     @Update("UPDATE rc_french_currency_order set confirm_collection_time=now(),order_state=5 WHERE user_id=#{arg0} AND order_id=#{arg1}")
     public void updateFbConfirm(@Param("userId") Long userId, @Param("id") String id);
+
+    public RcFrenchCurrencyOrder selectRcFrenchCurrencyOrderByOrderId(@Param("orderId") String orderId);
 
 }

@@ -51,6 +51,7 @@ public class SysIndexController extends BaseController
 
         // 平台ID 默认1
         mmap.put("platformId", "1");
+        mmap.put("userId", "1");
 
         // 菜单导航显示风格
         String menuStyle = configService.selectConfigByKey("sys.index.menuStyle");

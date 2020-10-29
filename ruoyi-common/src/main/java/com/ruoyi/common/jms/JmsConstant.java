@@ -1,3 +1,4 @@
+
 package com.ruoyi.common.jms;
 
 public class JmsConstant {
@@ -13,4 +14,15 @@ public class JmsConstant {
      * 用户资金统计
      */
     public static String queueMoneyUserStatistics = "money.queue.moneyUserStatistics";
+
+
+    /**
+     * 法币未付款超时时间
+     */
+    public static final String queueUnpaidOvertime = "mq.queue.legalCurrency.unpaidOvertime";
+
+    /**
+     * 法币未收款超时时间
+     */
+    public static final String queueUncollectedOvertime = "mq.queue.legalCurrency.uncollectedOvertime";
 }

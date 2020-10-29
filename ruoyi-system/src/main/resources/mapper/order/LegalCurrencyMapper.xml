@@ -34,6 +34,19 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
+
+    <resultMap type="RcFrenchCurrencyOrder" id="RcFrenchCurrencyOrderResult">
+        <id property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="rcFrenchCurrencyOrderReleaseId" column="rc_french_currency_order_release_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="paymentImg" column="payment_img"/>
+        <result property="orderState" column="order_state"/>
+        <result property="confirmThePaymentTime" column="confirm_the_payment_time"/>
+        <result property="confirmCollectionTime" column="confirm_collection_time"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
     <select id="getFbPerInformation" parameterType="Long" resultMap="ProfitResult">
         select
             b.money balance,a.earned,a.completed
@@ -176,5 +189,11 @@ FROM
 WHERE
 	 a.id=#{id}
     </select>
+
+
+    <select id="selectRcFrenchCurrencyOrderByOrderId" parameterType="String"
+            resultMap="RcFrenchCurrencyOrderResult">
+		select * from rc_french_currency_order where order_id=#{orderId}
+	</select>
 
 </mapper>
