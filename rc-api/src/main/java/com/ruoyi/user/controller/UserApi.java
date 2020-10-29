@@ -13,6 +13,7 @@ import com.ruoyi.common.Constants;
 import com.ruoyi.common.Result;
 import com.ruoyi.user.domain.RcUser;
 import com.ruoyi.user.service.IRcUserService;
+import com.ruoyi.user.service.IUserMoneyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -59,6 +60,9 @@ public class UserApi extends BaseController {
 
     @Autowired
     private PushService pushService;
+
+    @Autowired
+    private IUserMoneyService userMoneyService;
 
     @Lazy
     @Autowired
@@ -221,6 +225,31 @@ public class UserApi extends BaseController {
             return Result.isOk().data(data).msg(MsgConstants.USER_LOGIN_OK);
         }
         return Result.isFail().msg(MsgConstants.OPERATOR_FAIL);
+    }
+
+    @ApiOperation("加减币测试接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "userId", value = "交易会员id", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "userName", value = "交易会员名称", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "fromUserId", value = "交易对象id(订单ID)", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "money", value = "金额变化值", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "cashHandFee", value = "手续费(平台佣金)", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "recordType", value = "资金变化类型 0转账 1提现 2充值 3后台人员操作", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "mark", value = "备注说明", required = true)
+            })
+    @PostMapping("/updateMoney")
+    public Result userMoneyService(
+            @RequestParam("userId") String userId,
+            @RequestParam("userName") String userName,
+            @RequestParam("fromUserId") String fromUserId,
+            @RequestParam("money") String money,
+            @RequestParam("cashHandFee") String cashHandFee,
+            @RequestParam("recordType") String recordType,
+            @RequestParam("mark") String mark,
+            HttpServletRequest request) {
+        boolean isSame = userMoneyService.moneyDoCenter(userId,userName,fromUserId,new BigDecimal(money),new BigDecimal(cashHandFee),recordType,mark);
+        return Result.isOk().data(isSame);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.ruoyi.user.mapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ruoyi.common.json.JSONObject;
@@ -103,4 +104,8 @@ public interface RcUserMapper
      * @return 结果
      */
     RcUser selectverify(@Param("account") String account,@Param("password") String password);
+
+    JSONObject getUserMoney(@Param("id") String userId,@Param("account") String account);
+
+    int editUserMoneyWallet(@Param("userId")String userId, @Param("account")String account,@Param("money") BigDecimal money);
 }

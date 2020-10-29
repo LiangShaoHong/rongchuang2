@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.user.mapper.RcMoneyRecordMapper">
+
+    <resultMap type="RcMoneyRecord" id="RcMoneyRecordResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="userId"    />
+        <result property="userName"    column="userName"    />
+        <result property="fromUserId"    column="fromUserId"    />
+        <result property="beforeMoney"    column="beforeMoney"    />
+        <result property="afterMoney"    column="afterMoney"    />
+        <result property="money"    column="money"    />
+        <result property="cashHandFee"    column="cashHandFee"    />
+        <result property="recordType"    column="recordType"    />
+        <result property="mark"    column="mark"    />
+    </resultMap>
+
+    <sql id="selectRcMoneyRecordVo">
+        select id, userId, userName, fromUserId, beforeMoney , afterMoney, money, cashHandFee, recordType, mark from rc_money_record
+    </sql>
+
+    <select id="selectRcMoneyRecordList" parameterType="RcMoneyRecord" resultMap="RcMoneyRecordResult">
+        <include refid="selectRcMoneyRecordVo"/>
+        <where>
+            <if test="userId != null  and userId != ''"> and userId = #{userId}</if>
+            <if test="userName != null  and userName != ''"> and userName like concat('%', #{userName}, '%')</if>
+            <if test="fromUserId != null  and fromUserId != ''"> and fromUserId = #{fromUserId}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="beforeMoney != null "> and money = #{beforeMoney}</if>
+            <if test="afterMoney != null "> and money = #{afterMoney}</if>
+            <if test="cashHandFee != null "> and cashHandFee = #{cashHandFee}</if>
+            <if test="recordType != null  and recordType != ''"> and recordType = #{recordType}</if>
+            <if test="mark != null  and mark != ''"> and mark = #{mark}</if>
+        </where>
+    </select>
+
+    <select id="selectRcMoneyRecordById" parameterType="Integer" resultMap="RcMoneyRecordResult">
+        <include refid="selectRcMoneyRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertRcMoneyRecord" parameterType="RcMoneyRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into rc_money_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">userId,</if>
+            <if test="userName != null">userName,</if>
+            <if test="fromUserId != null">fromUserId,</if>
+            <if test="money != null">money,</if>
+            <if test="beforeMoney != null ">beforeMoney,</if>
+            <if test="afterMoney != null ">afterMoney,</if>
+            <if test="cashHandFee != null">cashHandFee,</if>
+            <if test="recordType != null">recordType,</if>
+            <if test="mark != null">mark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="fromUserId != null">#{fromUserId},</if>
+            <if test="money != null">#{money},</if>
+            <if test="beforeMoney != null ">#{beforeMoney},</if>
+            <if test="afterMoney != null ">#{afterMoney},</if>
+            <if test="cashHandFee != null">#{cashHandFee},</if>
+            <if test="recordType != null">#{recordType},</if>
+            <if test="mark != null">#{mark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateRcMoneyRecord" parameterType="RcMoneyRecord">
+        update rc_money_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">userId = #{userId},</if>
+            <if test="userName != null">userName = #{userName},</if>
+            <if test="fromUserId != null">fromUserId = #{fromUserId},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="beforeMoney != null "> and money = #{beforeMoney},</if>
+            <if test="afterMoney != null "> and money = #{afterMoney},</if>
+            <if test="cashHandFee != null">cashHandFee = #{cashHandFee},</if>
+            <if test="recordType != null">recordType = #{recordType},</if>
+            <if test="mark != null">mark = #{mark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcMoneyRecordById" parameterType="Integer">
+        delete from rc_money_record where id = #{id}
+    </delete>
+
+    <delete id="deleteRcMoneyRecordByIds" parameterType="String">
+        delete from rc_money_record where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
