@@ -20,8 +20,8 @@
         <result property="transactionCurrency" column="transaction_currency"/>
         <result property="number" column="number"/>
         <result property="transactionType" column="transaction_type"/>
-		<result property="buyingSources" column="buying_sources"/>
-		<result property="whereToSell" column="where_to_sell"/>
+        <result property="buyingSources" column="buying_sources"/>
+        <result property="whereToSell" column="where_to_sell"/>
         <result property="purchaseQuantity" column="purchase_quantity"/>
         <result property="purchasePrice" column="purchase_price"/>
         <result property="sellQuantity" column="sell_quantity"/>
@@ -30,6 +30,17 @@
         <result property="availableFiatMoney" column="available_fiat_money"/>
         <result property="profit" column="profit"/>
         <result property="orderState" column="order_state"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <resultMap type="RcCurrencyOrder" id="RcCurrencyOrderResult">
+        <id property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="rcCurrencyOrderReleaseId" column="rc_currency_order_release_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="orderState" column="order_state"/>
+        <result property="confirmThePaymentTime" column="confirm_the_payment_time"/>
+        <result property="confirmCollectionTime" column="confirm_collection_time"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
 
@@ -110,4 +121,32 @@ LEFT JOIN rc_currency_order b ON (a.id = b.rc_currency_order_release_id)
 WHERE
 	b.user_id = #{arg0} and b.order_id=#{arg1}
     </select>
+
+    <select id="getBbOrderById" resultMap="CurrencyOrderResult">
+       SELECT
+    a.id,
+	a.transaction_currency,
+	a.number,
+	a.transaction_type,
+	a.buying_sources,
+	a.where_to_sell,
+	a.purchase_quantity,
+	a.purchase_price,
+	a.sell_quantity,
+	a.sell_price,
+	a.spend_usdt,
+	a.available_fiat_money,
+	(a.available_fiat_money-a.spend_usdt) profit,
+	a.order_state
+FROM
+	rc_currency_order_release a
+WHERE
+	 a.id=#{id}
+    </select>
+
+
+    <select id="selectRcCurrencyOrderByOrderId" parameterType="String"
+            resultMap="RcCurrencyOrderResult">
+		select * from rc_currency_order where order_id=#{orderId}
+	</select>
 </mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.RcCurrencyOrderMapper">
+    
+    <resultMap type="RcCurrencyOrder" id="RcCurrencyOrderResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="rcCurrencyOrderReleaseId"    column="rc_currency_order_release_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="confirmThePaymentTime"    column="confirm_the_payment_time"    />
+        <result property="orderState"    column="order_state"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="confirmCollectionTime"    column="confirm_collection_time"    />
+    </resultMap>
+
+    <sql id="selectRcCurrencyOrderVo">
+        select id, order_id, rc_currency_order_release_id, user_id, confirm_the_payment_time, order_state, create_time, confirm_collection_time from rc_currency_order
+    </sql>
+
+    <select id="selectRcCurrencyOrderList" parameterType="RcCurrencyOrder" resultMap="RcCurrencyOrderResult">
+        <include refid="selectRcCurrencyOrderVo"/>
+        <where>  
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="rcCurrencyOrderReleaseId != null "> and rc_currency_order_release_id = #{rcCurrencyOrderReleaseId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="confirmThePaymentTime != null "> and confirm_the_payment_time = #{confirmThePaymentTime}</if>
+            <if test="orderState != null  and orderState != ''"> and order_state = #{orderState}</if>
+            <if test="confirmCollectionTime != null "> and confirm_collection_time = #{confirmCollectionTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectRcCurrencyOrderById" parameterType="Long" resultMap="RcCurrencyOrderResult">
+        <include refid="selectRcCurrencyOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRcCurrencyOrder" parameterType="RcCurrencyOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into rc_currency_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="rcCurrencyOrderReleaseId != null">rc_currency_order_release_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="confirmThePaymentTime != null">confirm_the_payment_time,</if>
+            <if test="orderState != null">order_state,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="confirmCollectionTime != null">confirm_collection_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="rcCurrencyOrderReleaseId != null">#{rcCurrencyOrderReleaseId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="confirmThePaymentTime != null">#{confirmThePaymentTime},</if>
+            <if test="orderState != null">#{orderState},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="confirmCollectionTime != null">#{confirmCollectionTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRcCurrencyOrder" parameterType="RcCurrencyOrder">
+        update rc_currency_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="rcCurrencyOrderReleaseId != null">rc_currency_order_release_id = #{rcCurrencyOrderReleaseId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="confirmThePaymentTime != null">confirm_the_payment_time = #{confirmThePaymentTime},</if>
+            <if test="orderState != null">order_state = #{orderState},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="confirmCollectionTime != null">confirm_collection_time = #{confirmCollectionTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcCurrencyOrderById" parameterType="Long">
+        delete from rc_currency_order where id = #{id}
+    </delete>
+
+    <delete id="deleteRcCurrencyOrderByIds" parameterType="String">
+        delete from rc_currency_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

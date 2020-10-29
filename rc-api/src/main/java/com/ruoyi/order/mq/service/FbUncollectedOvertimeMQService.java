@@ -14,11 +14,11 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UncollectedOvertimeMQService implements ReceiverService {
+public class FbUncollectedOvertimeMQService implements ReceiverService {
 
 
     @Autowired
-    private static final Logger log = LoggerFactory.getLogger(UncollectedOvertimeMQService.class);
+    private static final Logger log = LoggerFactory.getLogger(FbUncollectedOvertimeMQService.class);
     @Autowired
     private RcFrenchCurrencyOrderMapper rcFrenchCurrencyOrderMapper;
 
@@ -26,7 +26,7 @@ public class UncollectedOvertimeMQService implements ReceiverService {
     private LegalCurrencyMapper legalCurrencyMapper;
 
     @Override
-    @JmsListener(destination = JmsConstant.queueUncollectedOvertime, containerFactory = "queueListenerFactory")
+    @JmsListener(destination = JmsConstant.queueFbUncollectedOvertime, containerFactory = "queueListenerFactory")
     public void receiveQueue(String message) {
         log.info("法币订单超时未确认收款");
 

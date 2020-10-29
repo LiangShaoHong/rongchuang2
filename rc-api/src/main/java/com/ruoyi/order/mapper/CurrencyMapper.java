@@ -1,8 +1,6 @@
 package com.ruoyi.order.mapper;
 
-import com.ruoyi.order.domain.CurrencyOrder;
-import com.ruoyi.order.domain.FrenchCurrencyOrder;
-import com.ruoyi.order.domain.Profit;
+import com.ruoyi.order.domain.*;
 import io.lettuce.core.dynamic.annotation.Param;
 
 import java.util.List;
@@ -24,5 +22,9 @@ public interface CurrencyMapper {
 
     public CurrencyOrder getBbDetails(@Param("userId") Long userId, @Param("id") String id);
 
+
+    public CurrencyOrder getBbOrderById(@Param("id") String id);
+
+    public RcCurrencyOrder selectRcCurrencyOrderByOrderId(@Param("orderId") String orderId);
 
 }

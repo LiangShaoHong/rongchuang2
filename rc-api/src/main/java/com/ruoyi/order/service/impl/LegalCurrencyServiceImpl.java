@@ -15,6 +15,7 @@ import com.ruoyi.common.utils.redis.RedisLock;
 import com.ruoyi.common.utils.redis.RedisService;
 import com.ruoyi.common.utils.uuid.UUID;
 import com.ruoyi.framework.web.service.ConfigService;
+import com.ruoyi.framework.web.service.DictService;
 import com.ruoyi.order.domain.FrenchCurrencyOrder;
 import com.ruoyi.order.domain.Profit;
 import com.ruoyi.order.domain.RcFrenchCurrencyOrder;
@@ -60,7 +61,6 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Autowired
     private SenderService senderService;
 
-
     @Autowired
     private ConfigService configService;
 
@@ -76,7 +76,6 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
 
     @Override
     public Result getFbMyOrderList(RcUser user, Integer pageNum, Integer pageSize) {
-
         pageNum = (pageNum - 1) * pageSize;
         List<FrenchCurrencyOrder> frenchCurrencyOrderList = legalCurrencyMapper.getFbMyOrderList(user.getId(), pageNum, pageSize);
         return new Result().code(1).msg("查询成功").data(frenchCurrencyOrderList);
@@ -85,14 +84,12 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Override
     public Result getFbAutomaticOrder(RcUser user) {
         log.info("调用法币查询自动抢单状态接口");
-
         return null;
     }
 
     @Override
     public Result editFbAutomaticOrder(RcUser user, Boolean automatic) {
         log.info("调用法币改变自动抢单状态接口");
-
         return null;
     }
 
@@ -139,11 +136,11 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
                     msg.put("msg", "有新的法币订单需要确认收款");
                     pushService.sendToUser(String.valueOf(rcFrenchCurrencyOrderRelease.getSellerUserId()), msg.toString());
 
-                    //获取法币未确认付款超时时间（毫秒）
+                    //获取法币未确认收款超时时间（毫秒）
                     String unpaidOvertime = configService.getKey("rc.legalCurrency.uncollectedOvertime");
                     JSONObject data = new JSONObject();
                     data.put("orderId", id);
-                    senderService.sendQueueDelayMessage(JmsConstant.queueUncollectedOvertime, data, Integer.valueOf(unpaidOvertime));
+                    senderService.sendQueueDelayMessage(JmsConstant.queueFbUncollectedOvertime, data, Integer.valueOf(unpaidOvertime));
 
 
                     return new Result().code(1).msg("提交成功").data("");
@@ -155,7 +152,7 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
                     fairLock.unlock();
             }
         }
-         if ("4".equals(rcFrenchCurrencyOrder.getOrderState())) {
+        if ("4".equals(rcFrenchCurrencyOrder.getOrderState())) {
             return Result.isFail("订单确认付款已超时");
         }
         return Result.isFail("提交失败");
@@ -225,7 +222,7 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
                     String unpaidOvertime = configService.getKey("rc.legalCurrency.unpaidOvertime");
                     JSONObject data = new JSONObject();
                     data.put("orderId", orderId);
-                    senderService.sendQueueDelayMessage(JmsConstant.queueUnpaidOvertime, data, Integer.valueOf(unpaidOvertime));
+                    senderService.sendQueueDelayMessage(JmsConstant.queueFbUnpaidOvertime, data, Integer.valueOf(unpaidOvertime));
                     return Result.isOk().msg("提交成功");
                 }
             }

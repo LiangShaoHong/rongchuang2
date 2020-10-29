@@ -19,10 +19,16 @@ public class JmsConstant {
     /**
      * 法币未付款超时时间
      */
-    public static final String queueUnpaidOvertime = "mq.queue.legalCurrency.unpaidOvertime";
+    public static final String queueFbUnpaidOvertime = "mq.queue.legalCurrency.unpaidOvertime";
 
     /**
      * 法币未收款超时时间
      */
-    public static final String queueUncollectedOvertime = "mq.queue.legalCurrency.uncollectedOvertime";
+    public static final String queueFbUncollectedOvertime = "mq.queue.legalCurrency.uncollectedOvertime";
+
+    /**
+     * 币币自动确认延迟时间
+     */
+    public static final String queueBbOvertime = "mq.queue.Currency.Overtime";
+
 }

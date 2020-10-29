@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改币币订单发布')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-RcCurrencyOrderRelease-edit" th:object="${rcCurrencyOrderRelease}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">交易类型：</label>
+                <div class="col-sm-8">
+                    <select name="transactionType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">订单类型 1：后台发布 2：系统自动发布 3：指派订单：</label>
+                <div class="col-sm-8">
+                    <select name="orderType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">数量：</label>
+                <div class="col-sm-8">
+                    <input name="number" th:field="*{number}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">卖家id：</label>
+                <div class="col-sm-8">
+                    <input name="sellerUserId" th:field="*{sellerUserId}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">买入来源：</label>
+                <div class="col-sm-8">
+                    <input name="buyingSources" th:field="*{buyingSources}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">卖出去向：</label>
+                <div class="col-sm-8">
+                    <input name="whereToSell" th:field="*{whereToSell}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">交易币种：</label>
+                <div class="col-sm-8">
+                    <input name="transactionCurrency" th:field="*{transactionCurrency}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">买入数量：</label>
+                <div class="col-sm-8">
+                    <input name="purchaseQuantity" th:field="*{purchaseQuantity}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">买入价格：</label>
+                <div class="col-sm-8">
+                    <input name="purchasePrice" th:field="*{purchasePrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">卖出数量：</label>
+                <div class="col-sm-8">
+                    <input name="sellQuantity" th:field="*{sellQuantity}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">卖出价格：</label>
+                <div class="col-sm-8">
+                    <input name="sellPrice" th:field="*{sellPrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">花费USDT：</label>
+                <div class="col-sm-8">
+                    <input name="spendUsdt" th:field="*{spendUsdt}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">可得法币：</label>
+                <div class="col-sm-8">
+                    <input name="availableFiatMoney" th:field="*{availableFiatMoney}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">收益：</label>
+                <div class="col-sm-8">
+                    <input name="profit" th:field="*{profit}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">订单状态 1：已分配 2：未分配：</label>
+                <div class="col-sm-8">
+                    <input name="orderState" th:field="*{orderState}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">指派用户id：</label>
+                <div class="col-sm-8">
+                    <input name="assignUserId" th:field="*{assignUserId}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">订单发布时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="releaseTime" th:value="${#dates.format(rcCurrencyOrderRelease.releaseTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "order/RcCurrencyOrderRelease";
+        $("#form-RcCurrencyOrderRelease-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-RcCurrencyOrderRelease-edit').serialize());
+            }
+        }
+
+        $("input[name='releaseTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

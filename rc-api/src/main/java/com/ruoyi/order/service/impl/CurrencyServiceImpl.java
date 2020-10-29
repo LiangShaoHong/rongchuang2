@@ -1,28 +1,60 @@
 package com.ruoyi.order.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.ruoyi.common.Constants;
 import com.ruoyi.common.Result;
+import com.ruoyi.common.jms.JmsConstant;
+import com.ruoyi.common.jms.SenderService;
+import com.ruoyi.common.push.PushService;
 import com.ruoyi.common.utils.redis.RedisLock;
 import com.ruoyi.common.utils.redis.RedisService;
-import com.ruoyi.order.domain.CurrencyOrder;
-import com.ruoyi.order.domain.Profit;
-import com.ruoyi.order.mapper.CurrencyMapper;
+import com.ruoyi.common.utils.uuid.UUID;
+import com.ruoyi.framework.web.service.ConfigService;
+import com.ruoyi.order.domain.*;
+import com.ruoyi.order.mapper.*;
 import com.ruoyi.order.service.CurrencyService;
 import com.ruoyi.user.domain.RcUser;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
 
 
     @Autowired
+    private static final Logger log = LoggerFactory.getLogger(CurrencyServiceImpl.class);
+
+    @Autowired
+    private RedissonClient redissonClient;
+
+    @Autowired
     private CurrencyMapper currencyMapper;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RcCurrencyOrderMapper rcCurrencyOrderMapper;
+
+    @Autowired
+    private RcCurrencyOrderReleaseMapper rcCurrencyOrderReleaseMapper;
+
+    @Autowired
+    private SenderService senderService;
+
+    @Autowired
+    private ConfigService configService;
+
+    @Autowired
+    private PushService pushService;
+
 
     @Override
     public Result getBbPerInformation(RcUser rcUser) {
@@ -71,29 +103,48 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public Result robBbOrder(RcUser rcUser, String id) {
-
-        RedisLock lock = new RedisLock(redisTemplate, "order:orderId:" + id, 5000, 10000);
+    @Transactional(rollbackFor = Exception.class)
+    public Result robBbOrder(RcUser user, String id) {
+        log.info("调用币币抢订单接口");
+        String lockKey = "lockKey:" + Constants.DB_ORDER + "Bb:" + id;
+        RLock fairLock = redissonClient.getFairLock(lockKey);
         try {
-            if (lock.lock()) {
+            // 尝试加锁，最多等待l秒，上锁以后l1秒自动解锁
+            if (fairLock.tryLock(5, 10, TimeUnit.SECONDS)) {
+                CurrencyOrder currencyOrder = currencyMapper.getBbOrderById(id);
+                if (1 == currencyOrder.getOrderState()) {
+                    log.info("币币订单已被领取");
+                    return Result.isFail("订单已被领取");
+                }
+                if (2 == currencyOrder.getOrderState()) {
+                    log.info("当币币订单处于未领取状态时");
+                    RcCurrencyOrder rcCurrencyOrder = new RcCurrencyOrder();
+                    String orderId = UUID.randomUUID().toString().replace("-", "");
+                    rcCurrencyOrder.setOrderId(orderId);
+                    rcCurrencyOrder.setRcCurrencyOrderReleaseId(Long.valueOf(currencyOrder.getId()));
+                    rcCurrencyOrder.setUserId(user.getId());
+                    Date createTimeDate = new Date();
+                    rcCurrencyOrder.setCreateTime(createTimeDate);
+                    rcCurrencyOrder.setOrderState("3");
+                    rcCurrencyOrderMapper.insertRcCurrencyOrder(rcCurrencyOrder);
+                    RcCurrencyOrderRelease rcCurrencyOrderRelease = rcCurrencyOrderReleaseMapper.selectRcCurrencyOrderReleaseById(Long.valueOf(id));
+                    rcCurrencyOrderRelease.setOrderState("1");
+                    rcCurrencyOrderReleaseMapper.updateRcCurrencyOrderRelease(rcCurrencyOrderRelease);
 
-//                //1：已分配  2：未分配
-//                if ("2".equals(orderState)) {
-//                    return new Result().data(1);
-//                }
-                return new Result().data("加锁");
-            } else {
-                return new Result().data("重新加锁");
-
+                    //获取币币未确认付款超时时间（毫秒）
+                    String unpaidOvertime = configService.getKey("rc.currency.overtime");
+                    JSONObject data = new JSONObject();
+                    data.put("orderId", orderId);
+                    senderService.sendQueueDelayMessage(JmsConstant.queueBbOvertime, data, Integer.valueOf(unpaidOvertime));
+                    return Result.isOk().msg("提交成功");
+                }
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error("加锁异常！e.getMessage():{}, e:{}", e.getMessage(), e);
         } finally {
-            //为了让分布式锁的算法更稳键些，持有锁的客户端在解锁之前应该再检查一次自己的锁是否已经超时，再去做DEL操作，因为可能客户端因为某个耗时的操作而挂起，
-            //操作完的时候锁因为超时已经被别人获得，这时就不必解锁了。 ————这里没有做
-            lock.unlock();
+            if (fairLock.isHeldByCurrentThread())
+                fairLock.unlock();
         }
-
-        return new Result().data(1);
+        return null;
     }
 }

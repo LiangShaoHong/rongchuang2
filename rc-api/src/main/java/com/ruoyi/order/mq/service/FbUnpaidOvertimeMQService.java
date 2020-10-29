@@ -15,11 +15,11 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class UnpaidOvertimeMQService implements ReceiverService {
+public class FbUnpaidOvertimeMQService implements ReceiverService {
 
 
     @Autowired
-    private static final Logger log = LoggerFactory.getLogger(UnpaidOvertimeMQService.class);
+    private static final Logger log = LoggerFactory.getLogger(FbUnpaidOvertimeMQService.class);
     @Autowired
     private RcFrenchCurrencyOrderMapper rcFrenchCurrencyOrderMapper;
 
@@ -27,7 +27,7 @@ public class UnpaidOvertimeMQService implements ReceiverService {
     private LegalCurrencyMapper legalCurrencyMapper;
 
     @Override
-    @JmsListener(destination = JmsConstant.queueUnpaidOvertime, containerFactory = "queueListenerFactory")
+    @JmsListener(destination = JmsConstant.queueFbUnpaidOvertime, containerFactory = "queueListenerFactory")
     public void receiveQueue(String message) {
         log.info("法币订单超时未确认付款");
         JSONObject data = Message.getMessageData(message);
