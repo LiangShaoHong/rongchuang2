@@ -149,12 +149,50 @@ public class UserApi extends BaseController {
         msg.put("data", "withdraw");
         pushService.sendToGroup(user.getPlatformId(), msg.toString());
 
-
         JSONObject msg1 = new JSONObject();
         msg1.put("xx", "我来了");
         pushService.sendToUser("2", msg1.toString());
 
         return Result.isOk().data(data).msg(MsgConstants.USER_LOGIN_OK);
+    }
+
+    /**
+     * 根据旧密码修改密码
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @param request
+     * @return
+     */
+    @RequestMapping("/updatePassword")
+    public Result editUserPass(
+            @RequestParam("oldPassword") String oldPassword,
+            @RequestParam("newPassword") String newPassword,
+            HttpServletRequest request) {
+        RcUser user =  systemUtil.getPlatformIdAndUserId(request);
+        //检验输入的旧密码
+        boolean isSame = bCryptPasswordEncoder.matches(user.getInvitation() + oldPassword, user.getPassword());
+        if (!isSame) {
+            return Result.isFail(MsgConstants.OLD_PASSWORD_ERROR);
+        }
+        //设置用户新密码
+        RcUser updateUser = new RcUser();
+        updateUser.setId(user.getId());
+        updateUser.setPassword(bCryptPasswordEncoder.encode(user.getInvitation() + newPassword));
+        int isUpdate = rcUserService.updateRcUser(updateUser);
+        if (isUpdate > 0) {
+            //更新redis的user信息
+            String token = JWTUtil.sign(user.getPlatformId() + user.getAccount(),user.getInvitation());
+            JSONObject data = new JSONObject();
+            data.put("X_Token", token);
+            // 保存用户信息（account为key）
+            String userKey = Constants.DB_USER + user.getPlatformId() + user.getAccount();
+            redisService.set(userKey, user, Constants.DB_USER);
+            // 保存登录token信息（userID为key）
+            String tokenKey = Constants.DB_TOKEN + user.getPlatformId() + user.getId();
+            redisService.set(tokenKey, token, Constants.LOGIN_TIMEOUT, Constants.DB_USER);
+            return Result.isOk().data(data).msg(MsgConstants.USER_LOGIN_OK);
+        }
+        return Result.isFail().msg(MsgConstants.OPERATOR_FAIL);
     }
 
 }
