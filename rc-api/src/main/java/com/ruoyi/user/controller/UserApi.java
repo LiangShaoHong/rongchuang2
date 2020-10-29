@@ -13,11 +13,17 @@ import com.ruoyi.common.Constants;
 import com.ruoyi.common.Result;
 import com.ruoyi.user.domain.RcUser;
 import com.ruoyi.user.service.IRcUserService;
+import com.ruoyi.user.service.IUserMoneyService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +39,7 @@ import java.util.Map;
 /**
  * @author xiaoxia
  */
+@Api("登陆注册修改密码接口")
 @RestController
 @RequestMapping("/rc-api/user")
 public class UserApi extends BaseController {
@@ -54,6 +61,9 @@ public class UserApi extends BaseController {
     @Autowired
     private PushService pushService;
 
+    @Autowired
+    private IUserMoneyService userMoneyService;
+
     @Lazy
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -70,8 +80,18 @@ public class UserApi extends BaseController {
      * @return
      * @throws ParseException
      */
-    @RequestMapping("/register")
-    public Result addBank(@RequestParam("account") String account,
+    @ApiOperation("注册接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "account", value = "用户名", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "password", value = "密码", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "mobile", value = "手机号", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "invitationCode", value = "邀请码(该参数暂时没用 不传)", required = false),
+                    @ApiImplicitParam(dataType = "String", name = "verificationCode", value = "验证码(该参数暂时没用 不传)", required = false),
+                    @ApiImplicitParam(dataType = "String", name = "language", value = "地区(该参数暂时没用 不传)", required = false)
+            })
+    @PostMapping("/register")
+    public Result register(@RequestParam("account") String account,
                           @RequestParam("password") String passWord,
                           @RequestParam("mobile") String mobile,
                           @RequestParam(value = "invitationCode", required = false) String invitationCode,
@@ -123,7 +143,13 @@ public class UserApi extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping("/login")
+    @ApiOperation("登陆接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "account", value = "账号", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "password", value = "密码", required = true)
+            })
+    @PostMapping("/login")
     public Result login(@RequestParam("account") String account,
                         @RequestParam("password") String pass,
                         HttpServletRequest request) {
@@ -149,12 +175,81 @@ public class UserApi extends BaseController {
         msg.put("data", "withdraw");
         pushService.sendToGroup(user.getPlatformId(), msg.toString());
 
-
         JSONObject msg1 = new JSONObject();
         msg1.put("xx", "我来了");
         pushService.sendToUser("2", msg1.toString());
 
         return Result.isOk().data(data).msg(MsgConstants.USER_LOGIN_OK);
+    }
+
+    /**
+     * 根据旧密码修改密码
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @param request
+     * @return
+     */
+    @ApiOperation("修改密码接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "oldPassword", value = "旧密码", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "newPassword", value = "新密码", required = true)
+            })
+    @PostMapping("/updatePassword")
+    public Result editUserPass(
+            @RequestParam("oldPassword") String oldPassword,
+            @RequestParam("newPassword") String newPassword,
+            HttpServletRequest request) {
+        RcUser user =  systemUtil.getPlatformIdAndUserId(request);
+        //检验输入的旧密码
+        boolean isSame = bCryptPasswordEncoder.matches(user.getInvitation() + oldPassword, user.getPassword());
+        if (!isSame) {
+            return Result.isFail(MsgConstants.OLD_PASSWORD_ERROR);
+        }
+        //设置用户新密码
+        RcUser updateUser = new RcUser();
+        updateUser.setId(user.getId());
+        updateUser.setPassword(bCryptPasswordEncoder.encode(user.getInvitation() + newPassword));
+        int isUpdate = rcUserService.updateRcUser(updateUser);
+        if (isUpdate > 0) {
+            //更新redis的user信息
+            String token = JWTUtil.sign(user.getPlatformId() + user.getAccount(),user.getInvitation());
+            JSONObject data = new JSONObject();
+            data.put("X_Token", token);
+            // 保存用户信息（account为key）
+            String userKey = Constants.DB_USER + user.getPlatformId() + user.getAccount();
+            redisService.set(userKey, user, Constants.DB_USER);
+            // 保存登录token信息（userID为key）
+            String tokenKey = Constants.DB_TOKEN + user.getPlatformId() + user.getId();
+            redisService.set(tokenKey, token, Constants.LOGIN_TIMEOUT, Constants.DB_USER);
+            return Result.isOk().data(data).msg(MsgConstants.USER_LOGIN_OK);
+        }
+        return Result.isFail().msg(MsgConstants.OPERATOR_FAIL);
+    }
+
+    @ApiOperation("加减币测试接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "userId", value = "交易会员id", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "userName", value = "交易会员名称", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "fromUserId", value = "交易对象id(订单ID)", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "money", value = "金额变化值", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "cashHandFee", value = "手续费(平台佣金)", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "recordType", value = "资金变化类型 0转账 1提现 2充值 3后台人员操作", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "mark", value = "备注说明", required = true)
+            })
+    @PostMapping("/updateMoney")
+    public Result userMoneyService(
+            @RequestParam("userId") String userId,
+            @RequestParam("userName") String userName,
+            @RequestParam("fromUserId") String fromUserId,
+            @RequestParam("money") String money,
+            @RequestParam("cashHandFee") String cashHandFee,
+            @RequestParam("recordType") String recordType,
+            @RequestParam("mark") String mark,
+            HttpServletRequest request) {
+        boolean isSame = userMoneyService.moneyDoCenter(userId,userName,fromUserId,new BigDecimal(money),new BigDecimal(cashHandFee),recordType,mark);
+        return Result.isOk().data(isSame);
     }
 
 }

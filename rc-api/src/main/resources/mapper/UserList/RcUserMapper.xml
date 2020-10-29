@@ -146,4 +146,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
+    <select id="getUserMoney"  resultType="com.ruoyi.common.json.JSONObject">
+        SELECT IFNULL(money,0) money,id FROM rc_user WHERE id = #{id} AND account = #{account}
+    </select>
+
+    <update id="editUserMoneyWallet" >
+        update rc_user set money = money + #{money}
+        where id = #{userId} and account = #{account} and money + #{money} <![CDATA[>=]]> 0
+    </update>
+
 </mapper>
