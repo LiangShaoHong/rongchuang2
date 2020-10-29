@@ -57,11 +57,11 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
 
     /** 出售数量 */
     @Excel(name = "出售数量")
-    private Long sellingQuantity;
+    private Long sellQuantity;
 
     /** 出售价格 */
     @Excel(name = "出售价格")
-    private Long sellingPrice;
+    private Long sellPrice;
 
     /** 花费USDT */
     @Excel(name = "花费USDT")
@@ -181,23 +181,23 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
     {
         return purchasePrice;
     }
-    public void setSellingQuantity(Long sellingQuantity) 
+    public void setSellQuantity(Long sellQuantity) 
     {
-        this.sellingQuantity = sellingQuantity;
+        this.sellQuantity = sellQuantity;
     }
 
-    public Long getSellingQuantity() 
+    public Long getSellQuantity() 
     {
-        return sellingQuantity;
+        return sellQuantity;
     }
-    public void setSellingPrice(Long sellingPrice) 
+    public void setSellPrice(Long sellPrice) 
     {
-        this.sellingPrice = sellingPrice;
+        this.sellPrice = sellPrice;
     }
 
-    public Long getSellingPrice() 
+    public Long getSellPrice() 
     {
-        return sellingPrice;
+        return sellPrice;
     }
     public void setSpendUsdt(Long spendUsdt) 
     {
@@ -276,8 +276,8 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
             .append("transactionCurrency", getTransactionCurrency())
             .append("purchaseQuantity", getPurchaseQuantity())
             .append("purchasePrice", getPurchasePrice())
-            .append("sellingQuantity", getSellingQuantity())
-            .append("sellingPrice", getSellingPrice())
+            .append("sellQuantity", getSellQuantity())
+            .append("sellPrice", getSellPrice())
             .append("spendUsdt", getSpendUsdt())
             .append("availableFiatMoney", getAvailableFiatMoney())
             .append("profit", getProfit())

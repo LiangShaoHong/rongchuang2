@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改法币订单')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-RcFrenchCurrencyOrder-edit" th:object="${rcFrenchCurrencyOrder}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">交易单号：</label>
+                <div class="col-sm-8">
+                    <input name="orderId" th:field="*{orderId}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">法币订单发布表id：</label>
+                <div class="col-sm-8">
+                    <input name="rcFrenchCurrencyOrderReleaseId" th:field="*{rcFrenchCurrencyOrderReleaseId}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">用户id：</label>
+                <div class="col-sm-8">
+                    <input name="userId" th:field="*{userId}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">付款截图：</label>
+                <div class="col-sm-8">
+                    <input name="paymentImg" th:field="*{paymentImg}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">订单状态1：等待确认收款2：超时未确认收款3：等待确认付款4：超时未确认付款5：已确认6：申诉中7：申诉成功8：申诉失败：</label>
+                <div class="col-sm-8">
+                    <input name="orderState" th:field="*{orderState}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">确认付款时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="confirmThePaymentTime" th:value="${#dates.format(rcFrenchCurrencyOrder.confirmThePaymentTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">确认收款时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="confirmCollectionTime" th:value="${#dates.format(rcFrenchCurrencyOrder.confirmCollectionTime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "order/RcFrenchCurrencyOrder";
+        $("#form-RcFrenchCurrencyOrder-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-RcFrenchCurrencyOrder-edit').serialize());
+            }
+        }
+
+        $("input[name='confirmThePaymentTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='confirmCollectionTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

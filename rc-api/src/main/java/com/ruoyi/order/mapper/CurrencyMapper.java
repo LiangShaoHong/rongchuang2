@@ -8,7 +8,7 @@ import io.lettuce.core.dynamic.annotation.Param;
 import java.util.List;
 
 /**
- * 法币Mapper接口
+ * 币币Mapper接口
  *
  * @author ruoyi
  * @date 2020-10-22
