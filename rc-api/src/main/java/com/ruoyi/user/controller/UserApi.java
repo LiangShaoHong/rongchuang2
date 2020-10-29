@@ -13,11 +13,16 @@ import com.ruoyi.common.Constants;
 import com.ruoyi.common.Result;
 import com.ruoyi.user.domain.RcUser;
 import com.ruoyi.user.service.IRcUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +38,7 @@ import java.util.Map;
 /**
  * @author xiaoxia
  */
+@Api("登陆注册修改密码接口")
 @RestController
 @RequestMapping("/rc-api/user")
 public class UserApi extends BaseController {
@@ -70,8 +76,18 @@ public class UserApi extends BaseController {
      * @return
      * @throws ParseException
      */
-    @RequestMapping("/register")
-    public Result addBank(@RequestParam("account") String account,
+    @ApiOperation("注册接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "account", value = "用户名", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "password", value = "密码", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "mobile", value = "手机号", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "invitationCode", value = "邀请码(该参数暂时没用 不传)", required = false),
+                    @ApiImplicitParam(dataType = "String", name = "verificationCode", value = "验证码(该参数暂时没用 不传)", required = false),
+                    @ApiImplicitParam(dataType = "String", name = "language", value = "地区(该参数暂时没用 不传)", required = false)
+            })
+    @PostMapping("/register")
+    public Result register(@RequestParam("account") String account,
                           @RequestParam("password") String passWord,
                           @RequestParam("mobile") String mobile,
                           @RequestParam(value = "invitationCode", required = false) String invitationCode,
@@ -123,7 +139,13 @@ public class UserApi extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping("/login")
+    @ApiOperation("登陆接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "account", value = "账号", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "password", value = "密码", required = true)
+            })
+    @PostMapping("/login")
     public Result login(@RequestParam("account") String account,
                         @RequestParam("password") String pass,
                         HttpServletRequest request) {
@@ -163,7 +185,13 @@ public class UserApi extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping("/updatePassword")
+    @ApiOperation("修改密码接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "oldPassword", value = "旧密码", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "newPassword", value = "新密码", required = true)
+            })
+    @PostMapping("/updatePassword")
     public Result editUserPass(
             @RequestParam("oldPassword") String oldPassword,
             @RequestParam("newPassword") String newPassword,
