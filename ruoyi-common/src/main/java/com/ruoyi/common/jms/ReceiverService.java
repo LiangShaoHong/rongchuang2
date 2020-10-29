@@ -9,6 +9,6 @@ public interface ReceiverService {
      * 接收队列消息
      * @param message
      */
-    public void receiveQueue(String message);
+    public void receiveQueue(String message) throws InterruptedException;
 
 }
