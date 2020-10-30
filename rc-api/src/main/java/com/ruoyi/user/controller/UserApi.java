@@ -7,6 +7,7 @@ import com.ruoyi.common.json.JSONObject;
 import com.ruoyi.common.push.PushService;
 import com.ruoyi.common.utils.JWTUtil;
 import com.ruoyi.common.utils.OrderNumUtil;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisService;
 import com.ruoyi.controller.BaseController;
 import com.ruoyi.common.Constants;
@@ -73,7 +74,7 @@ public class UserApi extends BaseController {
      * @param account           用户名
      * @param passWord          密码
      * @param mobile            手机号
-     * @param invitationCode    邀请码
+     * @param referralcode      注册推荐码
      * @param verificationCode  验证码
      * @param language          选择的语言/区分区域
      * @param request
@@ -86,7 +87,7 @@ public class UserApi extends BaseController {
                     @ApiImplicitParam(dataType = "String", name = "account", value = "用户名", required = true),
                     @ApiImplicitParam(dataType = "String", name = "password", value = "密码", required = true),
                     @ApiImplicitParam(dataType = "String", name = "mobile", value = "手机号", required = true),
-                    @ApiImplicitParam(dataType = "String", name = "invitationCode", value = "邀请码(该参数暂时没用 不传)", required = false),
+                    @ApiImplicitParam(dataType = "String", name = "referralcode", value = "邀请码(非必填)", required = false),
                     @ApiImplicitParam(dataType = "String", name = "verificationCode", value = "验证码(该参数暂时没用 不传)", required = false),
                     @ApiImplicitParam(dataType = "String", name = "language", value = "地区(该参数暂时没用 不传)", required = false)
             })
@@ -94,7 +95,7 @@ public class UserApi extends BaseController {
     public Result register(@RequestParam("account") String account,
                           @RequestParam("password") String passWord,
                           @RequestParam("mobile") String mobile,
-                          @RequestParam(value = "invitationCode", required = false) String invitationCode,
+                          @RequestParam(value = "referralcode", required = false) String referralcode,
                           @RequestParam(value = "verificationCode", required = false) String verificationCode,
                           @RequestParam("language") String language,
                           HttpServletRequest request) throws ParseException {
@@ -104,6 +105,17 @@ public class UserApi extends BaseController {
         JSONObject selectinvitation = rcUserService.selectinvitation(showId);
         if (selectinvitation!=null){
             return Result.isFail().msg("请重试");
+        }
+        int parentid = 0;
+//        referralcode = null;
+        //推荐码非空时检测推荐码是否有效
+        if(!StringUtils.isEmpty(referralcode)){
+            JSONObject selectreferralcode = rcUserService.selectreferralcode(referralcode);
+            if (selectreferralcode==null){
+                return Result.isFail().msg("推荐码无效");
+            }
+//            referralcode = (String) selectreferralcode.get("referralcode");
+            parentid = (int) selectreferralcode.get("id");
         }
         //检测手机号是否存在正在使用
         QueryWrapper queryWrapper1=new QueryWrapper();
@@ -119,7 +131,7 @@ public class UserApi extends BaseController {
         String ip = (String) extractPublicParam.get("extra_ip");
         //刚注册的用户，默认过期时间
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        RcUser u = new RcUser(null,mobile,100,new BigDecimal(0),account,password,null,null,"中文",0,df.parse(df.format(new Date())),0,0,"0",showId,null,"1");
+        RcUser u = new RcUser(null,mobile,100,new BigDecimal(0),account,password,null,null,"中文",0,df.parse(df.format(new Date())),0,parentid,"0", showId, referralcode,null,"1");
         int insert = rcUserService.insertRcUser(u);
         if (insert==0) {
             return Result.isFail().msg(MsgConstants.INVITATION_UNUSER);

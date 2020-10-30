@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class RcTransactionPlatformTask {
     @Autowired
     private IRcTransactionPlatformService rcService;
 
+    @Async
     public void ryaddRC() {
 //        for (int i = 1; i < 8; i++) {
             String uri = "https://dncapi.bqrank.net/api/v2/exchange/web-exchange";

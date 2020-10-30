@@ -77,6 +77,10 @@ public class RcUser extends BaseEntity
     @Excel(name = "邀请码")
     private String invitation;
 
+    /** 注册推荐码 */
+    @Excel(name = "注册推荐码")
+    private String referralcode;
+
     /** 用户token */
     @Excel(name = "用户token")
     private String token;
@@ -220,6 +224,15 @@ public class RcUser extends BaseEntity
     {
         return invitation;
     }
+    public void setReferralcode(String referralcode)
+    {
+        this.referralcode = referralcode;
+    }
+
+    public String getReferralcode()
+    {
+        return referralcode;
+    }
     public void setToken(String token) 
     {
         this.token = token;
@@ -244,7 +257,7 @@ public class RcUser extends BaseEntity
 
     }
 
-    public RcUser(Long id, String mobile, Integer credit, BigDecimal money, String account, String password, String salt, Integer safeword, String language, Integer online, Date registertime, Integer paidan, Integer parentid, String identity, String invitation, String token, String platformId) {
+    public RcUser(Long id, String mobile, Integer credit, BigDecimal money, String account, String password, String salt, Integer safeword, String language, Integer online, Date registertime, Integer paidan, Integer parentid, String identity, String invitation, String referralcode, String token, String platformId) {
         this.id = id;
         this.mobile = mobile;
         this.credit = credit;
@@ -260,6 +273,7 @@ public class RcUser extends BaseEntity
         this.parentid = parentid;
         this.identity = identity;
         this.invitation = invitation;
+        this.referralcode = referralcode;
         this.token = token;
         this.platformId = platformId;
     }
@@ -282,6 +296,7 @@ public class RcUser extends BaseEntity
             .append("parentid", getParentid())
             .append("identity", getIdentity())
             .append("invitation", getInvitation())
+            .append("referralcode", getReferralcode())
             .append("token", getToken())
             .append("platformId", getPlatformId())
             .toString();

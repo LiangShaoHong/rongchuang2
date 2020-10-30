@@ -3,6 +3,8 @@ package com.ruoyi.digital.domain;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -13,7 +15,7 @@ import java.math.BigDecimal;
  */
 @ApiModel("市值行情数据")
 @Data
-public class RcTransactionDataDigital {
+public class RcTransactionDataDigital implements Serializable {
 
     @ApiModelProperty("主键id")
     private Long id;

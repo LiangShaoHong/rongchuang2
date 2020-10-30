@@ -9,6 +9,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.http.NameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class RcExchangeTateTask {
     @Autowired
     private RedisService redis;
 
+    @Async
     public void ryaddRC(){
 
         System.out.println("开始执行拉取汇率数据.........................");

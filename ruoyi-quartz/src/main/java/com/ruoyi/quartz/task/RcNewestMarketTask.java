@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,7 @@ public class RcNewestMarketTask {
     @Autowired
     private IRcTransactionInfoService infoService;
 
+    @Async
     public void ryaddRC(){
         System.out.println("开始执行拉取详情数据.........................");
         String uri = "https://dncapi.bqrank.net/api/home/web-newcoin";

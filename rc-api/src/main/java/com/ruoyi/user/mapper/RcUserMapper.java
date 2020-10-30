@@ -108,4 +108,6 @@ public interface RcUserMapper
     JSONObject getUserMoney(@Param("id") String userId,@Param("account") String account);
 
     int editUserMoneyWallet(@Param("userId")String userId, @Param("account")String account,@Param("money") BigDecimal money);
+
+    JSONObject selectreferralcode(@Param("referralcode") String referralcode);
 }

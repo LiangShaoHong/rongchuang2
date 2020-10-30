@@ -121,4 +121,9 @@ public class RcUserServiceImpl implements IRcUserService
     {
         return rcUserMapper.deleteRcUserById(id);
     }
+
+    @Override
+    public JSONObject selectreferralcode(String referralcode) {
+        return rcUserMapper.selectreferralcode(referralcode);
+    }
 }
