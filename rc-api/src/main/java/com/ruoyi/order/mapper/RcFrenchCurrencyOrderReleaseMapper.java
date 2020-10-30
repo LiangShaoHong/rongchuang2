@@ -7,7 +7,7 @@ import com.ruoyi.order.domain.RcFrenchCurrencyOrderRelease;
  * 法币订单发布Mapper接口
  * 
  * @author ruoyi
- * @date 2020-10-22
+ * @date 2020-10-30
  */
 public interface RcFrenchCurrencyOrderReleaseMapper 
 {

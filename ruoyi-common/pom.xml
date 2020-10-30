@@ -179,6 +179,10 @@
             <artifactId>tio-websocket-server</artifactId>
             <version>3.2.1.v20181024-RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
 
     </dependencies>
 

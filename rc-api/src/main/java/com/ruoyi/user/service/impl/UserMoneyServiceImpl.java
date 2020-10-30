@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
@@ -33,6 +35,7 @@ public class UserMoneyServiceImpl implements IUserMoneyService {
     private static final Logger log = LoggerFactory.getLogger(UserMoneyServiceImpl.class);
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean moneyDoCenter(String userId, String account, String fromUserId, BigDecimal money, BigDecimal cashHandFee, String recordType, String mark) {
         String lockKey = "lockKey:moneyDoCenter:"+userId;
         RLock fairLock = redissonClient.getFairLock(lockKey);

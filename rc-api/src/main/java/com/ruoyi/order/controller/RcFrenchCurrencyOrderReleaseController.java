@@ -23,7 +23,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 法币订单发布Controller
  * 
  * @author ruoyi
- * @date 2020-10-22
+ * @date 2020-10-30
  */
 @Controller
 @RequestMapping("/order/RcFrenchCurrencyOrderRelease")

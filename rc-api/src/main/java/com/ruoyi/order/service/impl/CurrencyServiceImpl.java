@@ -23,6 +23,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -59,6 +60,12 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public Result getBbPerInformation(RcUser rcUser) {
         Profit profit = currencyMapper.getBbPerInformation(rcUser.getId());
+        if (profit == null) {
+            profit = new Profit();
+            profit.setEarned(new BigDecimal(0));
+            profit.setBalance(rcUser.getMoney());
+            profit.setCompleted(0);
+        }
         return new Result().code(1).msg("查询成功").data(profit);
     }
 
@@ -135,6 +142,7 @@ public class CurrencyServiceImpl implements CurrencyService {
                     String unpaidOvertime = configService.getKey("rc.currency.overtime");
                     JSONObject data = new JSONObject();
                     data.put("orderId", orderId);
+                    data.put("user", user);
                     senderService.sendQueueDelayMessage(JmsConstant.queueBbOvertime, data, Integer.valueOf(unpaidOvertime));
                     return Result.isOk().msg("提交成功");
                 }

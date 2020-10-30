@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="sellerUserId"    column="seller_user_id"    />
         <result property="buyingSources"    column="buying_sources"    />
         <result property="whereToSell"    column="where_to_sell"    />
+        <result property="number"    column="number"    />
         <result property="transactionCurrency"    column="transaction_currency"    />
         <result property="purchaseQuantity"    column="purchase_quantity"    />
         <result property="purchasePrice"    column="purchase_price"    />
@@ -26,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectRcFrenchCurrencyOrderReleaseVo">
-        select id, transaction_type, order_type, seller_user_id, buying_sources, where_to_sell, transaction_currency, purchase_quantity, purchase_price, sell_quantity, sell_price, spend_usdt, available_fiat_money, profit, order_state, assign_user_id, area, release_time from rc_french_currency_order_release
+        select id, transaction_type, order_type, seller_user_id, buying_sources, where_to_sell, number, transaction_currency, purchase_quantity, purchase_price, sell_quantity, sell_price, spend_usdt, available_fiat_money, profit, order_state, assign_user_id, area, release_time from rc_french_currency_order_release
     </sql>
 
     <select id="selectRcFrenchCurrencyOrderReleaseList" parameterType="RcFrenchCurrencyOrderRelease" resultMap="RcFrenchCurrencyOrderReleaseResult">
@@ -37,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sellerUserId != null "> and seller_user_id = #{sellerUserId}</if>
             <if test="buyingSources != null  and buyingSources != ''"> and buying_sources = #{buyingSources}</if>
             <if test="whereToSell != null  and whereToSell != ''"> and where_to_sell = #{whereToSell}</if>
+            <if test="number != null "> and number = #{number}</if>
             <if test="transactionCurrency != null  and transactionCurrency != ''"> and transaction_currency = #{transactionCurrency}</if>
             <if test="purchaseQuantity != null "> and purchase_quantity = #{purchaseQuantity}</if>
             <if test="purchasePrice != null "> and purchase_price = #{purchasePrice}</if>
@@ -65,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sellerUserId != null">seller_user_id,</if>
             <if test="buyingSources != null">buying_sources,</if>
             <if test="whereToSell != null">where_to_sell,</if>
+            <if test="number != null">number,</if>
             <if test="transactionCurrency != null">transaction_currency,</if>
             <if test="purchaseQuantity != null">purchase_quantity,</if>
             <if test="purchasePrice != null">purchase_price,</if>
@@ -84,6 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sellerUserId != null">#{sellerUserId},</if>
             <if test="buyingSources != null">#{buyingSources},</if>
             <if test="whereToSell != null">#{whereToSell},</if>
+            <if test="number != null">#{number},</if>
             <if test="transactionCurrency != null">#{transactionCurrency},</if>
             <if test="purchaseQuantity != null">#{purchaseQuantity},</if>
             <if test="purchasePrice != null">#{purchasePrice},</if>
@@ -107,6 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sellerUserId != null">seller_user_id = #{sellerUserId},</if>
             <if test="buyingSources != null">buying_sources = #{buyingSources},</if>
             <if test="whereToSell != null">where_to_sell = #{whereToSell},</if>
+            <if test="number != null">number = #{number},</if>
             <if test="transactionCurrency != null">transaction_currency = #{transactionCurrency},</if>
             <if test="purchaseQuantity != null">purchase_quantity = #{purchaseQuantity},</if>
             <if test="purchasePrice != null">purchase_price = #{purchasePrice},</if>

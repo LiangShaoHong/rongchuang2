@@ -1,5 +1,6 @@
 package com.ruoyi.order.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -10,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 法币订单发布对象 rc_french_currency_order_release
  * 
  * @author ruoyi
- * @date 2020-10-22
+ * @date 2020-10-30
  */
 public class RcFrenchCurrencyOrderRelease extends BaseEntity
 {
@@ -57,11 +58,11 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
 
     /** 出售数量 */
     @Excel(name = "出售数量")
-    private Long sellQuantity;
+    private BigDecimal sellQuantity;
 
     /** 出售价格 */
     @Excel(name = "出售价格")
-    private Long sellPrice;
+    private BigDecimal sellPrice;
 
     /** 花费USDT */
     @Excel(name = "花费USDT")
@@ -181,21 +182,21 @@ public class RcFrenchCurrencyOrderRelease extends BaseEntity
     {
         return purchasePrice;
     }
-    public void setSellQuantity(Long sellQuantity) 
+    public void setSellQuantity(BigDecimal sellQuantity) 
     {
         this.sellQuantity = sellQuantity;
     }
 
-    public Long getSellQuantity() 
+    public BigDecimal getSellQuantity() 
     {
         return sellQuantity;
     }
-    public void setSellPrice(Long sellPrice) 
+    public void setSellPrice(BigDecimal sellPrice) 
     {
         this.sellPrice = sellPrice;
     }
 
-    public Long getSellPrice() 
+    public BigDecimal getSellPrice() 
     {
         return sellPrice;
     }

@@ -63,7 +63,7 @@
 	a.transaction_type,
 	a.purchase_price,
 	a.sell_price,
-	(a.available_fiat_money-a.spend_usdt) profit,
+	a.profit,
 	b.order_state,
 	b.create_time
 FROM
@@ -89,7 +89,7 @@ WHERE
 	a.transaction_type,
 	a.purchase_price,
 	a.sell_price,
-	(a.available_fiat_money-a.spend_usdt) profit,
+	a.profit,
 	b.order_state,
 	b.create_time
 FROM
@@ -121,7 +121,7 @@ WHERE
 	a.sell_price,
 	a.spend_usdt,
 	a.available_fiat_money,
-	(a.available_fiat_money-a.spend_usdt) profit,
+	a.profit,
 	b.order_state,
 	b.payment_img
 FROM
@@ -145,7 +145,7 @@ WHERE
 	a.sell_price,
 	a.spend_usdt,
 	a.available_fiat_money,
-	(a.available_fiat_money-a.spend_usdt) profit,
+	a.profit,
 	a.order_state,
 	a.release_time create_time
 FROM
@@ -182,7 +182,7 @@ AND a.order_state = '2'
 	a.sell_price,
 	a.spend_usdt,
 	a.available_fiat_money,
-	(a.available_fiat_money-a.spend_usdt) profit,
+	a.profit,
 	a.order_state
 FROM
 	rc_french_currency_order_release a
