@@ -6,6 +6,7 @@ import com.ruoyi.quartz.util.QuartzHttpUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,6 +22,7 @@ public class RcTransactionInfoTask {
     @Autowired
     private IRcTransactionInfoService rcService;
 
+    @Async
     public void ryaddRC(){
         System.out.println("开始执行拉取详情数据.........................");
         String uri = "https://dncapi.bqrank.net/api/coin/web-coininfo";

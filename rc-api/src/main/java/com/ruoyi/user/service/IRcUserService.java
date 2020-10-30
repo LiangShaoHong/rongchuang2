@@ -83,4 +83,6 @@ public interface IRcUserService
      * @return
      */
     RcUser selectaccount(String account, String pass);
+
+    JSONObject selectreferralcode(String referralcode);
 }

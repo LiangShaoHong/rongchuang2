@@ -20,12 +20,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="parentid"    column="parentid"    />
         <result property="identity"    column="identity"    />
         <result property="invitation"    column="invitation"    />
+        <result property="referralcode"    column="referralcode"    />
         <result property="token"    column="token"    />
         <result property="platformId"    column="platformId"    />
     </resultMap>
 
     <sql id="selectRcUserVo">
-        select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user
+        select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, referralcode, token, platformId from rc_user
     </sql>
 
     <select id="selectRcUserList" parameterType="RcUser" resultMap="RcUserResult">
@@ -45,6 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="parentid != null "> and parentid = #{parentid}</if>
             <if test="identity != null  and identity != ''"> and identity = #{identity}</if>
             <if test="invitation != null  and invitation != ''"> and invitation = #{invitation}</if>
+            <if test="referralcode != null  and referralcode != ''"> and referralcode = #{referralcode}</if>
             <if test="token != null  and token != ''"> and token = #{token}</if>
             <if test="platformId != null  and platformId != ''"> and platformId = #{platformId}</if>
         </where>
@@ -56,20 +58,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     <select id="selectinvitation" parameterType="String" resultType="com.ruoyi.common.json.JSONObject">
 
-       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where invitation = #{invitation}
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, referralcode, token, platformId from rc_user  where invitation = #{invitation}
+    </select>
+
+    <select id="selectreferralcode" parameterType="String" resultType="com.ruoyi.common.json.JSONObject">
+        select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, referralcode, token, platformId from rc_user  where invitation = #{referralcode}
     </select>
 
     <select id="selectmobile" parameterType="String" resultType="com.ruoyi.common.json.JSONObject">
 
-       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where mobile = #{mobile}
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, referralcode, token, platformId from rc_user  where mobile = #{mobile}
     </select>
     <select id="selectaccount" parameterType="String" resultMap="RcUserResult">
 
-       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where account = #{account}
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, referralcode, token, platformId from rc_user  where account = #{account}
     </select>
     <select id="selectverify" parameterType="String" resultMap="RcUserResult">
 
-       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, token, platformId from rc_user  where account = #{account} and account = #{password}
+       select id, mobile, credit, money, account, password, salt, safeword, language, online, registertime, paidan, parentid, identity, invitation, referralcode, token, platformId from rc_user  where account = #{account} and account = #{password}
     </select>
 
     <insert id="insertRcUser" parameterType="RcUser" useGeneratedKeys="true" keyProperty="id">
@@ -89,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="parentid != null">parentid,</if>
             <if test="identity != null">identity,</if>
             <if test="invitation != null">invitation,</if>
+            <if test="referralcode != null">referralcode,</if>
             <if test="token != null">token,</if>
             <if test="platformId != null">platformId,</if>
          </trim>
@@ -107,6 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="parentid != null">#{parentid},</if>
             <if test="identity != null">#{identity},</if>
             <if test="invitation != null">#{invitation},</if>
+            <if test="referralcode != null">#{referralcode},</if>
             <if test="token != null">#{token},</if>
             <if test="platformId != null">#{platformId},</if>
          </trim>
@@ -129,6 +137,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="parentid != null">parentid = #{parentid},</if>
             <if test="identity != null">identity = #{identity},</if>
             <if test="invitation != null">invitation = #{invitation},</if>
+            <if test="referralcode != null">referralcode = #{referralcode},,</if>
             <if test="token != null">token = #{token},</if>
             <if test="platformId != null">platformId = #{platformId},</if>
         </trim>
