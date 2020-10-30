@@ -13,6 +13,7 @@ import com.ruoyi.controller.BaseController;
 import com.ruoyi.common.Constants;
 import com.ruoyi.common.Result;
 import com.ruoyi.user.domain.RcUser;
+import com.ruoyi.user.mapper.RcUserMapper;
 import com.ruoyi.user.service.IRcUserService;
 import com.ruoyi.user.service.IUserMoneyService;
 import io.swagger.annotations.Api;
@@ -65,6 +66,9 @@ public class UserApi extends BaseController {
     @Autowired
     private IUserMoneyService userMoneyService;
 
+    @Autowired
+    private RcUserMapper rcUserMapper;
+
     @Lazy
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -106,16 +110,19 @@ public class UserApi extends BaseController {
         if (selectinvitation!=null){
             return Result.isFail().msg("请重试");
         }
-        int parentid = 0;
-//        referralcode = null;
         //推荐码非空时检测推荐码是否有效
+        int parentid = 0;
         if(!StringUtils.isEmpty(referralcode)){
             JSONObject selectreferralcode = rcUserService.selectreferralcode(referralcode);
             if (selectreferralcode==null){
                 return Result.isFail().msg("推荐码无效");
             }
-//            referralcode = (String) selectreferralcode.get("referralcode");
             parentid = (int) selectreferralcode.get("id");
+        }
+        //检测用户名是否重复
+        RcUser user = rcUserMapper.selectaccount(account);
+        if (user != null){
+            return Result.isFail().msg("用户名重复");
         }
         //检测手机号是否存在正在使用
         QueryWrapper queryWrapper1=new QueryWrapper();
