@@ -3,19 +3,11 @@ package com.ruoyi.order.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.common.Constants;
 import com.ruoyi.common.Result;
-import com.ruoyi.common.SystemUtil;
-import com.ruoyi.common.core.page.PageDomain;
-import com.ruoyi.common.exception.BusinessException;
 import com.ruoyi.common.jms.JmsConstant;
 import com.ruoyi.common.jms.SenderService;
 import com.ruoyi.common.push.PushService;
-import com.ruoyi.common.utils.JWTUtil;
-import com.ruoyi.common.utils.ResultDto;
-import com.ruoyi.common.utils.redis.RedisLock;
-import com.ruoyi.common.utils.redis.RedisService;
 import com.ruoyi.common.utils.uuid.UUID;
 import com.ruoyi.framework.web.service.ConfigService;
-import com.ruoyi.framework.web.service.DictService;
 import com.ruoyi.order.domain.FrenchCurrencyOrder;
 import com.ruoyi.order.domain.Profit;
 import com.ruoyi.order.domain.RcFrenchCurrencyOrder;
@@ -25,19 +17,22 @@ import com.ruoyi.order.mapper.RcFrenchCurrencyOrderMapper;
 import com.ruoyi.order.mapper.RcFrenchCurrencyOrderReleaseMapper;
 import com.ruoyi.order.service.LegalCurrencyService;
 import com.ruoyi.user.domain.RcUser;
+import com.ruoyi.user.service.IRcUserService;
+import com.ruoyi.user.service.IUserMoneyService;
+import com.ruoyi.user.service.IUserProfitService;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -67,10 +62,25 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Autowired
     private PushService pushService;
 
+    @Autowired
+    private IUserMoneyService iUserMoneyService;
+
+    @Autowired
+    private IRcUserService iRcUserService;
+
+    @Autowired
+    private IUserProfitService iUserProfitService;
+
     @Override
     public Result getFbPerInformation(RcUser user) {
         log.info("调用法币个人信息接口");
         Profit profit = legalCurrencyMapper.getFbPerInformation(user.getId());
+        if (profit == null) {
+            profit = new Profit();
+            profit.setEarned(new BigDecimal(0));
+            profit.setBalance(user.getMoney());
+            profit.setCompleted(0);
+        }
         return new Result().code(1).msg("查询成功").data(profit);
     }
 
@@ -159,6 +169,7 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result fbConfirm(RcUser user, String id) {
         log.info("调用法币确认收款接口");
         RcFrenchCurrencyOrder rcFrenchCurrencyOrder = legalCurrencyMapper.selectRcFrenchCurrencyOrderByOrderId(id);
@@ -170,6 +181,22 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
                 // 尝试加锁，最多等待l秒，上锁以后l1秒自动解锁
                 if (fairLock.tryLock(5, 10, TimeUnit.SECONDS)) {
                     legalCurrencyMapper.updateFbConfirm(user.getId(), id);
+
+                    RcUser srcUser = iRcUserService.selectRcUserById(rcFrenchCurrencyOrder.getUserId());
+
+                    //修改用户余额
+                    RcFrenchCurrencyOrderRelease rcCurrencyOrderRelease = rcFrenchCurrencyOrderReleaseMapper.selectRcFrenchCurrencyOrderReleaseById(rcFrenchCurrencyOrder.getRcFrenchCurrencyOrderReleaseId());
+                    Long money = rcCurrencyOrderRelease.getNumber() + rcCurrencyOrderRelease.getProfit();
+                    iUserMoneyService.moneyDoCenter(String.valueOf(srcUser.getId()), srcUser.getAccount(), rcFrenchCurrencyOrder.getOrderId(), new BigDecimal(money), new BigDecimal(0), "4", "法币交易");
+                    //修改用户收益
+                    Profit profit = new Profit();
+                    profit.setUserId(user.getId().intValue());
+                    profit.setProfitType("1");
+                    profit.setEarned(new BigDecimal(rcCurrencyOrderRelease.getProfit()));
+                    Integer x = iUserProfitService.update(profit);
+                    if (x <= 0) {
+                        iUserProfitService.insert(profit);
+                    }
                     return new Result().code(1).msg("提交成功").data("");
                 }
             } catch (InterruptedException e) {
@@ -223,7 +250,10 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
                     JSONObject data = new JSONObject();
                     data.put("orderId", orderId);
                     senderService.sendQueueDelayMessage(JmsConstant.queueFbUnpaidOvertime, data, Integer.valueOf(unpaidOvertime));
-                    return Result.isOk().msg("提交成功");
+                    Map<String, String> map = new HashMap<>();
+                    map.put("orderId", orderId);
+                    map.put("state", "3");
+                    return Result.isOk().msg("提交成功").data(map);
                 }
             }
         } catch (InterruptedException e) {
