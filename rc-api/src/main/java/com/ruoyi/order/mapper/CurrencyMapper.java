@@ -16,6 +16,8 @@ public interface CurrencyMapper {
 
     public Profit getBbPerInformation(Long userId);
 
+    public List<CurrencyOrder> getBbOptionalOrder(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+
     public List<CurrencyOrder> getBbMyOrderList(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
     public List<CurrencyOrder> getBbHistorical(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);

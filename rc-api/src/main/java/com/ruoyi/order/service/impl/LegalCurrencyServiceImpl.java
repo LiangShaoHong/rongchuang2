@@ -28,6 +28,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
@@ -92,15 +94,29 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     }
 
     @Override
-    public Result getFbAutomaticOrder(RcUser user) {
+    public Result getFbAutomaticOrder(HttpServletRequest request, RcUser user) {
         log.info("调用法币查询自动抢单状态接口");
-        return null;
+        HttpSession session = request.getSession();
+        Boolean automatic = (Boolean) session.getAttribute("FB Automatic order grabbing switch" + user.getAccount());
+        JSONObject jsonObject = new JSONObject();
+        if (automatic == null) {
+            jsonObject.put("automatic", false);
+        } else {
+            jsonObject.put("automatic", automatic);
+        }
+        return new Result().isOk().data(jsonObject);
     }
 
     @Override
-    public Result editFbAutomaticOrder(RcUser user, Boolean automatic) {
+    public Result editFbAutomaticOrder(HttpServletRequest request, RcUser user, Boolean automatic) {
         log.info("调用法币改变自动抢单状态接口");
-        return null;
+        HttpSession session = request.getSession();
+        if (automatic) {
+            session.setAttribute("FB Automatic order grabbing switch" + user.getAccount(), true);
+        } else {
+            session.setAttribute("FB Automatic order grabbing switch" + user.getAccount(), false);
+        }
+        return new Result().isOk().msg("提交成功");
     }
 
     @Override

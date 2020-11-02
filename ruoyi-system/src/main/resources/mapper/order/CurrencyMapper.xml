@@ -51,6 +51,32 @@
          where a.user_id=#{userId} and a.profit_type='2'
     </select>
 
+    <select id="getBbOptionalOrder" resultMap="CurrencyOrderResult">
+       SELECT
+    a.id,
+	a.transaction_currency,
+	a.number,
+	a.transaction_type,
+	a.buying_sources,
+	a.where_to_sell,
+	a.purchase_quantity,
+	a.purchase_price,
+	a.sell_quantity,
+	a.sell_price,
+	a.spend_usdt,
+	a.available_fiat_money,
+	a.profit,
+	a.order_state,
+	a.release_time create_time
+FROM
+	rc_currency_order_release a
+WHERE
+    (a.assign_user_id =#{arg0} OR a.assign_user_id IS NULL)
+AND a.order_state = '2'
+	ORDER BY a.release_time DESC
+	LIMIT  #{arg1} ,#{arg2}
+    </select>
+
 
     <select id="getBbMyOrderList" resultMap="CurrencyOrderResult">
         SELECT

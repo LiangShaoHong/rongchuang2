@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -18,38 +19,84 @@ import java.util.List;
  * @author ruoyi
  * @date 2020-10-22
  */
-@Api("法币业务接口")
 public interface LegalCurrencyService {
-
-    @ApiOperation("查询个人信息接口")
+    /**
+     * 查询个人信息接口
+     *
+     * @param user
+     * @return
+     */
     public Result getFbPerInformation(RcUser user);
 
-
-    @ApiOperation("查询我的订单列表接口")
+    /**
+     * 查询我的订单列表接口
+     *
+     * @param user
+     * @return
+     */
     public Result getFbMyOrderList(RcUser user, Integer pageNum, Integer pageSize);
 
-    @ApiOperation("查询自动抢单状态接口")
-    public Result getFbAutomaticOrder(RcUser user);
+    /**
+     * 查询自动抢单状态接口
+     *
+     * @param user
+     * @return
+     */
+    public Result getFbAutomaticOrder(HttpServletRequest request, RcUser user);
 
-    @ApiOperation("改变自动抢单状态接口")
-    public Result editFbAutomaticOrder(RcUser user, Boolean automatic);
+    /**
+     * 改变自动抢单状态接口
+     *
+     * @param user
+     * @return
+     */
+    public Result editFbAutomaticOrder(HttpServletRequest request, RcUser user, Boolean automatic);
 
-    @ApiOperation("查询可选订单列表接口")
+    /**
+     * 查询可选订单列表接口
+     *
+     * @param user
+     * @return
+     */
     public Result getFbOptionalOrder(RcUser user, Integer pageNum, Integer pageSize);
 
-    @ApiOperation("查询历史记录接口")
+    /**
+     * 查询历史记录接口
+     *
+     * @param user
+     * @return
+     */
     public Result getFbHistorical(RcUser user, Integer pageNum, Integer pageSize);
 
-
-    @ApiOperation("查询历史记录详情接口")
+    /**
+     * 查询历史记录详情接口
+     *
+     * @param user
+     * @return
+     */
     public Result getFbDetails(RcUser user, String id);
 
-    @ApiOperation("确定付款接口")
+    /**
+     * 确定付款接口
+     *
+     * @param user
+     * @return
+     */
     public Result fbConfirm_a(RcUser user, String id, String paymentImg);
 
-    @ApiOperation("确定收款接口")
+    /**
+     * 确定收款接口
+     *
+     * @param user
+     * @return
+     */
     public Result fbConfirm(RcUser user, String id);
 
-    @ApiOperation("抢订单接口")
+    /**
+     * 抢订单接口
+     *
+     * @param user
+     * @return
+     */
     public Result robFbOrder(RcUser user, String id);
 }

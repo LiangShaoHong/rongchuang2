@@ -43,6 +43,9 @@ public class CurrencyApi {
     @PostMapping("/getBbPerInformation")
     public Result getBbPerInformation(HttpServletRequest request) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return currencyService.getBbPerInformation(user);
     }
 
@@ -57,6 +60,9 @@ public class CurrencyApi {
     @PostMapping("/getBbMyOrderList")
     public Result getBbMyOrderList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return currencyService.getBbMyOrderList(user, pageNum, pageSize);
     }
 
@@ -68,7 +74,10 @@ public class CurrencyApi {
     @PostMapping("/getBbAutomaticOrder")
     public Result getBbAutomaticOrder(HttpServletRequest request) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
-        return currencyService.getBbAutomaticOrder(user);
+        if (user == null) {
+            return Result.unauthorized();
+        }
+        return currencyService.getBbAutomaticOrder(request, user);
     }
 
     @ApiOperation("改变自动抢单状态接口")
@@ -80,7 +89,10 @@ public class CurrencyApi {
     @PostMapping("/editBbAutomaticOrder")
     public Result editBbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
-        return currencyService.editBbAutomaticOrder(user, automatic);
+        if (user == null) {
+            return Result.unauthorized();
+        }
+        return currencyService.editBbAutomaticOrder(request, user, automatic);
     }
 
     @ApiOperation("查询可选订单列表接口")
@@ -93,6 +105,9 @@ public class CurrencyApi {
     @PostMapping("/getBbOptionalOrder")
     public Result getBbOptionalOrder(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return currencyService.getBbOptionalOrder(user, pageNum, pageSize);
     }
 
@@ -106,6 +121,9 @@ public class CurrencyApi {
     @PostMapping("/getBbHistorical")
     public Result getBbHistorical(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return currencyService.getBbHistorical(user, pageNum, pageSize);
     }
 
@@ -120,6 +138,9 @@ public class CurrencyApi {
     @PostMapping("/getBbDetails")
     public Result getBbDetails(HttpServletRequest request, String id) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return currencyService.getBbDetails(user, id);
     }
 
@@ -133,6 +154,9 @@ public class CurrencyApi {
     @PostMapping("/robBbOrder")
     public Result robBbOrder(HttpServletRequest request, String id) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return currencyService.robBbOrder(user, id);
     }
 }

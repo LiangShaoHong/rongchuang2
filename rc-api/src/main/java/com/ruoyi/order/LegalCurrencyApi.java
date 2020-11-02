@@ -54,6 +54,9 @@ public class LegalCurrencyApi {
     @PostMapping("/getFbPerInformation")
     public Result getFbPerInformation(HttpServletRequest request) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return legalCurrencyService.getFbPerInformation(user);
     }
 
@@ -68,6 +71,9 @@ public class LegalCurrencyApi {
     @PostMapping("/getFbMyOrderList")
     public Result getFbMyOrderList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return legalCurrencyService.getFbMyOrderList(user, pageNum, pageSize);
     }
 
@@ -79,7 +85,10 @@ public class LegalCurrencyApi {
     @PostMapping("/getFbAutomaticOrder")
     public Result getFbAutomaticOrder(HttpServletRequest request) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
-        return legalCurrencyService.getFbAutomaticOrder(user);
+        if (user == null) {
+            return Result.unauthorized();
+        }
+        return legalCurrencyService.getFbAutomaticOrder(request, user);
     }
 
     @ApiOperation("改变自动抢单状态接口")
@@ -91,7 +100,10 @@ public class LegalCurrencyApi {
     @PostMapping("/editFbAutomaticOrder")
     public Result editFbAutomaticOrder(HttpServletRequest request, Boolean automatic) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
-        return legalCurrencyService.editFbAutomaticOrder(user, automatic);
+        if (user == null) {
+            return Result.unauthorized();
+        }
+        return legalCurrencyService.editFbAutomaticOrder(request, user, automatic);
     }
 
     @ApiOperation("查询可选订单列表接口")
@@ -104,6 +116,9 @@ public class LegalCurrencyApi {
     @PostMapping("/getFbOptionalOrder")
     public Result getFbOptionalOrder(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return legalCurrencyService.getFbOptionalOrder(user, pageNum, pageSize);
     }
 
@@ -117,6 +132,9 @@ public class LegalCurrencyApi {
     @PostMapping("/getFbHistorical")
     public Result getFbHistorical(HttpServletRequest request, Integer pageNum, Integer pageSize) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return legalCurrencyService.getFbHistorical(user, pageNum, pageSize);
     }
 
@@ -131,6 +149,9 @@ public class LegalCurrencyApi {
     @PostMapping("/getFbDetails")
     public Result getFbDetails(HttpServletRequest request, String id) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return legalCurrencyService.getFbDetails(user, id);
     }
 
@@ -145,6 +166,9 @@ public class LegalCurrencyApi {
     @PostMapping("/fbConfirm_a")
     public Result fbConfirm_a(HttpServletRequest request, String id, String paymentImg) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return legalCurrencyService.fbConfirm_a(user, id, paymentImg);
     }
 
@@ -158,6 +182,9 @@ public class LegalCurrencyApi {
     @PostMapping("/fbConfirm")
     public Result fbConfirm(HttpServletRequest request, String id) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return legalCurrencyService.fbConfirm(user, id);
     }
 
@@ -171,6 +198,9 @@ public class LegalCurrencyApi {
     @PostMapping("/robFbOrder")
     public Result robFbOrder(HttpServletRequest request, String id) {
         RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
         return legalCurrencyService.robFbOrder(user, id);
     }
 }

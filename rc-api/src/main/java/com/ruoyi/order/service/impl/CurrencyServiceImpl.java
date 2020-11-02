@@ -23,6 +23,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -59,6 +61,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public Result getBbPerInformation(RcUser rcUser) {
+        log.info("调用币币查询个人信息接口");
         Profit profit = currencyMapper.getBbPerInformation(rcUser.getId());
         if (profit == null) {
             profit = new Profit();
@@ -71,28 +74,49 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public Result getBbMyOrderList(RcUser rcUser, Integer pageNum, Integer pageSize) {
+        log.info("调用币币查询我的订单列表接口");
         pageNum = (pageNum - 1) * pageSize;
         List<CurrencyOrder> currencyOrderList = currencyMapper.getBbMyOrderList(rcUser.getId(), pageNum, pageSize);
         return new Result().code(1).msg("查询成功").data(currencyOrderList);
     }
 
     @Override
-    public Result getBbAutomaticOrder(RcUser rcUser) {
-        return null;
+    public Result getBbAutomaticOrder(HttpServletRequest request, RcUser rcUser) {
+        log.info("调用币币查询自动抢单状态接口");
+        HttpSession session = request.getSession();
+        Boolean automatic = (Boolean) session.getAttribute("BB Automatic order grabbing switch" + rcUser.getAccount());
+        JSONObject jsonObject = new JSONObject();
+        if (automatic == null) {
+            jsonObject.put("automatic", false);
+        } else {
+            jsonObject.put("automatic", automatic);
+        }
+        return new Result().isOk().data(jsonObject);
     }
 
     @Override
-    public Result editBbAutomaticOrder(RcUser rcUser, Boolean automatic) {
-        return null;
+    public Result editBbAutomaticOrder(HttpServletRequest request, RcUser rcUser, Boolean automatic) {
+        log.info("调用币币改变自动抢单状态接口");
+        HttpSession session = request.getSession();
+        if (automatic) {
+            session.setAttribute("BB Automatic order grabbing switch" + rcUser.getAccount(), true);
+        } else {
+            session.setAttribute("BB Automatic order grabbing switch" + rcUser.getAccount(), false);
+        }
+        return new Result().isOk().msg("提交成功");
     }
 
     @Override
     public Result getBbOptionalOrder(RcUser rcUser, Integer pageNum, Integer pageSize) {
-        return null;
+        log.info("调用币币查询可选订单列表接口");
+        pageNum = (pageNum - 1) * pageSize;
+        List<CurrencyOrder> currencyOrderList = currencyMapper.getBbOptionalOrder(rcUser.getId(), pageNum, pageSize);
+        return new Result().code(1).msg("查询成功").data(currencyOrderList);
     }
 
     @Override
     public Result getBbHistorical(RcUser rcUser, Integer pageNum, Integer pageSize) {
+        log.info("调用币币查询历史记录接口");
         pageNum = (pageNum - 1) * pageSize;
         List<CurrencyOrder> currencyOrderList = currencyMapper.getBbHistorical(rcUser.getId(), pageNum, pageSize);
         return new Result().code(1).msg("查询成功").data(currencyOrderList);
@@ -100,13 +124,9 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public Result getBbDetails(RcUser rcUser, String id) {
+        log.info("调用币币查询历史记录详情接口");
         CurrencyOrder currencyOrder = currencyMapper.getBbDetails(rcUser.getId(), id);
         return new Result().code(1).msg("查询成功").data(currencyOrder);
-    }
-
-    @Override
-    public Result bbConfirm(RcUser rcUser, String id) {
-        return null;
     }
 
     @Override
