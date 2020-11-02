@@ -261,6 +261,15 @@ public class QuartzHttpUtils {
 //        String result = makeAPICall(uri, paratmers);
 //        System.out.println(result);
 
+//        String uri = "https://dncapi.bqrank.net/api/coin/web-charts";
+//        List<NameValuePair> paratmers = new ArrayList<NameValuePair>();
+//        paratmers.add(new BasicNameValuePair("webp", "1"));
+//        paratmers.add(new BasicNameValuePair("code", "bitcoin"));
+//        paratmers.add(new BasicNameValuePair("type", "all"));
+//        String result = makeAPICall(uri, paratmers);
+//        JSONObject sql = JSONObject.fromObject(result);
+//        System.out.println(sql.get("value"));
+
 //        String uri = "https://dncapi.bqrank.net/api/coin/web-coinrank";
 //        List<NameValuePair> paratmers = new ArrayList<NameValuePair>();
 //        paratmers.add(new BasicNameValuePair("webp","1"));

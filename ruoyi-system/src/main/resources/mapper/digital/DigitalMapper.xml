@@ -102,6 +102,36 @@
         where code=#{arg0}
     </select>
 
+    <select id="getInfoByCodeDataAll" resultMap="RcTransactionInfoResult">
+        SELECT info_all FROM rc_transaction_info
+        where code=#{arg0}
+    </select>
+
+    <select id="getInfoByCodeD" resultMap="RcTransactionInfoResult">
+        SELECT info_d FROM rc_transaction_info
+        where code=#{arg0}
+    </select>
+
+    <select id="getInfoByCodeW" resultMap="RcTransactionInfoResult">
+        SELECT info_w FROM rc_transaction_info
+        where code=#{arg0}
+    </select>
+
+    <select id="getInfoByCodeThreeM" resultMap="RcTransactionInfoResult">
+        SELECT info_3m FROM rc_transaction_info
+        where code=#{arg0}
+    </select>
+
+    <select id="getInfoByCodeYdt" resultMap="RcTransactionInfoResult">
+        SELECT info_ydt FROM rc_transaction_info
+        where code=#{arg0}
+    </select>
+
+    <select id="getInfoByCodeY" resultMap="RcTransactionInfoResult">
+        SELECT info_y FROM rc_transaction_info
+        where code=#{arg0}
+    </select>
+
     <select id="getClinchList" resultMap="RcTransactionInfoResult">
         SELECT id,code,name,fullname,symbol,logo,supply,totalSupply,vol,circulationRate FROM rc_transaction_info
         ORDER BY vol DESC

@@ -26,16 +26,20 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         //注册requestInterceptor拦截器
         InterceptorRegistration request = registry.addInterceptor(requestInterceptor);
-        request.addPathPatterns("/dx-api/**");                   //所有路径都被拦截
+        //所有路径都被拦截
+        request.addPathPatterns("/rc-api/**");
 
         //注册loginInterceptor拦截器
         InterceptorRegistration login = registry.addInterceptor(loginInterceptor);
-        login.addPathPatterns("/dx-api/**");                   //所有路径都被拦截
-        login.excludePathPatterns("/dx-api/base/**");          //添加不拦截路径
+        //所有路径都被拦截
+        login.addPathPatterns("/rc-api/**");
+        //添加不拦截路径
+        login.excludePathPatterns("/rc-api/user/**");
+        login.excludePathPatterns("/rc-api/digital/**");
 
         //注册adminRequestInterceptor拦截器
-        InterceptorRegistration adminRequest = registry.addInterceptor(adminRequestInterceptor);
-        adminRequest.addPathPatterns("/dx/**", "/system/**");
+//        InterceptorRegistration adminRequest = registry.addInterceptor(adminRequestInterceptor);
+//        adminRequest.addPathPatterns("/rc-api/**", "/system/**");
     }
 
 }

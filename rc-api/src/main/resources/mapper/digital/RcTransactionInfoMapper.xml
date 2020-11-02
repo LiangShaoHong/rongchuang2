@@ -25,6 +25,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="low"    column="low"    />
         <result property="vol"    column="vol"    />
         <result property="turnOver"    column="turn_over"    />
+        <result property="info_all"    column="info_all"    />
+        <result property="info_d"    column="info_d"    />
+        <result property="info_w"    column="info_w"    />
+        <result property="info_3m"    column="info_3m"    />
+        <result property="info_ydt"    column="info_ydt"    />
+        <result property="info_y"    column="info_y"    />
         <result property="onlineTime"    column="online_time"    />
         <result property="updateTime"    column="updatetime"    />
         <result property="lastUpdatatime"    column="last_updatatime"    />
@@ -172,5 +178,107 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             )
         </foreach>
     </insert>
+
+    <update id="updateInfoAll"  parameterType="java.util.List">
+        update rc_transaction_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="info_all =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.info_all!=null">
+                        when code = #{item.code} then #{item.info_all}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where code in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.code}
+        </foreach>
+    </update>
+
+    <update id="updateDay"  parameterType="java.util.List">
+        update rc_transaction_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="info_d =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.info_d!=null">
+                        when code = #{item.code} then #{item.info_d}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where code in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.code}
+        </foreach>
+    </update>
+
+    <update id="updateThreeMonth"  parameterType="java.util.List">
+        update rc_transaction_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="info_3m =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.info_3m!=null">
+                        when code = #{item.code} then #{item.info_3m}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where code in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.code}
+        </foreach>
+    </update>
+
+    <update id="updateWeek"  parameterType="java.util.List">
+        update rc_transaction_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="info_w =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.info_w!=null">
+                        when code = #{item.code} then #{item.info_w}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where code in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.code}
+        </foreach>
+    </update>
+
+    <update id="updateYdt"  parameterType="java.util.List">
+        update rc_transaction_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="info_ydt =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.info_ydt!=null">
+                        when code = #{item.code} then #{item.info_ydt}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where code in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.code}
+        </foreach>
+    </update>
+
+    <update id="updateYear"  parameterType="java.util.List">
+        update rc_transaction_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="info_y =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.info_y!=null">
+                        when code = #{item.code} then #{item.info_y}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where code in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.code}
+        </foreach>
+    </update>
 
 </mapper>

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -18,6 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @date 2020-10-23
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 public class RcTransactionInfo extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -100,6 +103,13 @@ public class RcTransactionInfo extends BaseEntity
     /** 详情24H换手率/最新上市24H涨幅 */
     @Excel(name = "详情24H换手率/最新上市24H涨幅")
     private BigDecimal turnOver;
+
+    private String info_all;
+    private String info_d;
+    private String info_w;
+    private String info_3m;
+    private String info_ydt;
+    private String info_y;
 
     /** 币种上市时间 */
     @Excel(name = "币种上市时间", width = 30, dateFormat = "yyyy-MM-dd")

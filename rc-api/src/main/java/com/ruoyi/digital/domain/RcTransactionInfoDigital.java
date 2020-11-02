@@ -86,4 +86,21 @@ public class RcTransactionInfoDigital {
     @ApiModelProperty("币种上市时间")
     private String onlineTime;
 
+    @ApiModelProperty("所有数据")
+    private String info_all;
+
+    @ApiModelProperty("币种24H数据")
+    private String info_d;
+
+    @ApiModelProperty("币种一周数据")
+    private String info_w;
+
+    @ApiModelProperty("币种三月数据")
+    private String info_3m;
+
+    @ApiModelProperty("币种今年数据" )
+    private String info_ydt;
+
+    @ApiModelProperty("币种一年数据")
+    private String info_y;
 }

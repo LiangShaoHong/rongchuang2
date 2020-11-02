@@ -180,6 +180,8 @@ public class UserApi extends BaseController {
         String token = JWTUtil.sign(user.getPlatformId() + account,user.getInvitation());
         JSONObject data = new JSONObject();
         data.put("X_Token", token);
+        data.put("account", user.getAccount());
+        data.put("mobile", user.getMobile());
         // 保存用户信息（account为key）
         String userKey = Constants.DB_USER + user.getPlatformId() + account;
         redisService.set(userKey, user, Constants.DB_USER);
@@ -244,6 +246,27 @@ public class UserApi extends BaseController {
             return Result.isOk().data(data).msg(MsgConstants.USER_LOGIN_OK);
         }
         return Result.isFail().msg(MsgConstants.OPERATOR_FAIL);
+    }
+
+    /**
+     * 退出登陆
+     * @param request
+     * @return
+     */
+    @ApiOperation("退出登陆接口")
+    @ApiImplicitParams(
+            {
+            })
+    @PostMapping("/logout")
+    public Result logout(HttpServletRequest request) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        //移除用户信息
+        String userKey = Constants.DB_USER + user.getPlatformId() + user.getAccount();
+        redisService.remove(userKey, Constants.DB_USER);
+        //移除token
+        String tokenKey = Constants.DB_TOKEN + user.getPlatformId() + user.getId();
+        redisService.remove(tokenKey, Constants.DB_USER);
+        return Result.isOk().msg(MsgConstants.OPERATOR_SUCCESS);
     }
 
     @ApiOperation("加减币测试接口")

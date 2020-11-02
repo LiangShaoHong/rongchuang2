@@ -293,6 +293,8 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/rc-api/digital/**", "anon");
         // 测试MQ
         filterChainDefinitionMap.put("/rc-api/mq/**", "anon");
+        // 个人信息认证接口
+        filterChainDefinitionMap.put("/rc-api/userAuth/**", "anon");
 
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");
