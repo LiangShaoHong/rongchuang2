@@ -28,4 +28,7 @@ public interface IRcDigitalService {
     @ApiOperation("查询币种详情接口")
     Result getInfoByCode(String code);
 
+    @ApiOperation("查询币种详情所有接口")
+    Result getInfoByCodeData(String code, String type);
+
 }

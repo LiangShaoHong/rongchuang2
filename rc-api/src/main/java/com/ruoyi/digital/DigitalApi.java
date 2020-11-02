@@ -96,4 +96,15 @@ public class DigitalApi {
         return rcService.getInfoByCode(code);
     }
 
+    @ApiOperation("查询币种详情折线图接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "code", value = "code", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "type", value = "所有=all 24H=d 一周=w 3月=3m 今年=ydt 1年=y", required = true),
+            })
+    @PostMapping("/getInfoByCodeData")
+    public Result getInfoByCodeData(HttpServletRequest request, String code, String type) {
+        return rcService.getInfoByCodeData(code,type);
+    }
+
 }

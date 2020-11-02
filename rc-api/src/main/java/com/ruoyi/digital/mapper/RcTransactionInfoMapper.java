@@ -60,4 +60,11 @@ public interface RcTransactionInfoMapper
     public int deleteRcTransactionInfoByIds(String[] ids);
 
     public void insertRcTransactionInfoList(List<RcTransactionInfo> rcTransactionInfo);
+
+    public void updateInfoAll(List<RcTransactionInfo> rcTransactionInfo);
+    public void updateDay(List<RcTransactionInfo> rcTransactionInfo);
+    public void updateThreeMonth(List<RcTransactionInfo> rcTransactionInfo);
+    public void updateWeek(List<RcTransactionInfo> rcTransactionInfo);
+    public void updateYdt(List<RcTransactionInfo> rcTransactionInfo);
+    public void updateYear(List<RcTransactionInfo> rcTransactionInfo);
 }
