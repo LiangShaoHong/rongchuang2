@@ -6,7 +6,10 @@ import com.ruoyi.digital.mapper.RcDigitalMapper;
 import com.ruoyi.digital.service.IRcDigitalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -25,23 +28,79 @@ public class RcDigitalServiceImpl implements IRcDigitalService {
     }
 
     @Override
-    public Result getMarketList(Integer pageNum, Integer pageSize) {
+    public Result getMarketList(Integer pageNum, Integer pageSize, Integer byName, Integer byType) {
         pageNum = (pageNum - 1) * pageSize;
-        List<RcNewestMarketDigital> profit = rcDigitalMapper.getMarketList(pageNum, pageSize);
+        // 1-市值 2-最新价 3-24H涨幅
+        // 1-升序 2-降序
+        String pageName = " ";
+        String pageType = " DESC ";
+        switch (byName){
+            case 1:
+                pageName = " price ";
+                break;
+            case 2:
+                pageName = " change_percent ";
+                break;
+            default:
+                pageName = " price ";
+                break;
+        }
+        if(byType == 2){
+            pageType = " ASC ";
+        }
+        List<RcNewestMarketDigital> profit = rcDigitalMapper.getMarketList(pageNum, pageSize, pageName, pageType);
         return Result.isOk().data(profit).msg("查询成功");
     }
 
     @Override
-    public Result getClinchList(Integer pageNum, Integer pageSize) {
+    public Result getClinchList(Integer pageNum, Integer pageSize, Integer byName, Integer byType) {
         pageNum = (pageNum - 1) * pageSize;
-        List<RcTransactionInfoDigital> profit = rcDigitalMapper.getClinchList(pageNum, pageSize);
+        // 1-市值 2-最新价 3-24H涨幅
+        // 1-升序 2-降序
+
+        String pageType = " DESC ";
+        if(byType == 2){
+            pageType = " ASC ";
+        }
+        List<RcTransactionInfoDigital> profit = rcDigitalMapper.getClinchList(pageNum, pageSize, pageType);
         return Result.isOk().data(profit).msg("查询成功");
     }
 
     @Override
-    public Result getDataList(Integer pageNum, Integer pageSize) {
+    public Result getDataList(Integer pageNum, Integer pageSize, Integer byName, Integer byType) {
         pageNum = (pageNum - 1) * pageSize;
-        List<RcTransactionDataDigital> profit = rcDigitalMapper.getDataList(pageNum, pageSize);
+        // 1-市值 2-最新价 3-24H涨幅
+        // 1-升序 2-降序
+        String pageName = " ";
+        String pageType = " DESC ";
+        switch (byName){
+            case 1:
+                pageName = " market_value_usd ";
+                break;
+            case 2:
+                pageName = " current_price_usd ";
+                break;
+            case 3:
+                pageName = " change_percent ";
+                break;
+            default:
+                pageName = " rank ";
+                break;
+        }
+        if(byType == 2){
+            pageType = " ASC ";
+        }
+        List<RcTransactionDataDigital> profit = rcDigitalMapper.getDataList(pageNum, pageSize, pageName, pageType);
+
+        // 正序
+        List<RcTransactionDataDigital> newList = profit.stream()
+                .sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd))
+                .collect(Collectors.toList());
+        // 倒序
+        List<RcTransactionDataDigital> newListTwo = profit.stream()
+                .sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd).reversed())
+                .collect(Collectors.toList());
+
         return Result.isOk().data(profit).msg("查询成功");
     }
 

@@ -88,12 +88,13 @@
 
     <select id="getDataList" resultMap="RcTransactionDataResult">
         SELECT id,code,name,fullname,rank,logo,current_price_usd,market_value_usd,change_percent FROM rc_transaction_data
-        ORDER BY rank
+        ORDER BY ${arg2} ${arg3}
         limit #{arg0},#{arg1}
     </select>
 
     <select id="getMarketList" resultMap="RcNewestMarketResult">
-        SELECT id,code,name,logo,full_name,time,price,price_cny,change_percent FROM rc_newest_market
+        SELECT id,code,name,logo,full_name,time,0 + CAST(price AS CHAR) AS price,0 + CAST(price_cny AS CHAR) AS price_cny,change_percent FROM rc_newest_market
+        ORDER BY ${arg2} ${arg3}
         limit #{arg0},#{arg1}
     </select>
 
@@ -134,7 +135,7 @@
 
     <select id="getClinchList" resultMap="RcTransactionInfoResult">
         SELECT id,code,name,fullname,symbol,logo,supply,totalSupply,vol,circulationRate FROM rc_transaction_info
-        ORDER BY vol DESC
+        ORDER BY vol ${arg2}
         limit #{arg0},#{arg1}
     </select>
 

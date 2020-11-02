@@ -8,6 +8,8 @@ import com.ruoyi.common.jms.ReceiverService;
 import com.ruoyi.common.jms.SenderService;
 import com.ruoyi.common.json.JSONObject;
 import com.ruoyi.common.utils.redis.RedisService;
+import com.ruoyi.digital.domain.RcTransactionDataDigital;
+import com.ruoyi.digital.mapper.RcDigitalMapper;
 import com.ruoyi.digital.service.IRcDigitalService;
 import com.ruoyi.user.service.IUserMoneyService;
 import io.swagger.annotations.Api;
@@ -22,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * test
@@ -44,6 +49,9 @@ public class TestMQController {
     @Autowired
     private IUserMoneyService userMoneyService;
 
+    @Autowired
+    private RcDigitalMapper rcDigitalMapper;
+
     @PostMapping("/testMQ")
     public Result testMQ() {
 //        JSONObject data = new JSONObject();
@@ -62,12 +70,23 @@ public class TestMQController {
 //        msg1.put("xx", "我来了");
 //        pushService.sendToUser("2", msg1.toString());
 
-        JSONObject data = new JSONObject();
-        data.put("rcService", rcService.getDataList(0,100));
-        redisService.set("GG", data, "GG:");
+//        JSONObject data = new JSONObject();
+//        data.put("rcService", rcService.getDataList(0,100, 1 ,1));
+//        redisService.set("GG", data, "GG:");
+//
+//        JSONObject gg = (JSONObject) redisService.get("GG", "GG:");
+//        return Result.isOk().data(gg.get("rcService"));
 
-        JSONObject gg = (JSONObject) redisService.get("GG", "GG:");
-        return Result.isOk().data(gg.get("rcService"));
+
+        List<RcTransactionDataDigital> list = rcDigitalMapper.getDataList(1,100, "market_value_usd" ,"DESC");
+        List<RcTransactionDataDigital> newList = list.stream().sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd)).collect(Collectors.toList());
+        List<RcTransactionDataDigital> newListTwo = list.stream().sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd).reversed()).collect(Collectors.toList());
+
+        JSONObject msg = new JSONObject();
+        msg.put("list", list);
+        msg.put("newList", newList);
+        msg.put("newListTwo", newListTwo);
+        return Result.isOk().data(msg);
     }
 
     @ApiOperation("加减币测试接口")
