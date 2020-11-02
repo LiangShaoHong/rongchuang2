@@ -92,8 +92,8 @@ public class UserApi extends BaseController {
                     @ApiImplicitParam(dataType = "String", name = "password", value = "密码", required = true),
                     @ApiImplicitParam(dataType = "String", name = "mobile", value = "手机号", required = true),
                     @ApiImplicitParam(dataType = "String", name = "referralcode", value = "邀请码(非必填)", required = false),
-                    @ApiImplicitParam(dataType = "String", name = "verificationCode", value = "验证码(该参数暂时没用 不传)", required = false),
-                    @ApiImplicitParam(dataType = "String", name = "language", value = "地区(该参数暂时没用 不传)", required = false)
+                    @ApiImplicitParam(dataType = "String", name = "verificationCode", value = "验证码(该参数暂时没用 暂时先不传)", required = false),
+                    @ApiImplicitParam(dataType = "String", name = "language", value = "地区(该参数暂时没用 暂时先不传)", required = false)
             })
     @PostMapping("/register")
     public Result register(@RequestParam("account") String account,
@@ -103,6 +103,11 @@ public class UserApi extends BaseController {
                           @RequestParam(value = "verificationCode", required = false) String verificationCode,
                           @RequestParam(value = "language", required = false) String language,
                           HttpServletRequest request) throws ParseException {
+        //检测用户名是否重复
+        RcUser user = rcUserMapper.selectaccount(account);
+        if (user != null){
+            return Result.isFail().msg("用户名重复");
+        }
         //产生邀请码
         String showId = OrderNumUtil.getRandomNum(8);
         //检测产生的邀请码是否被使用了
@@ -119,14 +124,9 @@ public class UserApi extends BaseController {
             }
             parentid = (int) selectreferralcode.get("id");
         }
-        //检测用户名是否重复
-        RcUser user = rcUserMapper.selectaccount(account);
-        if (user != null){
-            return Result.isFail().msg("用户名重复");
-        }
         //检测手机号是否存在正在使用
-        QueryWrapper queryWrapper1=new QueryWrapper();
-        queryWrapper1.eq("mobile",mobile);
+//        QueryWrapper queryWrapper1=new QueryWrapper();
+//        queryWrapper1.eq("mobile",mobile);
         JSONObject selectmobile = rcUserService.selectmobile(mobile);
         if (selectmobile !=null) {
             return Result.isFail().msg(MsgConstants.USER_ALLREADY_EXITS);
@@ -141,7 +141,7 @@ public class UserApi extends BaseController {
         RcUser u = new RcUser(null,mobile,100,new BigDecimal(0),account,password,null,null,"中文",0,df.parse(df.format(new Date())),0,parentid,"0", showId, referralcode,null,"1");
         int insert = rcUserService.insertRcUser(u);
         if (insert==0) {
-            return Result.isFail().msg(MsgConstants.INVITATION_UNUSER);
+            return Result.isFail().msg(MsgConstants.OPERATOR_FAIL);
         }
         String token = JWTUtil.sign(u.getPlatformId() + u.getAccount(), showId);
         JSONObject data = new JSONObject();
@@ -257,6 +257,32 @@ public class UserApi extends BaseController {
         String tokenKey = Constants.DB_TOKEN + user.getPlatformId() + user.getId();
         redisService.remove(tokenKey, Constants.DB_USER);
         return Result.isOk().msg(MsgConstants.OPERATOR_SUCCESS);
+    }
+
+    /**
+     * 设置安全密码
+     * @param safeword 安全密码
+     * @param request
+     * @return
+     */
+    @ApiOperation("设置安全密码")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "safeword", value = "安全密码", required = true)
+            })
+    @PostMapping("/addSafeWord")
+    public Result addSafeWord(
+            @RequestParam("safeword") String safeword,
+            HttpServletRequest request) {
+        RcUser user =  systemUtil.getPlatformIdAndUserId(request);
+        RcUser updateUser = new RcUser();
+        updateUser.setId(user.getId());
+        updateUser.setSafeword(bCryptPasswordEncoder.encode(user.getAccount() + safeword));
+        int isUpdate = rcUserService.updateRcUser(updateUser);
+        if (isUpdate > 0) {
+            return Result.isFail().msg(MsgConstants.OPERATOR_SUCCESS);
+        }
+        return Result.isFail().msg(MsgConstants.OPERATOR_FAIL);
     }
 
 }

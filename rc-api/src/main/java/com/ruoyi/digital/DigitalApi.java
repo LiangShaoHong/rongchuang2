@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,7 +52,10 @@ public class DigitalApi {
                     @ApiImplicitParam(dataType = "int", name = "byType", value = "1-升序 2-降序 默认传0", required = true)
             })
     @PostMapping("/getMarketList")
-    public Result getMarketList(HttpServletRequest request, Integer pageNum, Integer pageSize,Integer byName, Integer byType) {
+    public Result getMarketList(HttpServletRequest request,
+                                @RequestParam(defaultValue = "1") Integer pageNum,
+                                @RequestParam(defaultValue = "10")Integer pageSize,
+                                Integer byName, Integer byType) {
         return rcService.getMarketList(pageNum,pageSize,byName,byType);
     }
 
@@ -64,7 +68,10 @@ public class DigitalApi {
                     @ApiImplicitParam(dataType = "int", name = "byType", value = "1-升序 2-降序 默认传0", required = true)
             })
     @PostMapping("/getClinchList")
-    public Result getClinchList(HttpServletRequest request, Integer pageNum, Integer pageSize,Integer byName, Integer byType) {
+    public Result getClinchList(HttpServletRequest request,
+                                @RequestParam(defaultValue = "1")Integer pageNum,
+                                @RequestParam(defaultValue = "10")Integer pageSize,
+                                Integer byName, Integer byType) {
         return rcService.getClinchList(pageNum,pageSize,byName,byType);
     }
 
@@ -77,7 +84,10 @@ public class DigitalApi {
                     @ApiImplicitParam(dataType = "int", name = "byType", value = "1-升序 2-降序 默认传0", required = true)
             })
     @PostMapping("/getDataList")
-    public Result getDataList(HttpServletRequest request, Integer pageNum, Integer pageSize, Integer byName, Integer byType) {
+    public Result getDataList(HttpServletRequest request,
+                              @RequestParam(defaultValue = "1")Integer pageNum,
+                              @RequestParam(defaultValue = "10")Integer pageSize,
+                              Integer byName, Integer byType) {
         return rcService.getDataList(pageNum,pageSize,byName,byType);
     }
 
@@ -88,7 +98,9 @@ public class DigitalApi {
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
     @PostMapping("/getPlatformList")
-    public Result getPlatformList(HttpServletRequest request, Integer pageNum, Integer pageSize) {
+    public Result getPlatformList(HttpServletRequest request,
+                                  @RequestParam(defaultValue = "1")Integer pageNum,
+                                  @RequestParam(defaultValue = "10")Integer pageSize) {
         return rcService.getPlatformList(pageNum,pageSize);
     }
 

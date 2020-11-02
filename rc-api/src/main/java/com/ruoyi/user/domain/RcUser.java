@@ -47,7 +47,7 @@ public class RcUser extends BaseEntity
 
     /** 安全码 */
     @Excel(name = "安全码")
-    private Integer safeword;
+    private String safeword;
 
     /** 选择的语言 */
     @Excel(name = "选择的语言")
@@ -152,12 +152,12 @@ public class RcUser extends BaseEntity
     {
         return salt;
     }
-    public void setSafeword(Integer safeword)
+    public void setSafeword(String safeword)
     {
         this.safeword = safeword;
     }
 
-    public Integer getSafeword()
+    public String getSafeword()
     {
         return safeword;
     }
@@ -257,7 +257,7 @@ public class RcUser extends BaseEntity
 
     }
 
-    public RcUser(Long id, String mobile, Integer credit, BigDecimal money, String account, String password, String salt, Integer safeword, String language, Integer online, Date registertime, Integer paidan, Integer parentid, String identity, String invitation, String referralcode, String token, String platformId) {
+    public RcUser(Long id, String mobile, Integer credit, BigDecimal money, String account, String password, String salt, String safeword, String language, Integer online, Date registertime, Integer paidan, Integer parentid, String identity, String invitation, String referralcode, String token, String platformId) {
         this.id = id;
         this.mobile = mobile;
         this.credit = credit;
