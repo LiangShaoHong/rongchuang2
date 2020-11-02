@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface RcHomeMapper {
 
-    List<RcNoticeHome> getNoticeList(@Param("pageNumber") Integer pageNumber, @Param("limit") Integer limit);
+    List<RcNoticeHome> getNoticeList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
     RcNoticeHome getNoticeDetail(@Param("id") Integer id);
     RcNoticeHome getNewNotice();
-    List<RcInformationHome> getInfoList(@Param("pageNumber") Integer pageNumber, @Param("limit") Integer limit);
+    List<RcInformationHome> getInfoList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
     List<RcLunboHome> getLunboList();
-    List<RcHelpHome> getHelpList(@Param("pageNumber") Integer pageNumber, @Param("limit") Integer limit);
+    List<RcHelpHome> getHelpList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
     RcHelpHome getHelpDetail(@Param("id") Integer id);
 }

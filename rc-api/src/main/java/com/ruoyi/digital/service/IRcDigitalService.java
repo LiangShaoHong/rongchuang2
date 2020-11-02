@@ -14,16 +14,16 @@ public interface IRcDigitalService {
     Result getRateList();
 
     @ApiOperation("实时各交易所币种交易数据")
-    Result getMarketList(Integer pageNumber, Integer limit);
+    Result getMarketList(Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询首页成交榜额列表接口")
-    Result getClinchList(Integer pageNumber, Integer limit);
+    Result getClinchList(Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询首页市值行情列表接口")
-    Result getDataList(Integer pageNumber, Integer limit);
+    Result getDataList(Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询首页交易所列表接口")
-    Result getPlatformList(Integer pageNumber, Integer limit);
+    Result getPlatformList(Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询币种详情接口")
     Result getInfoByCode(String code);

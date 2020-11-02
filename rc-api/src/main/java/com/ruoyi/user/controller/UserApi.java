@@ -101,7 +101,7 @@ public class UserApi extends BaseController {
                           @RequestParam("mobile") String mobile,
                           @RequestParam(value = "referralcode", required = false) String referralcode,
                           @RequestParam(value = "verificationCode", required = false) String verificationCode,
-                          @RequestParam("language") String language,
+                          @RequestParam(value = "language", required = false) String language,
                           HttpServletRequest request) throws ParseException {
         //产生邀请码
         String showId = OrderNumUtil.getRandomNum(8);
@@ -133,9 +133,9 @@ public class UserApi extends BaseController {
         }
         //加密
         String password = bCryptPasswordEncoder.encode(showId + passWord);
-        Map<String, Object> extractPublicParam = super.extractPublicParam(request);
-        //获取请求的ip地址
-        String ip = (String) extractPublicParam.get("extra_ip");
+//        Map<String, Object> extractPublicParam = super.extractPublicParam(request);
+//        //获取请求的ip地址
+//        String ip = (String) extractPublicParam.get("extra_ip");
         //刚注册的用户，默认过期时间
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         RcUser u = new RcUser(null,mobile,100,new BigDecimal(0),account,password,null,null,"中文",0,df.parse(df.format(new Date())),0,parentid,"0", showId, referralcode,null,"1");
@@ -146,6 +146,8 @@ public class UserApi extends BaseController {
         String token = JWTUtil.sign(u.getPlatformId() + u.getAccount(), showId);
         JSONObject data = new JSONObject();
         data.put("X_Token", token);
+        data.put("account", u.getAccount());
+        data.put("mobile", u.getMobile());
         // 保存用户信息（account为key）
         String userKey = Constants.DB_USER + u.getPlatformId() + u.getAccount();
         redisService.set(userKey, u, Constants.DB_USER);
@@ -188,24 +190,12 @@ public class UserApi extends BaseController {
         // 保存登录token信息（userID为key）
         String tokenKey = Constants.DB_TOKEN + user.getPlatformId() + user.getId();
         redisService.set(tokenKey, token, Constants.LOGIN_TIMEOUT, Constants.DB_USER);
-
-        // websocket 通知后台 有用户登陆 首页页面输出用户名和音乐
-        JSONObject msg = new JSONObject();
-        msg.put("code", "1");
-        msg.put("account", user.getAccount());
-        msg.put("data", "withdraw");
-        pushService.sendToGroup(user.getPlatformId(), msg.toString());
-
-        JSONObject msg1 = new JSONObject();
-        msg1.put("xx", "我来了");
-        pushService.sendToUser("2", msg1.toString());
-
         return Result.isOk().data(data).msg(MsgConstants.USER_LOGIN_OK);
     }
 
     /**
      * 根据旧密码修改密码
-     * @param oldPassword 旧密码
+//     * @param oldPassword 旧密码
      * @param newPassword 新密码
      * @param request
      * @return
@@ -213,20 +203,20 @@ public class UserApi extends BaseController {
     @ApiOperation("修改密码接口")
     @ApiImplicitParams(
             {
-                    @ApiImplicitParam(dataType = "String", name = "oldPassword", value = "旧密码", required = true),
+//                    @ApiImplicitParam(dataType = "String", name = "oldPassword", value = "旧密码", required = true),
                     @ApiImplicitParam(dataType = "String", name = "newPassword", value = "新密码", required = true)
             })
     @PostMapping("/updatePassword")
     public Result editUserPass(
-            @RequestParam("oldPassword") String oldPassword,
+//            @RequestParam("oldPassword") String oldPassword,
             @RequestParam("newPassword") String newPassword,
             HttpServletRequest request) {
         RcUser user =  systemUtil.getPlatformIdAndUserId(request);
-        //检验输入的旧密码
-        boolean isSame = bCryptPasswordEncoder.matches(user.getInvitation() + oldPassword, user.getPassword());
-        if (!isSame) {
-            return Result.isFail(MsgConstants.OLD_PASSWORD_ERROR);
-        }
+//        //检验输入的旧密码
+//        boolean isSame = bCryptPasswordEncoder.matches(user.getInvitation() + oldPassword, user.getPassword());
+//        if (!isSame) {
+//            return Result.isFail(MsgConstants.OLD_PASSWORD_ERROR);
+//        }
         //设置用户新密码
         RcUser updateUser = new RcUser();
         updateUser.setId(user.getId());
@@ -267,31 +257,6 @@ public class UserApi extends BaseController {
         String tokenKey = Constants.DB_TOKEN + user.getPlatformId() + user.getId();
         redisService.remove(tokenKey, Constants.DB_USER);
         return Result.isOk().msg(MsgConstants.OPERATOR_SUCCESS);
-    }
-
-    @ApiOperation("加减币测试接口")
-    @ApiImplicitParams(
-            {
-                    @ApiImplicitParam(dataType = "String", name = "userId", value = "交易会员id", required = true),
-                    @ApiImplicitParam(dataType = "String", name = "userName", value = "交易会员名称", required = true),
-                    @ApiImplicitParam(dataType = "String", name = "fromUserId", value = "交易对象id(订单ID)", required = true),
-                    @ApiImplicitParam(dataType = "String", name = "money", value = "金额变化值", required = true),
-                    @ApiImplicitParam(dataType = "String", name = "cashHandFee", value = "手续费(平台佣金)", required = true),
-                    @ApiImplicitParam(dataType = "String", name = "recordType", value = "资金变化类型 0转账 1提现 2充值 3后台人员操作", required = true),
-                    @ApiImplicitParam(dataType = "String", name = "mark", value = "备注说明", required = true)
-            })
-    @PostMapping("/updateMoney")
-    public Result userMoneyService(
-            @RequestParam("userId") String userId,
-            @RequestParam("userName") String userName,
-            @RequestParam("fromUserId") String fromUserId,
-            @RequestParam("money") String money,
-            @RequestParam("cashHandFee") String cashHandFee,
-            @RequestParam("recordType") String recordType,
-            @RequestParam("mark") String mark,
-            HttpServletRequest request) {
-        boolean isSame = userMoneyService.moneyDoCenter(userId,userName,fromUserId,new BigDecimal(money),new BigDecimal(cashHandFee),recordType,mark);
-        return Result.isOk().data(isSame);
     }
 
 }

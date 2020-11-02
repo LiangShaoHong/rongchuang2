@@ -25,26 +25,30 @@ public class RcDigitalServiceImpl implements IRcDigitalService {
     }
 
     @Override
-    public Result getMarketList(Integer pageNumber, Integer limit) {
-        List<RcNewestMarketDigital> profit = rcDigitalMapper.getMarketList(pageNumber, limit);
+    public Result getMarketList(Integer pageNum, Integer pageSize) {
+        pageNum = (pageNum - 1) * pageSize;
+        List<RcNewestMarketDigital> profit = rcDigitalMapper.getMarketList(pageNum, pageSize);
         return Result.isOk().data(profit).msg("查询成功");
     }
 
     @Override
-    public Result getClinchList(Integer pageNumber, Integer limit) {
-        List<RcTransactionInfoDigital> profit = rcDigitalMapper.getClinchList(pageNumber, limit);
+    public Result getClinchList(Integer pageNum, Integer pageSize) {
+        pageNum = (pageNum - 1) * pageSize;
+        List<RcTransactionInfoDigital> profit = rcDigitalMapper.getClinchList(pageNum, pageSize);
         return Result.isOk().data(profit).msg("查询成功");
     }
 
     @Override
-    public Result getDataList(Integer pageNumber, Integer limit) {
-        List<RcTransactionDataDigital> profit = rcDigitalMapper.getDataList(pageNumber, limit);
+    public Result getDataList(Integer pageNum, Integer pageSize) {
+        pageNum = (pageNum - 1) * pageSize;
+        List<RcTransactionDataDigital> profit = rcDigitalMapper.getDataList(pageNum, pageSize);
         return Result.isOk().data(profit).msg("查询成功");
     }
 
     @Override
-    public Result getPlatformList(Integer pageNumber, Integer limit) {
-        List<RcTransactionPlatformDigital> profit = rcDigitalMapper.getPlatformList(pageNumber, limit);
+    public Result getPlatformList(Integer pageNum, Integer pageSize) {
+        pageNum = (pageNum - 1) * pageSize;
+        List<RcTransactionPlatformDigital> profit = rcDigitalMapper.getPlatformList(pageNum, pageSize);
         return Result.isOk().data(profit).msg("查询成功");
     }
 

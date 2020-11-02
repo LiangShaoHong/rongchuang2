@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiOperation;
 public interface IHomeService {
 
     @ApiOperation("查询公告列表接口")
-    Result getNoticeList(Integer pageNumber, Integer limit);
+    Result getNoticeList(Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询公告详情接口")
     Result getNoticeDetail(Integer id);
@@ -23,10 +23,10 @@ public interface IHomeService {
     Result getLunboList();
 
     @ApiOperation("查询系统消息接口")
-    Result getInfoList(Integer pageNumber, Integer limit);
+    Result getInfoList(Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询帮助列表接口")
-    Result getHelpList(Integer pageNumber, Integer limit);
+    Result getHelpList(Integer pageNum, Integer pageSize);
 
     @ApiOperation("查询帮助详情接口")
     Result getHelpDetail(Integer id);

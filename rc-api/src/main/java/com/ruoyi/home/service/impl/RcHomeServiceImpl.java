@@ -21,8 +21,9 @@ public class RcHomeServiceImpl implements IHomeService {
     private RcHomeMapper homeMapper;
 
     @Override
-    public Result getNoticeList(Integer pageNumber, Integer limit) {
-        List<RcNoticeHome> profit = homeMapper.getNoticeList(pageNumber, limit);
+    public Result getNoticeList(Integer pageNum, Integer pageSize) {
+        pageNum = (pageNum - 1) * pageSize;
+        List<RcNoticeHome> profit = homeMapper.getNoticeList(pageNum, pageSize);
         return Result.isOk().data(profit).msg("查询成功");
     }
 
@@ -45,14 +46,16 @@ public class RcHomeServiceImpl implements IHomeService {
     }
 
     @Override
-    public Result getInfoList(Integer pageNumber, Integer limit) {
-        List<RcInformationHome> profit = homeMapper.getInfoList(pageNumber,limit);
+    public Result getInfoList(Integer pageNum, Integer pageSize) {
+        pageNum = (pageNum - 1) * pageSize;
+        List<RcInformationHome> profit = homeMapper.getInfoList(pageNum,pageSize);
         return Result.isOk().data(profit).msg("查询成功");
     }
 
     @Override
-    public Result getHelpList(Integer pageNumber, Integer limit) {
-        List<RcHelpHome> profit = homeMapper.getHelpList(pageNumber,limit);
+    public Result getHelpList(Integer pageNum, Integer pageSize) {
+        pageNum = (pageNum - 1) * pageSize;
+        List<RcHelpHome> profit = homeMapper.getHelpList(pageNum,pageSize);
         return Result.isOk().data(profit).msg("查询成功");
     }
 

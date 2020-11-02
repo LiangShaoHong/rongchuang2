@@ -11,11 +11,11 @@ import java.util.List;
 public interface RcDigitalMapper {
 
     List<RcExchangeRateDigital> getRateList();
-    List<RcTransactionDataDigital> getDataList(@Param("pageNumber") Integer pageNumber, @Param("limit") Integer limit);
-    List<RcNewestMarketDigital> getMarketList(@Param("pageNumber") Integer pageNumber, @Param("limit") Integer limit);
+    List<RcTransactionDataDigital> getDataList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    List<RcNewestMarketDigital> getMarketList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
     RcTransactionInfoDigital getInfoByCode(@Param("code") String code);
-    List<RcTransactionInfoDigital> getClinchList(@Param("pageNumber") Integer pageNumber, @Param("limit") Integer limit);
-    List<RcTransactionPlatformDigital> getPlatformList(@Param("pageNumber") Integer pageNumber, @Param("limit") Integer limit);
+    List<RcTransactionInfoDigital> getClinchList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    List<RcTransactionPlatformDigital> getPlatformList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
     RcTransactionInfoDigital getInfoByCodeDataAll(@Param("code") String code);
     RcTransactionInfoDigital getInfoByCodeD(@Param("code") String code);
     RcTransactionInfoDigital getInfoByCodeW(@Param("code") String code);
