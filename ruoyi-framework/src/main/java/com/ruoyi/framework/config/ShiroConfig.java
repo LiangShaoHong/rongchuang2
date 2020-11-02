@@ -283,18 +283,16 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
-        filterChainDefinitionMap.put("/rc-api/legalCurrency/**", "anon");
-        filterChainDefinitionMap.put("/rc-api/currency/**", "anon");
-        filterChainDefinitionMap.put("/rc-api/user/**", "anon");
-
-        // 首页公告 轮播 系统消息 帮助接口
-        filterChainDefinitionMap.put("/rc-api/home/**", "anon");
-        // 首页货币信息接口
-        filterChainDefinitionMap.put("/rc-api/digital/**", "anon");
-        // 测试MQ
-        filterChainDefinitionMap.put("/rc-api/mq/**", "anon");
-        // 个人信息认证接口
-        filterChainDefinitionMap.put("/rc-api/userAuth/**", "anon");
+        filterChainDefinitionMap.put("/rc-api/**", "anon");
+//        filterChainDefinitionMap.put("/rc-api/currency/**", "anon");
+//        filterChainDefinitionMap.put("/rc-api/user/**", "anon");
+//
+//        // 首页公告 轮播 系统消息 帮助接口
+//        filterChainDefinitionMap.put("/rc-api/home/**", "anon");
+//        // 首页货币信息接口
+//        filterChainDefinitionMap.put("/rc-api/digital/**", "anon");
+//        // 测试MQ
+//        filterChainDefinitionMap.put("/rc-api/mq/**", "anon");
 
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");

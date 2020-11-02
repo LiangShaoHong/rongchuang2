@@ -36,10 +36,8 @@ import java.util.List;
 @RequestMapping("/rc-api/legalCurrency")
 public class LegalCurrencyApi {
 
-
     @Autowired
     private LegalCurrencyService legalCurrencyService;
-
 
     @Resource
     private SystemUtil systemUtil;
