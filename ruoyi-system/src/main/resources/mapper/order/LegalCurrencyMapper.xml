@@ -153,14 +153,12 @@ FROM
 WHERE
 	(area IN (
 		SELECT
-			d.region
+			c.region
 		FROM
 			rc_user b,
-			rc_user_area c,
-			rc_collection_account_type d
+			rc_account c
 		WHERE
 			b.id = c.user_id
-		AND c.rc_collection_account_type_id = d.id
 		AND b.id = #{arg0}
 	) OR a.assign_user_id =#{arg0})
 AND a.order_state = '2'
