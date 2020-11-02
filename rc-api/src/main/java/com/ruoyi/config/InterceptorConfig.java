@@ -38,8 +38,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
         login.excludePathPatterns("/rc-api/digital/**");
 
         //注册adminRequestInterceptor拦截器
-//        InterceptorRegistration adminRequest = registry.addInterceptor(adminRequestInterceptor);
-//        adminRequest.addPathPatterns("/rc-api/**", "/system/**");
+        InterceptorRegistration adminRequest = registry.addInterceptor(adminRequestInterceptor);
+        adminRequest.addPathPatterns("/rc-api/**", "/system/**");
     }
 
 }
