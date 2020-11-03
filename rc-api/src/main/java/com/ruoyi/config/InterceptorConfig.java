@@ -36,6 +36,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         //添加不拦截路径
         login.excludePathPatterns("/rc-api/user/**");
         login.excludePathPatterns("/rc-api/digital/**");
+        login.excludePathPatterns("/rc-api/home/**");
 
         //注册adminRequestInterceptor拦截器
         InterceptorRegistration adminRequest = registry.addInterceptor(adminRequestInterceptor);

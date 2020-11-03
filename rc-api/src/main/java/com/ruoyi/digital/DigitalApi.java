@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,45 +46,62 @@ public class DigitalApi {
     @ApiOperation("查询首页最新上市列表接口")
     @ApiImplicitParams(
             {
-                    @ApiImplicitParam(dataType = "int", name = "pageNumber", value = "当前页号", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
+                    @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "byName", value = "1-全球指数 2-24H涨幅 默认传0", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "byType", value = "1-升序 2-降序 默认传0", required = true)
             })
     @PostMapping("/getMarketList")
-    public Result getMarketList(HttpServletRequest request, Integer pageNumber, Integer limit) {
-        return rcService.getMarketList(pageNumber,limit);
+    public Result getMarketList(HttpServletRequest request,
+                                @RequestParam(defaultValue = "1") Integer pageNum,
+                                @RequestParam(defaultValue = "10")Integer pageSize,
+                                Integer byName, Integer byType) {
+        return rcService.getMarketList(pageNum,pageSize,byName,byType);
     }
 
     @ApiOperation("查询首页成交榜额列表接口")
     @ApiImplicitParams(
             {
-                    @ApiImplicitParam(dataType = "int", name = "pageNumber", value = "当前页号", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
+                    @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "byName", value = "1-市值 2-最新价 3-24H涨幅 默认传0", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "byType", value = "1-升序 2-降序 默认传0", required = true)
             })
     @PostMapping("/getClinchList")
-    public Result getClinchList(HttpServletRequest request, Integer pageNumber, Integer limit) {
-        return rcService.getClinchList(pageNumber,limit);
+    public Result getClinchList(HttpServletRequest request,
+                                @RequestParam(defaultValue = "1")Integer pageNum,
+                                @RequestParam(defaultValue = "10")Integer pageSize,
+                                Integer byName, Integer byType) {
+        return rcService.getClinchList(pageNum,pageSize,byName,byType);
     }
 
     @ApiOperation("查询首页市值行情列表接口")
     @ApiImplicitParams(
             {
-                    @ApiImplicitParam(dataType = "int", name = "pageNumber", value = "当前页号", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
+                    @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "byName", value = "1-市值 2-最新价 3-24H涨幅 默认传0", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "byType", value = "1-升序 2-降序 默认传0", required = true)
             })
     @PostMapping("/getDataList")
-    public Result getDataList(HttpServletRequest request, Integer pageNumber, Integer limit) {
-        return rcService.getDataList(pageNumber,limit);
+    public Result getDataList(HttpServletRequest request,
+                              @RequestParam(defaultValue = "1")Integer pageNum,
+                              @RequestParam(defaultValue = "10")Integer pageSize,
+                              Integer byName, Integer byType) {
+        return rcService.getDataList(pageNum,pageSize,byName,byType);
     }
 
     @ApiOperation("查询首页交易所列表接口")
     @ApiImplicitParams(
             {
-                    @ApiImplicitParam(dataType = "int", name = "pageNumber", value = "当前页号", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "limit", value = "每页大小", required = true)
+                    @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
             })
     @PostMapping("/getPlatformList")
-    public Result getPlatformList(HttpServletRequest request, Integer pageNumber, Integer limit) {
-        return rcService.getPlatformList(pageNumber,limit);
+    public Result getPlatformList(HttpServletRequest request,
+                                  @RequestParam(defaultValue = "1")Integer pageNum,
+                                  @RequestParam(defaultValue = "10")Integer pageSize) {
+        return rcService.getPlatformList(pageNum,pageSize);
     }
 
     @ApiOperation("查询币种详情接口")
