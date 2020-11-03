@@ -92,6 +92,7 @@ public class CollectionServiceImpl implements ICollectionService {
             jsonObject.put("dictType", sysDictData.getDictType());
             jsonObject.put("id", sysDictData.getDictValue());
             jsonObject.put("text", sysDictData.getDictLabel());
+            jsonObject.put("value","");
             list.add(jsonObject);
         }
         return new Result().isOk().data(list);
@@ -101,7 +102,6 @@ public class CollectionServiceImpl implements ICollectionService {
     @Transactional(rollbackFor = Exception.class)
     public Result addPersonalCollection(Long userId, String dictType, String json, String qrcode) {
         log.info("调用新增个人收款账户接口");
-        JSONObject jsonObject = JSONArray.parseObject(json);
         SysDictType sysDictType = iSysDictTypeService.selectDictTypeByType(dictType);
         String region = sysDictType.getRemark();
         Integer state = collectionMapper.addPersonalCollection(userId, json, qrcode, region);
@@ -115,7 +115,6 @@ public class CollectionServiceImpl implements ICollectionService {
     @Transactional(rollbackFor = Exception.class)
     public Result updatePersonalCollection(Long userId, Long id, String dictType, String json, String qrcode) {
         log.info("调用修改个人收款账户接口");
-        JSONObject jsonObject = JSONArray.parseObject(json);
         SysDictType sysDictType = iSysDictTypeService.selectDictTypeByType(dictType);
         String region = sysDictType.getRemark();
         Integer state = collectionMapper.updatePersonalCollection(userId, id, json, qrcode, region);

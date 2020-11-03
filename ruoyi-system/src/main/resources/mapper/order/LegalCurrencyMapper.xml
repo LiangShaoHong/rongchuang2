@@ -161,7 +161,7 @@ WHERE
 			b.id = c.user_id
 		AND b.id = #{arg0}
 	) OR a.assign_user_id =#{arg0})
-AND a.order_state = '2'
+AND a.order_state = '2' AND a.seller_user_id <![CDATA[<>]]> #{arg0}
 	ORDER BY a.release_time desc
 	LIMIT  #{arg1} ,#{arg2}
     </select>
