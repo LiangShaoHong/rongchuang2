@@ -102,6 +102,24 @@ public class CollectionController {
     }
 
 
+    @ApiOperation("获取个人收款账户详情接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
+                    @ApiImplicitParam(dataType = "Long", name = "id", value = "业务id", required = true)
+            })
+    @PostMapping("/getPersonalCollectionDetails")
+    public Result getPersonalCollectionDetails(HttpServletRequest request, Long id) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return new Result().isFail("登录超时");
+        }
+        Result result = iCollectionService.getPersonalCollectionDetails(user.getId(), id);
+        return result;
+    }
+
+
+
     @ApiOperation("修改个人收款账户接口")
     @ApiImplicitParams(
             {

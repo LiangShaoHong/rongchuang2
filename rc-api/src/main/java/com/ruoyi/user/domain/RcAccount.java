@@ -30,66 +30,88 @@ public class RcAccount extends BaseEntity
     @Excel(name = "区域")
     private String region;
 
+    /** 图标 */
+    @Excel(name = "图标")
+    private String icon;
+
+    /** 图标 */
+    @Excel(name = "字典类型")
+    private String dictType;
+
     /** 二维码 */
     @Excel(name = "二维码")
     private String qrcode;
 
-    public void setId(Long id) 
-    {
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() 
-    {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
-    public void setUserId(Long userId) 
-    {
+
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Long getUserId() 
-    {
-        return userId;
+    public String getCollectionInformation() {
+        return collectionInformation;
     }
-    public void setCollectionInformation(String collectionInformation) 
-    {
+
+    public void setCollectionInformation(String collectionInformation) {
         this.collectionInformation = collectionInformation;
     }
 
-    public String getCollectionInformation() 
-    {
-        return collectionInformation;
+    public String getRegion() {
+        return region;
     }
-    public void setRegion(String region) 
-    {
+
+    public void setRegion(String region) {
         this.region = region;
     }
 
-    public String getRegion() 
-    {
-        return region;
-    }
-    public void setQrcode(String qrcode) 
-    {
-        this.qrcode = qrcode;
+    public String getIcon() {
+        return icon;
     }
 
-    public String getQrcode() 
-    {
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getDictType() {
+        return dictType;
+    }
+
+    public void setDictType(String dictType) {
+        this.dictType = dictType;
+    }
+
+    public String getQrcode() {
         return qrcode;
+    }
+
+    public void setQrcode(String qrcode) {
+        this.qrcode = qrcode;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("userId", getUserId())
-            .append("collectionInformation", getCollectionInformation())
-            .append("region", getRegion())
-            .append("qrcode", getQrcode())
-            .append("updateTime", getUpdateTime())
-            .append("createTime", getCreateTime())
-            .toString();
+        return "RcAccount{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", collectionInformation='" + collectionInformation + '\'' +
+                ", region='" + region + '\'' +
+                ", icon='" + icon + '\'' +
+                ", dictType='" + dictType + '\'' +
+                ", qrcode='" + qrcode + '\'' +
+                '}';
     }
 }
