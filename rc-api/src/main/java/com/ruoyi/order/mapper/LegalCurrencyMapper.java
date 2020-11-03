@@ -1,9 +1,8 @@
 package com.ruoyi.order.mapper;
 
-import com.ruoyi.order.domain.FrenchCurrencyOrder;
-import com.ruoyi.order.domain.Profit;
-import com.ruoyi.order.domain.RcFrenchCurrencyOrder;
+import com.ruoyi.order.domain.*;
 import io.lettuce.core.dynamic.annotation.Param;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -39,5 +38,14 @@ public interface LegalCurrencyMapper {
     public void updateFbConfirm(@Param("userId") Long userId, @Param("id") String id);
 
     public RcFrenchCurrencyOrder selectRcFrenchCurrencyOrderByOrderId(@Param("orderId") String orderId);
+
+    @Insert("insert into rc_appeal (user_id,order_id,appeal_content,compl_img,state,create_time)values(#{userId},#{orderId},#{appealContent},#{complImg},#{state},#{createTime})")
+    public void insertFbAppealOrder(@Param("appeal") Appeal appeal);
+
+    @Select("select count(1) from rc_appeal where order_id=#{id} and state=1")
+    public Integer selectRcAppealByUserIdAndRcFrenchCurrencyOrderId(@Param("id") String id);
+
+    @Update("UPDATE rc_french_currency_order set confirm_collection_time=now(),order_state=6 WHERE user_id=#{arg0} AND order_id=#{arg1}")
+    public void updateFbAppealOrder(@Param("userId") Long userId, @Param("id") String id);
 
 }
