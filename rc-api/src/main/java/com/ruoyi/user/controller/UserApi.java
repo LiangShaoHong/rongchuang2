@@ -271,16 +271,57 @@ public class UserApi extends BaseController {
                     @ApiImplicitParam(dataType = "String", name = "safeword", value = "安全密码", required = true)
             })
     @PostMapping("/addSafeWord")
-    public Result addSafeWord(
-            @RequestParam("safeword") String safeword,
-            HttpServletRequest request) {
+    public Result addSafeWord( @RequestParam("safeword") String safeword, HttpServletRequest request ) {
         RcUser user =  systemUtil.getPlatformIdAndUserId(request);
         RcUser updateUser = new RcUser();
         updateUser.setId(user.getId());
         updateUser.setSafeword(bCryptPasswordEncoder.encode(user.getAccount() + safeword));
         int isUpdate = rcUserService.updateRcUser(updateUser);
         if (isUpdate > 0) {
-            return Result.isFail().msg(MsgConstants.OPERATOR_SUCCESS);
+            //更新redis的user信息
+            String token = JWTUtil.sign(user.getPlatformId() + user.getAccount(),user.getInvitation());
+            JSONObject data = new JSONObject();
+            data.put("X_Token", token);
+            // 保存用户信息（account为key）
+            String userKey = Constants.DB_USER + user.getPlatformId() + user.getAccount();
+            redisService.set(userKey, user, Constants.DB_USER);
+            // 保存登录token信息（userID为key）
+            String tokenKey = Constants.DB_TOKEN + user.getPlatformId() + user.getId();
+            redisService.set(tokenKey, token, Constants.LOGIN_TIMEOUT, Constants.DB_USER);
+            return Result.isOk().data(data).msg(MsgConstants.OPERATOR_SUCCESS);
+        }
+        return Result.isFail().msg(MsgConstants.OPERATOR_FAIL);
+    }
+
+    @ApiOperation("修改手机号接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "mobile", value = "手机号", required = true)
+            })
+    @PostMapping("/updateMobile")
+    public Result updateMobile( @RequestParam("mobile") String mobile, HttpServletRequest request){
+        RcUser user =  systemUtil.getPlatformIdAndUserId(request);
+        //检测修改的手机号是否重复
+        JSONObject selectmobile = rcUserService.selectmobile(mobile);
+        if (selectmobile !=null) {
+            return Result.isFail().msg(MsgConstants.USER_ALLREADY_EXITS);
+        }
+        RcUser updateUser = new RcUser();
+        updateUser.setId(user.getId());
+        updateUser.setMobile(mobile);
+        int isUpdate = rcUserService.updateRcUser(updateUser);
+        if (isUpdate > 0) {
+            //更新redis的user信息
+            String token = JWTUtil.sign(user.getPlatformId() + user.getAccount(),user.getInvitation());
+            JSONObject data = new JSONObject();
+            data.put("X_Token", token);
+            // 保存用户信息（account为key）
+            String userKey = Constants.DB_USER + user.getPlatformId() + user.getAccount();
+            redisService.set(userKey, user, Constants.DB_USER);
+            // 保存登录token信息（userID为key）
+            String tokenKey = Constants.DB_TOKEN + user.getPlatformId() + user.getId();
+            redisService.set(tokenKey, token, Constants.LOGIN_TIMEOUT, Constants.DB_USER);
+            return Result.isOk().data(data).msg(MsgConstants.OPERATOR_SUCCESS);
         }
         return Result.isFail().msg(MsgConstants.OPERATOR_FAIL);
     }

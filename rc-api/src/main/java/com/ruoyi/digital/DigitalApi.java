@@ -80,14 +80,15 @@ public class DigitalApi {
             {
                     @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "byName", value = "1-市值 2-最新价 3-24H涨幅 默认传0", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "byType", value = "1-升序 2-降序 默认传0", required = true)
+                    @ApiImplicitParam(dataType = "int", name = "byName", value = "1-市值 2-最新价 3-24H涨幅 默认0可不传", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "byType", value = "1-升序 2-降序 默认0可不传", required = true)
             })
     @PostMapping("/getDataList")
     public Result getDataList(HttpServletRequest request,
                               @RequestParam(defaultValue = "1")Integer pageNum,
                               @RequestParam(defaultValue = "10")Integer pageSize,
-                              Integer byName, Integer byType) {
+                              @RequestParam(defaultValue = "0")Integer byName,
+                              @RequestParam(defaultValue = "0")Integer byType) {
         return rcService.getDataList(pageNum,pageSize,byName,byType);
     }
 

@@ -88,7 +88,8 @@
 
     <select id="getDataList" resultMap="RcTransactionDataResult">
         SELECT id,code,name,fullname,rank,logo,current_price_usd,market_value_usd,change_percent FROM rc_transaction_data
-        ORDER BY ${arg2} ${arg3}
+        ORDER BY rank
+<!--        ORDER BY ${arg2} ${arg3}-->
         limit #{arg0},#{arg1}
     </select>
 

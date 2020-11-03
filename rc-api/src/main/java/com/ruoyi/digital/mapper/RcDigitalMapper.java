@@ -11,7 +11,7 @@ import java.util.List;
 public interface RcDigitalMapper {
 
     List<RcExchangeRateDigital> getRateList();
-    List<RcTransactionDataDigital> getDataList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,String pageName,String pageType);
+    List<RcTransactionDataDigital> getDataList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
     List<RcNewestMarketDigital> getMarketList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, String pageName, String pageType);
     RcTransactionInfoDigital getInfoByCode(@Param("code") String code);
     List<RcTransactionInfoDigital> getClinchList(@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize,String pageType);
