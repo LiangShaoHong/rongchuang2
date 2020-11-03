@@ -12,7 +12,6 @@ import java.util.Date;
 @Data
 public class FrenchCurrencyOrder {
 
-    @ApiModelProperty("主键id")
     private Integer id;
 
     @ApiModelProperty("交易单号")
@@ -59,6 +58,9 @@ public class FrenchCurrencyOrder {
 
     @ApiModelProperty("订单状态")
     private Integer orderState;
+
+    @ApiModelProperty("买卖类型 1：买 2：卖")
+    private Integer businessType;
 
     @ApiModelProperty("订单时间")
     private Date createTime;

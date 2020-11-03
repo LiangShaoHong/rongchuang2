@@ -20,7 +20,9 @@ public interface LegalCurrencyMapper {
 
     public Profit getFbPerInformation(@Param("userId") Long userId);
 
-    public List<FrenchCurrencyOrder> getFbMyOrderList(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    public List<FrenchCurrencyOrder> getFbMyOrderList1(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+
+    public List<FrenchCurrencyOrder> getFbMyOrderList2(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
     public List<FrenchCurrencyOrder> getFbHistorical(@Param("userId") Long userId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 

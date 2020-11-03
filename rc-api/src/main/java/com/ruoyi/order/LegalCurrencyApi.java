@@ -64,6 +64,7 @@ public class LegalCurrencyApi {
     @ApiOperation("查询我的订单列表接口")
     @ApiImplicitParams(
             {
+
                     @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
                     @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)

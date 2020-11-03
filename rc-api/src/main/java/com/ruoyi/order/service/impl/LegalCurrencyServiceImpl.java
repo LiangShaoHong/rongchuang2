@@ -31,10 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -89,7 +86,11 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Override
     public Result getFbMyOrderList(RcUser user, Integer pageNum, Integer pageSize) {
         pageNum = (pageNum - 1) * pageSize;
-        List<FrenchCurrencyOrder> frenchCurrencyOrderList = legalCurrencyMapper.getFbMyOrderList(user.getId(), pageNum, pageSize);
+        List<FrenchCurrencyOrder> frenchCurrencyOrderList = new ArrayList<FrenchCurrencyOrder>();
+        List<FrenchCurrencyOrder> frenchCurrencyOrderList1 = legalCurrencyMapper.getFbMyOrderList1(user.getId(), pageNum, pageSize);
+        List<FrenchCurrencyOrder> frenchCurrencyOrderList2 = legalCurrencyMapper.getFbMyOrderList2(user.getId(), pageNum, pageSize);
+        frenchCurrencyOrderList.addAll(frenchCurrencyOrderList1);
+        frenchCurrencyOrderList.addAll(frenchCurrencyOrderList2);
         return new Result().code(1).msg("查询成功").data(frenchCurrencyOrderList);
     }
 

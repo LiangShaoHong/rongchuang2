@@ -31,6 +31,7 @@
         <result property="paymentImg" column="payment_img"/>
         <result property="profit" column="profit"/>
         <result property="orderState" column="order_state"/>
+        <result property="businessType" column="business_type"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
 
@@ -54,31 +55,57 @@
          where a.user_id=#{userId} and a.profit_type='1'
     </select>
 
-    <select id="getFbMyOrderList" resultMap="FrenchCurrencyOrderResult">
+    <select id="getFbMyOrderList1" resultMap="FrenchCurrencyOrderResult">
         SELECT
-	b.id,
-	b.order_id,
-	a.transaction_currency,
-	a.number,
-	a.transaction_type,
-	a.purchase_price,
-	a.sell_price,
-	a.profit,
-	b.order_state,
-	b.create_time
-FROM
-	rc_french_currency_order_release a
-LEFT JOIN rc_french_currency_order b ON (a.id = b.rc_french_currency_order_release_id)
-WHERE
-	b.user_id = #{arg0}
-	and
-	(b.order_state ='1' or b.order_state ='2' or b.order_state ='3' or b.order_state ='4')
-	and
-	a.order_state = '1'
-	order by b.create_time desc
-	limit  #{arg1} ,#{arg2}
+        b.id,
+        b.order_id,
+        a.transaction_currency,
+        a.number,
+        a.transaction_type,
+        a.purchase_price,
+        a.sell_price,
+        a.profit,
+        b.order_state,
+        '1' business_type,
+        b.create_time
+        FROM
+        rc_french_currency_order_release a
+        LEFT JOIN rc_french_currency_order b ON (a.id = b.rc_french_currency_order_release_id)
+        WHERE
+        b.user_id = #{arg0}
+        and
+        (b.order_state ='1' or  b.order_state ='2' or b.order_state ='3' or b.order_state ='4' )
+        and
+        a.order_state = '1'
+        order by b.create_time desc
+        limit #{arg1} ,#{arg2}
     </select>
 
+    <select id="getFbMyOrderList2" resultMap="FrenchCurrencyOrderResult">
+        SELECT
+        b.id,
+        b.order_id,
+        a.transaction_currency,
+        a.number,
+        a.transaction_type,
+        a.purchase_price,
+        a.sell_price,
+        a.profit,
+        b.order_state,
+        '2' business_type,
+        b.create_time
+        FROM
+        rc_french_currency_order_release a
+        LEFT JOIN rc_french_currency_order b ON (a.id = b.rc_french_currency_order_release_id)
+        WHERE
+        a.seller_user_id = #{arg0}
+        and
+        (b.order_state ='1' or b.order_state ='2' or b.order_state ='3' or b.order_state ='4')
+        and
+        a.order_state = '1'
+        order by b.create_time desc
+        limit #{arg1} ,#{arg2}
+    </select>
 
     <select id="getFbHistorical" resultMap="FrenchCurrencyOrderResult">
         SELECT
@@ -160,7 +187,7 @@ WHERE
 		WHERE
 			b.id = c.user_id
 		AND b.id = #{arg0}
-	) OR a.assign_user_id =#{arg0})
+	) AND (a.assign_user_id =#{arg0} OR a.assign_user_id IS NULL))
 AND a.order_state = '2' AND a.seller_user_id <![CDATA[<>]]> #{arg0}
 	ORDER BY a.release_time desc
 	LIMIT  #{arg1} ,#{arg2}
