@@ -69,38 +69,35 @@ public class RcDigitalServiceImpl implements IRcDigitalService {
     @Override
     public Result getDataList(Integer pageNum, Integer pageSize, Integer byName, Integer byType) {
         pageNum = (pageNum - 1) * pageSize;
+        List<RcTransactionDataDigital> profitList = rcDigitalMapper.getDataList(pageNum, pageSize);
         // 1-市值 2-最新价 3-24H涨幅
         // 1-升序 2-降序
-        String pageName = " ";
-        String pageType = " DESC ";
-        switch (byName){
-            case 1:
-                pageName = " market_value_usd ";
-                break;
-            case 2:
-                pageName = " current_price_usd ";
-                break;
-            case 3:
-                pageName = " change_percent ";
-                break;
-            default:
-                pageName = " rank ";
-                break;
+        List<RcTransactionDataDigital> profit = profitList;
+        if(byName == 1 && byType == 1){
+            profit = profitList.stream()
+                    .sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd))
+                    .collect(Collectors.toList());
+        }else if(byName == 1 && byType == 2){
+            profit = profitList.stream()
+                    .sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd).reversed())
+                    .collect(Collectors.toList());
+        }else if(byName == 2 && byType == 1){
+            profit = profitList.stream()
+                    .sorted(Comparator.comparing(RcTransactionDataDigital::getCurrentPriceUsd))
+                    .collect(Collectors.toList());
+        }else if(byName == 2 && byType == 2){
+            profit = profitList.stream()
+                    .sorted(Comparator.comparing(RcTransactionDataDigital::getCurrentPriceUsd).reversed())
+                    .collect(Collectors.toList());
+        }else if(byName == 3 && byType == 1){
+            profit = profitList.stream()
+                    .sorted(Comparator.comparing(RcTransactionDataDigital::getChangePercent))
+                    .collect(Collectors.toList());
+        }else if(byName == 3 && byType == 2){
+            profit = profitList.stream()
+                    .sorted(Comparator.comparing(RcTransactionDataDigital::getChangePercent).reversed())
+                    .collect(Collectors.toList());
         }
-        if(byType == 2){
-            pageType = " ASC ";
-        }
-        List<RcTransactionDataDigital> profit = rcDigitalMapper.getDataList(pageNum, pageSize, pageName, pageType);
-
-        // 正序
-        List<RcTransactionDataDigital> newList = profit.stream()
-                .sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd))
-                .collect(Collectors.toList());
-        // 倒序
-        List<RcTransactionDataDigital> newListTwo = profit.stream()
-                .sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd).reversed())
-                .collect(Collectors.toList());
-
         return Result.isOk().data(profit).msg("查询成功");
     }
 
