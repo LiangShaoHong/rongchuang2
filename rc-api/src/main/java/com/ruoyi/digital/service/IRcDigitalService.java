@@ -23,7 +23,7 @@ public interface IRcDigitalService {
     Result getDataList(Integer pageNum, Integer pageSize, Integer byName, Integer byType);
 
     @ApiOperation("查询首页交易所列表接口")
-    Result getPlatformList(Integer pageNum, Integer pageSize);
+    Result getPlatformList(Integer pageNum, Integer pageSize, Integer byName, Integer byType);
 
     @ApiOperation("查询币种详情接口")
     Result getInfoByCode(String code);

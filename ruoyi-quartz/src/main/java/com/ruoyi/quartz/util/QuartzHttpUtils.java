@@ -5,6 +5,7 @@ import com.aeuok.task.core.TaskContainerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.digital.domain.RcTransactionInfo;
+import com.ruoyi.framework.web.domain.server.Sys;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.http.*;
@@ -322,6 +323,15 @@ public class QuartzHttpUtils {
 
 //        Date dd = format.parse(format.format(new Date(Long.valueOf("1603682043000"))));
 //        System.out.println(dd);
+
+
+//        List<NameValuePair> paratmers = new ArrayList<>();
+//        paratmers.add(new BasicNameValuePair("webp", "1"));
+//        paratmers.add(new BasicNameValuePair("code", "bitcoin"));
+//        paratmers.add(new BasicNameValuePair("type", "all"));
+//        JSONObject resultInfo = JSONObject.fromObject(QuartzHttpUtils.makeAPICall("https://dncapi.bqrank.net/api/coin/web-charts", paratmers));
+////        JSONArray jsonArray = JSONArray.fromObject(resultInfo.getString("value"));
+//        System.out.println(resultInfo.getString("value"));
 
     }
 }

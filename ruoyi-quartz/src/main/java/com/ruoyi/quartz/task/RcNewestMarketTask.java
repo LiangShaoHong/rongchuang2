@@ -47,7 +47,6 @@ public class RcNewestMarketTask {
                 System.out.println("没有数据");
                 return;
             }
-            Thread.sleep(5000);
             JSONObject sql = JSONObject.fromObject(result);
             JSONArray jsonArray = JSONArray.fromObject(sql.getString("data"));
             Object[] objs = jsonArray.toArray();
@@ -66,12 +65,13 @@ public class RcNewestMarketTask {
                 data.setTime((String)jsonObject.getString("time"));
                 data.setPrice(new BigDecimal(jsonObject.getString("price")));
                 data.setPriceCny(new BigDecimal(jsonObject.getString("price_cny")));
-                data.setChangePercent((String)jsonObject.getString("change_percent"));
+                data.setChangePercent(new BigDecimal(jsonObject.getString("change_percent")));
                 data.setLastUpdate(new Date());
                 addList.add(data);
 
                 JSONObject paramsInfo = new JSONObject();
                 paramsInfo.put("code", data.getCode());
+                Thread.sleep(5000);
                 JSONObject resultPost = QuartzHttpUtils.makeAPICallPost("https://dncapi.bqrank.net/api/coin/web-coininfo", paramsInfo);
                 JSONObject resultInfo = JSONObject.fromObject(resultPost.getString("data"));
                 if(!resultInfo.isEmpty()){

@@ -35,11 +35,11 @@ public class RcInfoWeekTask {
     @Async
     public void second() throws InterruptedException {
         System.out.println("开始执行拉取详情数据.........................");
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 2; i++) {
             String uri = "https://dncapi.bqrank.net/api/coin/web-coinrank";
             List<NameValuePair> paratmers = new ArrayList<NameValuePair>();
             paratmers.add(new BasicNameValuePair("webp","1"));
-            paratmers.add(new BasicNameValuePair("pagesize","100"));
+            paratmers.add(new BasicNameValuePair("pagesize","50"));
             paratmers.add(new BasicNameValuePair("page",i + ""));
             paratmers.add(new BasicNameValuePair("type","-1"));
             try {
@@ -49,7 +49,6 @@ public class RcInfoWeekTask {
                     System.out.println("没有数据");
                     continue;
                 }
-                Thread.sleep(5000);
                 JSONObject sql = JSONObject.fromObject(result);
                 JSONArray jsonArray = JSONArray.fromObject(sql.getString("data"));
                 Object[] objs = jsonArray.toArray();
@@ -62,6 +61,7 @@ public class RcInfoWeekTask {
                     list_all.add(new BasicNameValuePair("webp", "1"));
                     list_all.add(new BasicNameValuePair("code", (String)jsonObject.getString("code")));
                     list_all.add(new BasicNameValuePair("type", "w"));
+                    Thread.sleep(5000);
                     JSONObject resultInfo = JSONObject.fromObject(QuartzHttpUtils.makeAPICall("https://dncapi.bqrank.net/api/coin/web-charts", list_all));
                     if(!resultInfo.isEmpty()){
                         infoData.setCode((String)jsonObject.getString("code"));

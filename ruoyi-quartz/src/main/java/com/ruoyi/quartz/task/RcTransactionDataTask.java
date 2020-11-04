@@ -55,7 +55,6 @@ public class RcTransactionDataTask {
                     System.out.println("没有数据");
                     continue;
                 }
-                Thread.sleep(5000);
                 JSONObject sql = JSONObject.fromObject(result);
                 JSONArray jsonArray = JSONArray.fromObject(sql.getString("data"));
                 Object[] objs = jsonArray.toArray();
@@ -81,6 +80,7 @@ public class RcTransactionDataTask {
 
                     JSONObject paramsInfo = new JSONObject();
                     paramsInfo.put("code", data.getCode());
+                    Thread.sleep(5000);
                     JSONObject resultPost = QuartzHttpUtils.makeAPICallPost("https://dncapi.bqrank.net/api/coin/web-coininfo", paramsInfo);
                     JSONObject resultInfo = JSONObject.fromObject(resultPost.getString("data"));
                     if(!resultInfo.isEmpty()){

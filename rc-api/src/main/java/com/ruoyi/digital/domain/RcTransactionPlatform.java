@@ -58,7 +58,7 @@ public class RcTransactionPlatform extends BaseEntity
 
     /** 24H涨跌（百分比） */
     @Excel(name = "24H涨跌", readConverterExp = "百=分比")
-    private String changeVolumn;
+    private BigDecimal changeVolumn;
 
     /** ExRank */
     @Excel(name = "ExRank")
@@ -162,12 +162,12 @@ public class RcTransactionPlatform extends BaseEntity
     {
         return tradeurl;
     }
-    public void setChangeVolumn(String changeVolumn)
+    public void setChangeVolumn(BigDecimal changeVolumn)
     {
         this.changeVolumn = changeVolumn;
     }
 
-    public String getChangeVolumn()
+    public BigDecimal getChangeVolumn()
     {
         return changeVolumn;
     }
