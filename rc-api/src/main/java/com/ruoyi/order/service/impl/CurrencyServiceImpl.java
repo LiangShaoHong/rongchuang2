@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -58,6 +59,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Autowired
     private PushService pushService;
 
+    @Autowired
+    private RedisService redisService;
+
 
     @Override
     public Result getBbPerInformation(RcUser rcUser) {
@@ -83,13 +87,13 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public Result getBbAutomaticOrder(HttpServletRequest request, RcUser rcUser) {
         log.info("调用币币查询自动抢单状态接口");
-        HttpSession session = request.getSession();
-        Boolean automatic = (Boolean) session.getAttribute("BB Automatic order grabbing switch" + rcUser.getAccount());
+        String switchBbKey = Constants.DB_CURRENCY + rcUser.getPlatformId() + rcUser.getId();
+        Boolean automatic = (Boolean) redisService.get(switchBbKey, Constants.DB_SWITCH);
         JSONObject jsonObject = new JSONObject();
-        if (automatic == null) {
-            jsonObject.put("automatic", false);
+        if (automatic) {
+            jsonObject.put("automatic", true);
         } else {
-            jsonObject.put("automatic", automatic);
+            jsonObject.put("automatic", false);
         }
         return new Result().isOk().data(jsonObject);
     }
@@ -97,11 +101,11 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public Result editBbAutomaticOrder(HttpServletRequest request, RcUser rcUser, Boolean automatic) {
         log.info("调用币币改变自动抢单状态接口");
-        HttpSession session = request.getSession();
+        String switchBbKey = Constants.DB_CURRENCY + rcUser.getPlatformId() + rcUser.getId();
         if (automatic) {
-            session.setAttribute("BB Automatic order grabbing switch" + rcUser.getAccount(), true);
+            redisService.set(switchBbKey, true, Constants.DB_SWITCH);
         } else {
-            session.setAttribute("BB Automatic order grabbing switch" + rcUser.getAccount(), false);
+            redisService.set(switchBbKey, false, Constants.DB_SWITCH);
         }
         return new Result().isOk().msg("提交成功");
     }

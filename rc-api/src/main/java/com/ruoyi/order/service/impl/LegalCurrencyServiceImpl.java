@@ -6,6 +6,7 @@ import com.ruoyi.common.Result;
 import com.ruoyi.common.jms.JmsConstant;
 import com.ruoyi.common.jms.SenderService;
 import com.ruoyi.common.push.PushService;
+import com.ruoyi.common.utils.redis.RedisService;
 import com.ruoyi.common.utils.uuid.UUID;
 import com.ruoyi.framework.web.service.ConfigService;
 import com.ruoyi.framework.web.service.DictService;
@@ -72,6 +73,9 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Autowired
     private DictService dictService;
 
+    @Autowired
+    private RedisService redisService;
+
     @Override
     public Result getFbPerInformation(RcUser user) {
         log.info("调用法币个人信息接口");
@@ -99,13 +103,13 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Override
     public Result getFbAutomaticOrder(HttpServletRequest request, RcUser user) {
         log.info("调用法币查询自动抢单状态接口");
-        HttpSession session = request.getSession();
-        Boolean automatic = (Boolean) session.getAttribute("FB Automatic order grabbing switch" + user.getAccount());
+        String switchFbKey = Constants.DB_LEGALCURRENCY + user.getPlatformId() + user.getId();
+        Boolean automatic = (Boolean) redisService.get(switchFbKey, Constants.DB_SWITCH);
         JSONObject jsonObject = new JSONObject();
-        if (automatic == null) {
-            jsonObject.put("automatic", false);
+        if (automatic) {
+            jsonObject.put("automatic", true);
         } else {
-            jsonObject.put("automatic", automatic);
+            jsonObject.put("automatic", false);
         }
         return new Result().isOk().data(jsonObject);
     }
@@ -113,11 +117,11 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Override
     public Result editFbAutomaticOrder(HttpServletRequest request, RcUser user, Boolean automatic) {
         log.info("调用法币改变自动抢单状态接口");
-        HttpSession session = request.getSession();
+        String switchFbKey = Constants.DB_LEGALCURRENCY + user.getPlatformId() + user.getId();
         if (automatic) {
-            session.setAttribute("FB Automatic order grabbing switch" + user.getAccount(), true);
+            redisService.set(switchFbKey, true, Constants.DB_SWITCH);
         } else {
-            session.setAttribute("FB Automatic order grabbing switch" + user.getAccount(), false);
+            redisService.set(switchFbKey, false, Constants.DB_SWITCH);
         }
         return new Result().isOk().msg("提交成功");
     }
@@ -200,7 +204,6 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
                 // 尝试加锁，最多等待l秒，上锁以后l1秒自动解锁
                 if (fairLock.tryLock(5, 10, TimeUnit.SECONDS)) {
                     legalCurrencyMapper.updateFbConfirm(user.getId(), id);
-
                     RcUser srcUser = iRcUserService.selectRcUserById(rcFrenchCurrencyOrder.getUserId());
 
                     //修改用户余额
@@ -290,7 +293,6 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
         List<SysDictData> sysDictDataList = dictService.getType("rc_appeal_type");
         return new Result().code(1).msg("查询成功").data(sysDictDataList);
     }
-
 
     @Override
     @Transactional(rollbackFor = Exception.class)
