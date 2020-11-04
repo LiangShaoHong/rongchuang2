@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.order.mapper.RcAppealMapper">
+    
+    <resultMap type="RcAppeal" id="RcAppealResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="appealContent"    column="appeal_content"    />
+        <result property="replyContent"    column="reply_content"    />
+        <result property="complImg"    column="compl_img"    />
+        <result property="state"    column="state"    />
+        <result property="auditTime"    column="audit_time"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectRcAppealVo">
+        select id, user_id, order_id, appeal_content, reply_content, compl_img, state, audit_time, create_time from rc_appeal
+    </sql>
+
+    <select id="selectRcAppealList" parameterType="RcAppeal" resultMap="RcAppealResult">
+        <include refid="selectRcAppealVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="appealContent != null  and appealContent != ''"> and appeal_content = #{appealContent}</if>
+            <if test="replyContent != null  and replyContent != ''"> and reply_content = #{replyContent}</if>
+            <if test="complImg != null  and complImg != ''"> and compl_img = #{complImg}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="auditTime != null "> and audit_time = #{auditTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectRcAppealById" parameterType="Long" resultMap="RcAppealResult">
+        <include refid="selectRcAppealVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRcAppeal" parameterType="RcAppeal">
+        insert into rc_appeal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="appealContent != null">appeal_content,</if>
+            <if test="replyContent != null">reply_content,</if>
+            <if test="complImg != null">compl_img,</if>
+            <if test="state != null">state,</if>
+            <if test="auditTime != null">audit_time,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="appealContent != null">#{appealContent},</if>
+            <if test="replyContent != null">#{replyContent},</if>
+            <if test="complImg != null">#{complImg},</if>
+            <if test="state != null">#{state},</if>
+            <if test="auditTime != null">#{auditTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRcAppeal" parameterType="RcAppeal">
+        update rc_appeal
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="appealContent != null">appeal_content = #{appealContent},</if>
+            <if test="replyContent != null">reply_content = #{replyContent},</if>
+            <if test="complImg != null">compl_img = #{complImg},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="auditTime != null">audit_time = #{auditTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcAppealById" parameterType="Long">
+        delete from rc_appeal where id = #{id}
+    </delete>
+
+    <delete id="deleteRcAppealByIds" parameterType="String">
+        delete from rc_appeal where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

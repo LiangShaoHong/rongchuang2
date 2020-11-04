@@ -28,9 +28,25 @@ public class Constants {
     public static final String DB_CONFIG = "config:";
 
     /**
-     * redis Token库
+     * redis Order库
      */
     public static final String DB_ORDER = "order:";
+
+    /**
+     * redis 法币库
+     */
+    public static final String DB_LEGALCURRENCY = "legalcurrency:";
+
+
+    /**
+     * redis 币币库
+     */
+    public static final String DB_CURRENCY = "currency:";
+
+    /**
+     * redis switch库
+     */
+    public static final String DB_SWITCH = "switch:";
 
     /**
      * 用户对应系统收款账号储存过期时间（秒）

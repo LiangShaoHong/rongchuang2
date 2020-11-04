@@ -42,6 +42,16 @@ public interface ICollectionService {
 
 
     /**
+     * 获取个人收款账户详情接口
+     *
+     * @param userId 用户id
+     * @param id     业务id
+     * @return
+     */
+    public Result getPersonalCollectionDetails(Long userId, Long id);
+
+
+    /**
      * 修改个人收款账户接口
      *
      * @param userId 用户id

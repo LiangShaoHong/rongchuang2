@@ -6,16 +6,16 @@ import com.ruoyi.common.Result;
 import com.ruoyi.common.jms.JmsConstant;
 import com.ruoyi.common.jms.SenderService;
 import com.ruoyi.common.push.PushService;
+import com.ruoyi.common.utils.redis.RedisService;
 import com.ruoyi.common.utils.uuid.UUID;
 import com.ruoyi.framework.web.service.ConfigService;
-import com.ruoyi.order.domain.FrenchCurrencyOrder;
-import com.ruoyi.order.domain.Profit;
-import com.ruoyi.order.domain.RcFrenchCurrencyOrder;
-import com.ruoyi.order.domain.RcFrenchCurrencyOrderRelease;
+import com.ruoyi.framework.web.service.DictService;
+import com.ruoyi.order.domain.*;
 import com.ruoyi.order.mapper.LegalCurrencyMapper;
 import com.ruoyi.order.mapper.RcFrenchCurrencyOrderMapper;
 import com.ruoyi.order.mapper.RcFrenchCurrencyOrderReleaseMapper;
 import com.ruoyi.order.service.LegalCurrencyService;
+import com.ruoyi.system.domain.SysDictData;
 import com.ruoyi.user.domain.RcUser;
 import com.ruoyi.user.service.IRcUserService;
 import com.ruoyi.user.service.IUserMoneyService;
@@ -31,10 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -73,6 +70,12 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Autowired
     private IUserProfitService iUserProfitService;
 
+    @Autowired
+    private DictService dictService;
+
+    @Autowired
+    private RedisService redisService;
+
     @Override
     public Result getFbPerInformation(RcUser user) {
         log.info("调用法币个人信息接口");
@@ -89,20 +92,24 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Override
     public Result getFbMyOrderList(RcUser user, Integer pageNum, Integer pageSize) {
         pageNum = (pageNum - 1) * pageSize;
-        List<FrenchCurrencyOrder> frenchCurrencyOrderList = legalCurrencyMapper.getFbMyOrderList(user.getId(), pageNum, pageSize);
+        List<FrenchCurrencyOrder> frenchCurrencyOrderList = new ArrayList<FrenchCurrencyOrder>();
+        List<FrenchCurrencyOrder> frenchCurrencyOrderList1 = legalCurrencyMapper.getFbMyOrderList1(user.getId(), pageNum, pageSize);
+        List<FrenchCurrencyOrder> frenchCurrencyOrderList2 = legalCurrencyMapper.getFbMyOrderList2(user.getId(), pageNum, pageSize);
+        frenchCurrencyOrderList.addAll(frenchCurrencyOrderList1);
+        frenchCurrencyOrderList.addAll(frenchCurrencyOrderList2);
         return new Result().code(1).msg("查询成功").data(frenchCurrencyOrderList);
     }
 
     @Override
     public Result getFbAutomaticOrder(HttpServletRequest request, RcUser user) {
         log.info("调用法币查询自动抢单状态接口");
-        HttpSession session = request.getSession();
-        Boolean automatic = (Boolean) session.getAttribute("FB Automatic order grabbing switch" + user.getAccount());
+        String switchFbKey = Constants.DB_LEGALCURRENCY + user.getPlatformId() + user.getId();
+        Boolean automatic = (Boolean) redisService.get(switchFbKey, Constants.DB_SWITCH);
         JSONObject jsonObject = new JSONObject();
-        if (automatic == null) {
-            jsonObject.put("automatic", false);
+        if (automatic) {
+            jsonObject.put("automatic", true);
         } else {
-            jsonObject.put("automatic", automatic);
+            jsonObject.put("automatic", false);
         }
         return new Result().isOk().data(jsonObject);
     }
@@ -110,11 +117,11 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
     @Override
     public Result editFbAutomaticOrder(HttpServletRequest request, RcUser user, Boolean automatic) {
         log.info("调用法币改变自动抢单状态接口");
-        HttpSession session = request.getSession();
+        String switchFbKey = Constants.DB_LEGALCURRENCY + user.getPlatformId() + user.getId();
         if (automatic) {
-            session.setAttribute("FB Automatic order grabbing switch" + user.getAccount(), true);
+            redisService.set(switchFbKey, true, Constants.DB_SWITCH);
         } else {
-            session.setAttribute("FB Automatic order grabbing switch" + user.getAccount(), false);
+            redisService.set(switchFbKey, false, Constants.DB_SWITCH);
         }
         return new Result().isOk().msg("提交成功");
     }
@@ -197,7 +204,6 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
                 // 尝试加锁，最多等待l秒，上锁以后l1秒自动解锁
                 if (fairLock.tryLock(5, 10, TimeUnit.SECONDS)) {
                     legalCurrencyMapper.updateFbConfirm(user.getId(), id);
-
                     RcUser srcUser = iRcUserService.selectRcUserById(rcFrenchCurrencyOrder.getUserId());
 
                     //修改用户余额
@@ -280,4 +286,53 @@ public class LegalCurrencyServiceImpl implements LegalCurrencyService {
         }
         return null;
     }
+
+    @Override
+    public Result getFbAppealReasonType() {
+        log.info("调用法币获取申诉理由类型接口");
+        List<SysDictData> sysDictDataList = dictService.getType("rc_appeal_type");
+        return new Result().code(1).msg("查询成功").data(sysDictDataList);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Result fbAppealOrder(RcUser user, String id, String appealContent, String complImg) {
+        log.info("调用法币订单申诉接口");
+        String lockKey = "lockKey:" + Constants.DB_ORDER + id;
+        RLock fairLock = redissonClient.getFairLock(lockKey);
+        try {
+            // 尝试加锁，最多等待l秒，上锁以后l1秒自动解锁
+            if (fairLock.tryLock(5, 10, TimeUnit.SECONDS)) {
+                FrenchCurrencyOrder frenchCurrencyOrder = legalCurrencyMapper.getFbDetails(user.getId(), id);
+                if (2 == frenchCurrencyOrder.getOrderState() || 4 == frenchCurrencyOrder.getOrderState()) {
+                    Integer count = legalCurrencyMapper.selectRcAppealByUserIdAndRcFrenchCurrencyOrderId(id);
+                    if (count > 0) {
+                        return Result.isFail("订单已经在申诉中");
+                    } else {
+                        Appeal appeal = new Appeal();
+                        appeal.setUserId(user.getId());
+                        appeal.setOrderId(id);
+                        appeal.setAppealContent(appealContent);
+                        appeal.setComplImg(complImg);
+                        appeal.setState(1);
+                        appeal.setCreateTime(new Date());
+                        legalCurrencyMapper.insertFbAppealOrder(appeal);
+                        legalCurrencyMapper.updateFbAppealOrder(user.getId(), id);
+                    }
+                    return Result.isOk().msg("提交成功");
+                } else if (6 == frenchCurrencyOrder.getOrderState()) {
+                    return Result.isFail("订单已经在申诉中");
+                } else {
+                    return Result.isFail("订单不允许申诉");
+                }
+            }
+        } catch (InterruptedException e) {
+            log.error("加锁异常！e.getMessage():{}, e:{}", e.getMessage(), e);
+        } finally {
+            if (fairLock.isHeldByCurrentThread())
+                fairLock.unlock();
+        }
+        return null;
+    }
+
 }

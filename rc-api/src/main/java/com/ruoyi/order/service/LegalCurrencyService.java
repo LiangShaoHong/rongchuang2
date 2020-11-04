@@ -22,7 +22,6 @@ import java.util.List;
 public interface LegalCurrencyService {
     /**
      * 查询个人信息接口
-     *
      * @param user
      * @return
      */
@@ -30,15 +29,16 @@ public interface LegalCurrencyService {
 
     /**
      * 查询我的订单列表接口
-     *
      * @param user
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     public Result getFbMyOrderList(RcUser user, Integer pageNum, Integer pageSize);
 
     /**
      * 查询自动抢单状态接口
-     *
+     * @param request
      * @param user
      * @return
      */
@@ -46,48 +46,52 @@ public interface LegalCurrencyService {
 
     /**
      * 改变自动抢单状态接口
-     *
+     * @param request
      * @param user
+     * @param automatic
      * @return
      */
     public Result editFbAutomaticOrder(HttpServletRequest request, RcUser user, Boolean automatic);
 
     /**
      * 查询可选订单列表接口
-     *
      * @param user
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     public Result getFbOptionalOrder(RcUser user, Integer pageNum, Integer pageSize);
 
     /**
      * 查询历史记录接口
-     *
      * @param user
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     public Result getFbHistorical(RcUser user, Integer pageNum, Integer pageSize);
 
     /**
      * 查询历史记录详情接口
-     *
      * @param user
+     * @param id
      * @return
      */
     public Result getFbDetails(RcUser user, String id);
 
     /**
      * 确定付款接口
-     *
      * @param user
+     * @param id
+     * @param paymentImg
      * @return
      */
     public Result fbConfirm_a(RcUser user, String id, String paymentImg);
 
     /**
      * 确定收款接口
-     *
      * @param user
+     * @param id
      * @return
      */
     public Result fbConfirm(RcUser user, String id);
@@ -96,7 +100,27 @@ public interface LegalCurrencyService {
      * 抢订单接口
      *
      * @param user
+     * @param id
      * @return
      */
     public Result robFbOrder(RcUser user, String id);
+
+
+    /**
+     * 获取申诉理由类型接口
+     *
+     * @return
+     */
+    public Result getFbAppealReasonType();
+
+
+    /**
+     * 法币订单申诉接口
+     *
+     * @param user
+     * @param id
+     * @param appealId
+     * @return
+     */
+    public Result fbAppealOrder(RcUser user, String id, String appealContent, String complImg);
 }

@@ -92,10 +92,10 @@ public class CollectionServiceImpl implements ICollectionService {
             jsonObject.put("dictType", sysDictData.getDictType());
             jsonObject.put("id", sysDictData.getDictValue());
             jsonObject.put("text", sysDictData.getDictLabel());
-            jsonObject.put("value","");
+            jsonObject.put("value", "");
             list.add(jsonObject);
         }
-        return new Result().isOk().data(list);
+        return new Result().isOk().msg("查询成功").data(list);
     }
 
     @Override
@@ -104,11 +104,29 @@ public class CollectionServiceImpl implements ICollectionService {
         log.info("调用新增个人收款账户接口");
         SysDictType sysDictType = iSysDictTypeService.selectDictTypeByType(dictType);
         String region = sysDictType.getRemark();
-        Integer state = collectionMapper.addPersonalCollection(userId, json, qrcode, region);
+        dictType = dictType.replace("rc_attribute_", "");
+        String icon = "";
+        List<SysDictData> sysDictDataList = dictService.getType("rc_collection_account_icon");
+        for (SysDictData sysDictData : sysDictDataList) {
+            if (sysDictData.getDictValue().equals(dictType + "_icon")) {
+                icon = sysDictData.getRemark();
+                break;
+            }
+        }
+        Integer state = collectionMapper.addPersonalCollection(userId, json, qrcode, region, dictType, icon);
         if (state <= 0) {
             return new Result().isFail().msg("提交失败");
         }
         return new Result().isOk().data("提交成功");
+    }
+
+    @Override
+    public Result getPersonalCollectionDetails(Long userId, Long id) {
+        log.info("调用获取个人收款账户详情接口");
+        RcAccount rcAccount = collectionMapper.getPersonalCollectionDetails(userId, id);
+        return new Result().isOk().msg("查询成功").data(rcAccount);
+
+
     }
 
     @Override
@@ -117,7 +135,16 @@ public class CollectionServiceImpl implements ICollectionService {
         log.info("调用修改个人收款账户接口");
         SysDictType sysDictType = iSysDictTypeService.selectDictTypeByType(dictType);
         String region = sysDictType.getRemark();
-        Integer state = collectionMapper.updatePersonalCollection(userId, id, json, qrcode, region);
+        dictType = dictType.replace("rc_attribute_", "");
+        String icon = "";
+        List<SysDictData> sysDictDataList = dictService.getType("rc_collection_account_icon");
+        for (SysDictData sysDictData : sysDictDataList) {
+            if (sysDictData.getDictValue().equals(dictType + "_icon")) {
+                icon = sysDictData.getRemark();
+                break;
+            }
+        }
+        Integer state = collectionMapper.updatePersonalCollection(userId, id, json, qrcode, region, dictType, icon);
         if (state <= 0) {
             return new Result().isFail().msg("提交失败");
         }

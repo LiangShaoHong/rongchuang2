@@ -203,4 +203,38 @@ public class LegalCurrencyApi {
         }
         return legalCurrencyService.robFbOrder(user, id);
     }
+
+
+    @ApiOperation("获取申诉理由类型接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true)
+            })
+    @PostMapping("/getFbAppealReasonType")
+    public Result getFbAppealReasonType(HttpServletRequest request) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
+        return legalCurrencyService.getFbAppealReasonType();
+    }
+
+
+    @ApiOperation("法币订单申诉接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(paramType = "header", dataType = "String", name = "X_Token", value = "用户登录凭据", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "id", value = "订单id", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "appealContent", value = "申诉理由", required = true),
+                    @ApiImplicitParam(dataType = "String", name = "complImg", value = "申诉截图", required = true)
+
+            })
+    @PostMapping("/fbAppealOrder")
+    public Result fbAppealOrder(HttpServletRequest request, String id, String appealContent, String complImg) {
+        RcUser user = systemUtil.getPlatformIdAndUserId(request);
+        if (user == null) {
+            return Result.unauthorized();
+        }
+        return legalCurrencyService.fbAppealOrder(user, id, appealContent, complImg);
+    }
 }
