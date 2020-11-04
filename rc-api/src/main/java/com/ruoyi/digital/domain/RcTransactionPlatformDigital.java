@@ -51,7 +51,7 @@ public class RcTransactionPlatformDigital {
     private String tradeurl;
 
     @ApiModelProperty("24H涨跌（百分比）")
-    private String changeVolumn;
+    private BigDecimal changeVolumn;
 
     @ApiModelProperty("ExRank ")
     private String exrank;

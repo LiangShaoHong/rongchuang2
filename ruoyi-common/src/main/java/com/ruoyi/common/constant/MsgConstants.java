@@ -76,6 +76,10 @@ public class MsgConstants {
     public static final String OPERATOR_SUCCESS ="操作成功！";
     public static final String OPERATOR_FAIL ="操作失败！";
 
+    public static final String ATTENTION_SUCCESS = "关注成功";
+    public static final String ATTENTION_FAIL = "关注失败";
+    public static final String ATTENTION_REPEAT = "已经关注";
+
     public static final String PARAMETER_FAIL ="参数有误！";
 
     public static final String DATE_NEVER_INIT ="数据未初始化！";

@@ -55,7 +55,8 @@ public class DigitalApi {
     public Result getMarketList(HttpServletRequest request,
                                 @RequestParam(defaultValue = "1") Integer pageNum,
                                 @RequestParam(defaultValue = "10")Integer pageSize,
-                                Integer byName, Integer byType) {
+                                @RequestParam(defaultValue = "0")Integer byName,
+                                @RequestParam(defaultValue = "0")Integer byType) {
         return rcService.getMarketList(pageNum,pageSize,byName,byType);
     }
 
@@ -64,14 +65,15 @@ public class DigitalApi {
             {
                     @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
                     @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "byName", value = "1-市值 2-最新价 3-24H涨幅 默认传0", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "byName", value = "1-24H涨幅 默认传0", required = true),
                     @ApiImplicitParam(dataType = "int", name = "byType", value = "1-升序 2-降序 默认传0", required = true)
             })
     @PostMapping("/getClinchList")
     public Result getClinchList(HttpServletRequest request,
                                 @RequestParam(defaultValue = "1")Integer pageNum,
                                 @RequestParam(defaultValue = "10")Integer pageSize,
-                                Integer byName, Integer byType) {
+                                @RequestParam(defaultValue = "0")Integer byName,
+                                @RequestParam(defaultValue = "0")Integer byType) {
         return rcService.getClinchList(pageNum,pageSize,byName,byType);
     }
 
@@ -96,13 +98,17 @@ public class DigitalApi {
     @ApiImplicitParams(
             {
                     @ApiImplicitParam(dataType = "int", name = "pageNum", value = "当前页号", required = true),
-                    @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true)
+                    @ApiImplicitParam(dataType = "int", name = "pageSize", value = "每页大小", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "byName", value = "1-持有资产 2-24H涨幅 默认0可不传", required = true),
+                    @ApiImplicitParam(dataType = "int", name = "byType", value = "1-升序 2-降序 默认0可不传", required = true)
             })
     @PostMapping("/getPlatformList")
     public Result getPlatformList(HttpServletRequest request,
                                   @RequestParam(defaultValue = "1")Integer pageNum,
-                                  @RequestParam(defaultValue = "10")Integer pageSize) {
-        return rcService.getPlatformList(pageNum,pageSize);
+                                  @RequestParam(defaultValue = "10")Integer pageSize,
+                                  @RequestParam(defaultValue = "0")Integer byName,
+                                  @RequestParam(defaultValue = "0")Integer byType) {
+        return rcService.getPlatformList(pageNum,pageSize,byName,byType);
     }
 
     @ApiOperation("查询币种详情接口")

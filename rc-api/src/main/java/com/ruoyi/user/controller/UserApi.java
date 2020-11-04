@@ -12,8 +12,10 @@ import com.ruoyi.common.utils.redis.RedisService;
 import com.ruoyi.controller.BaseController;
 import com.ruoyi.common.Constants;
 import com.ruoyi.common.Result;
+import com.ruoyi.user.domain.RcAttention;
 import com.ruoyi.user.domain.RcUser;
 import com.ruoyi.user.mapper.RcUserMapper;
+import com.ruoyi.user.service.IRcAttentionService;
 import com.ruoyi.user.service.IRcUserService;
 import com.ruoyi.user.service.IUserMoneyService;
 import io.swagger.annotations.Api;
@@ -69,6 +71,9 @@ public class UserApi extends BaseController {
 
     @Autowired
     private RcUserMapper rcUserMapper;
+
+    @Autowired
+    private IRcAttentionService rcAttentionService;
 
     @Lazy
     @Autowired
@@ -345,6 +350,54 @@ public class UserApi extends BaseController {
             return Result.isOk().data(data).msg(MsgConstants.OPERATOR_SUCCESS);
         }
         return Result.isFail().msg(MsgConstants.OPERATOR_FAIL);
+    }
+
+    @ApiOperation("添加/取消关注接口")
+    @ApiImplicitParams(
+            {
+                    @ApiImplicitParam(dataType = "String", name = "byCode", value = "币种code码", required = true),
+                    @ApiImplicitParam(dataType = "Integer", name = "byType", value = "添加关注0 取消关注1", required = true, defaultValue = "0")
+            })
+    @PostMapping("/updateAttention")
+    public Result updateAttention(
+            @RequestParam("byCode") String byCode,
+            @RequestParam("byType") Integer byType,
+            HttpServletRequest request){
+        RcUser user =  systemUtil.getPlatformIdAndUserId(request);
+        //检测关注是否存在
+        RcAttention attention = rcAttentionService.selectByUser(byCode, user.getId());
+        RcAttention updateUser = new RcAttention();
+        if(attention != null){
+            updateUser.setId(attention.getId());
+            updateUser.setStatus(byType);
+            updateUser.setLastTime(new Date());
+            int isUpdate = rcAttentionService.updateRcAttention(updateUser);
+            if (isUpdate > 0) {
+                return Result.isOk().msg(MsgConstants.OPERATOR_SUCCESS);
+            }
+        }else{
+            updateUser.setUserId(user.getId());
+            updateUser.setCoinType(byCode);
+            updateUser.setStatus(byType);
+            updateUser.setLastTime(new Date());
+            int isUpdate = rcAttentionService.insertRcAttention(updateUser);
+            if (isUpdate > 0) {
+                return Result.isOk().msg(MsgConstants.OPERATOR_SUCCESS);
+            }
+        }
+        return Result.isFail().msg(MsgConstants.OPERATOR_FAIL);
+    }
+
+    @ApiOperation("查询用户关注接口")
+    @ApiImplicitParams(
+            {
+            })
+    @PostMapping("/selectAttention")
+    public Result selectAttention(
+            HttpServletRequest request){
+        RcUser user =  systemUtil.getPlatformIdAndUserId(request);
+        JSONObject obj = rcUserMapper.selectAttention(user.getId());
+        return Result.isOk().data(obj);
     }
 
 }

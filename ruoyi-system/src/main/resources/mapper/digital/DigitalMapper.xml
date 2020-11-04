@@ -88,8 +88,8 @@
 
     <select id="getDataList" resultMap="RcTransactionDataResult">
         SELECT id,code,name,fullname,rank,logo,current_price_usd,market_value_usd,change_percent FROM rc_transaction_data
-        ORDER BY rank
-<!--        ORDER BY ${arg2} ${arg3}-->
+<!--        ORDER BY rank-->
+        ORDER BY ${arg2} ${arg3}
         limit #{arg0},#{arg1}
     </select>
 
@@ -135,14 +135,16 @@
     </select>
 
     <select id="getClinchList" resultMap="RcTransactionInfoResult">
-        SELECT id,code,name,fullname,symbol,logo,supply,totalSupply,vol,circulationRate FROM rc_transaction_info
-        ORDER BY vol ${arg2}
+        SELECT id,code,name,fullname,symbol,logo,supply,totalSupply,vol,circulationRate,amount_day FROM rc_transaction_info
+<!--        ORDER BY vol ${arg2}-->
+        ORDER BY ${arg2} ${arg3}
         limit #{arg0},#{arg1}
     </select>
 
     <select id="getPlatformList" resultMap="RcTransactionPlatformResult">
         select id, coin_id, name, logo, rank, pairnum, volumn, volumn_btc, volumn_cny, tradeurl, change_volumn, exrank, assets_usd, risk_level, create_time from rc_transaction_platform
-        ORDER BY rank
+<!--        ORDER BY rank-->
+        ORDER BY ${arg2} ${arg3}
         limit #{arg0},#{arg1}
     </select>
 

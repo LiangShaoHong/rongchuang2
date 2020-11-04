@@ -58,7 +58,7 @@ public class RcTransactionPlatformTask {
                     data.setVolumnBtc(new BigDecimal(jsonObject.getString("volumn_btc")));
                     data.setVolumnCny(new BigDecimal(jsonObject.getString("volumn_cny")));
                     data.setTradeurl((String) jsonObject.getString("tradeurl"));
-                    data.setChangeVolumn(new BigDecimal(jsonObject.getString("change_volumn")).toString());
+                    data.setChangeVolumn(new BigDecimal(jsonObject.getString("change_volumn")));
                     data.setExrank((String) jsonObject.getString("exrank"));
                     data.setAssetsUsd(new BigDecimal(jsonObject.getString("assets_usd")));
                     data.setRiskLevel((String) jsonObject.getString("risk_level"));
@@ -79,7 +79,7 @@ public class RcTransactionPlatformTask {
                         newData.setVolumnBtc(new BigDecimal(jsonObject.getString("volumn_btc")));
                         newData.setVolumnCny(new BigDecimal(jsonObject.getString("volumn_cny")));
                         newData.setTradeurl((String) jsonObject.getString("tradeurl"));
-                        newData.setChangeVolumn(new BigDecimal(jsonObject.getString("change_volumn")).toString());
+                        newData.setChangeVolumn(new BigDecimal(jsonObject.getString("change_volumn")));
                         newData.setExrank((String) jsonObject.getString("exrank"));
                         newData.setAssetsUsd(new BigDecimal(jsonObject.getString("assets_usd")));
                         newData.setRiskLevel((String) jsonObject.getString("risk_level"));

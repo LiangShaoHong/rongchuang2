@@ -6,6 +6,7 @@ import java.util.List;
 import com.ruoyi.common.json.JSONObject;
 import com.ruoyi.user.domain.RcUser;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * 用户注册Mapper接口
@@ -110,4 +111,7 @@ public interface RcUserMapper
     int editUserMoneyWallet(@Param("userId")String userId, @Param("account")String account,@Param("money") BigDecimal money);
 
     JSONObject selectreferralcode(@Param("referralcode") String referralcode);
+
+    @Select("SELECT a.amount_day as amountDay,a.code as code,a.name as name,a.fullname as fullname,a.symbol as symbol,a.logo as logo,a.change_percent as changePercent,a.turn_over as turnOver FROM rc_transaction_info AS a,rc_attention AS b WHERE a.code = b.coin_type and b.status=0 and b.user_id=#{id}")
+    JSONObject selectAttention(Long id);
 }

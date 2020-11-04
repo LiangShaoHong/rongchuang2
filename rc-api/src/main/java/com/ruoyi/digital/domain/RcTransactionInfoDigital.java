@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 数据列表对象 rc_transaction_info
@@ -103,4 +104,10 @@ public class RcTransactionInfoDigital {
 
     @ApiModelProperty("币种一年数据")
     private String info_y;
+
+    @ApiModelProperty("币种时间集合")
+    private List timeList;
+
+    @ApiModelProperty("币种数据集合")
+    private List dataList;
 }

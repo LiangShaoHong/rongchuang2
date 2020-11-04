@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.user.mapper.RcAttentionMapper">
+
+    <resultMap type="RcAttention" id="RcAttentionResult">
+        <result property="id"    column="id"    />
+        <result property="coinType"    column="coin_type"    />
+        <result property="worldExponent"    column="world_exponent"    />
+        <result property="dayDz"    column="day_dz"    />
+        <result property="rate"    column="rate"    />
+        <result property="status"    column="status"    />
+        <result property="userId"    column="user_id"    />
+        <result property="lastTime"    column="last_time"    />
+    </resultMap>
+
+    <sql id="selectRcAttentionVo">
+        select id, coin_type, world_exponent, day_dz, rate, status, user_id, last_time from rc_attention
+    </sql>
+
+    <select id="selectByUser" resultMap="RcAttentionResult">
+        select id, coin_type, status from rc_attention  where coin_type = #{coin_type} and user_id = #{user_id}
+    </select>
+
+    <select id="selectRcAttentionList" parameterType="RcAttention" resultMap="RcAttentionResult">
+        <include refid="selectRcAttentionVo"/>
+        <where>
+            <if test="coinType != null  and coinType != ''"> and coin_type = #{coinType}</if>
+            <if test="worldExponent != null  and worldExponent != ''"> and world_exponent = #{worldExponent}</if>
+            <if test="dayDz != null  and dayDz != ''"> and day_dz = #{dayDz}</if>
+            <if test="rate != null  and rate != ''"> and rate = #{rate}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="lastTime != null "> and last_time = #{lastTime}</if>
+        </where>
+    </select>
+
+    <select id="selectRcAttentionById" parameterType="Long" resultMap="RcAttentionResult">
+        <include refid="selectRcAttentionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertRcAttention" parameterType="RcAttention">
+        insert into rc_attention
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="coinType != null">coin_type,</if>
+            <if test="worldExponent != null">world_exponent,</if>
+            <if test="dayDz != null">day_dz,</if>
+            <if test="rate != null">rate,</if>
+            <if test="status != null">status,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="lastTime != null">last_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="coinType != null">#{coinType},</if>
+            <if test="worldExponent != null">#{worldExponent},</if>
+            <if test="dayDz != null">#{dayDz},</if>
+            <if test="rate != null">#{rate},</if>
+            <if test="status != null">#{status},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="lastTime != null">#{lastTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateRcAttention" parameterType="RcAttention">
+        update rc_attention
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="coinType != null">coin_type = #{coinType},</if>
+            <if test="worldExponent != null">world_exponent = #{worldExponent},</if>
+            <if test="dayDz != null">day_dz = #{dayDz},</if>
+            <if test="rate != null">rate = #{rate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="lastTime != null">last_time = #{lastTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRcAttentionById" parameterType="Long">
+        delete from rc_attention where id = #{id}
+    </delete>
+
+    <delete id="deleteRcAttentionByIds" parameterType="String">
+        delete from rc_attention where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

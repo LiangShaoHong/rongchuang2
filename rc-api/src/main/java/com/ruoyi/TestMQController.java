@@ -80,22 +80,22 @@ public class TestMQController {
         int pageNum = request.getParameter("pageNum") == null ? 1 : Integer.parseInt(request.getParameter("pageNum"));
         int pageSize = request.getParameter("pageSize") == null ? 10 : Integer.parseInt(request.getParameter("pageSize"));
 
-        List<RcTransactionDataDigital> list = rcDigitalMapper.getDataList(1,100);
-        JSONObject data = new JSONObject();
-        data.put("rcService", list);
-        redisService.set("rcService", rcDigitalMapper.getDataList(1,100), "GG:");
-        redisService.rPush("rxxx", rcDigitalMapper.getDataList(1,100), "GG:");
+//        List<RcTransactionDataDigital> list = rcDigitalMapper.getDataList(1,100);
+//        JSONObject data = new JSONObject();
+//        data.put("rcService", list);
+//        redisService.set("rcService", rcDigitalMapper.getDataList(1,100), "GG:");
+//        redisService.rPush("rxxx", rcDigitalMapper.getDataList(1,100), "GG:");
 
-        List<RcTransactionDataDigital> newList = list.stream()
-                .sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd))
-                .collect(Collectors.toList());
-
-        List<RcTransactionDataDigital> newListTwo = list.stream()
-                .sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd)
-                        .reversed())
-                .collect(Collectors.toList());
-        List<RcTransactionDataDigital> zz = (List<RcTransactionDataDigital>) redisService.get("rcService","GG:");
-        System.out.println(zz);
+//        List<RcTransactionDataDigital> newList = list.stream()
+//                .sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd))
+//                .collect(Collectors.toList());
+//
+//        List<RcTransactionDataDigital> newListTwo = list.stream()
+//                .sorted(Comparator.comparing(RcTransactionDataDigital::getMarketValueUsd)
+//                        .reversed())
+//                .collect(Collectors.toList());
+//        List<RcTransactionDataDigital> zz = (List<RcTransactionDataDigital>) redisService.get("rcService","GG:");
+//        System.out.println(zz);
         JSONObject msg = new JSONObject();
         msg.put("list", redisService.lRange("rxxx", "GG:", pageSize * (pageNum - 1), (pageSize * pageNum ) - 1));
 //        msg.put("list", list);
