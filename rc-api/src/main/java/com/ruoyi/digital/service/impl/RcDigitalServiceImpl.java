@@ -101,7 +101,7 @@ public class RcDigitalServiceImpl implements IRcDigitalService {
         switch (rate){
             case "cny":
                 for (RcTransactionDataDigital doman : profitList){
-                    doman.setMarketValueUsd(doman.getMarketValueUsd().multiply(new BigDecimal(2222433)));
+                    doman.setMarketValueUsd(doman.getMarketValueUsd().multiply(rcDigitalMapper.getRate("cny")));
                 }
                 break;
             default:
